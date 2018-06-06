@@ -11,8 +11,6 @@
         <p:growl id="messagens" showDetail="true"/>
         <p:fileUpload fileUploadListener="#{oberloCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
                       auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens" />
-
-        <p:commandButton actionListener="#{oberloCsvControlador.teste}" value="Clicar" update="messagens"/>
     </h:form>
 </h:body>
 </html>
