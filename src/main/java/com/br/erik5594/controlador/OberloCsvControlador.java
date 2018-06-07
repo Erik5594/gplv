@@ -1,5 +1,6 @@
 package com.br.erik5594.controlador;
 
+import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.dto.*;
 import com.br.erik5594.model.PedidoAliexpress;
 import lombok.Data;
@@ -76,6 +77,7 @@ public @Data class OberloCsvControlador implements Serializable {
             linha = linhasArquivo.readLine();
         }
         linhasArquivo.close();
+        Teste.pedidosShopifyDto = pedidoShopifies;
     }
 
     private BufferedReader obterBufferReader(UploadedFile arquivo) throws IOException {

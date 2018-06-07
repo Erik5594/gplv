@@ -2,21 +2,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
 <h:body>
     <h:form id="formOberlo">
         <p:growl id="messagens" showDetail="true"/>
+        <p:menubar>
+            <p:menuitem value="XML" url="/home.xhtml"/>
+        </p:menubar>
         <p:fileUpload fileUploadListener="#{oberloCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
                       auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaPedido tabelaProduto tabelaPedidoAliexpress tabelaRastreamento tabelaItens" />
 
         <p:dataTable var="pedido" value="#{oberloCsvControlador.pedidoShopifies}"
                      emptyMessage="Nenhum registro" id="tabelaPedido" style="margin-top: 15px"
-                     rows="10" paginator="true" rowsPerPageTemplate="5,10,15"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Pedidos
+            </f:facet>
             <p:column headerText="Pedido">
                 <p:outputLabel value="##{pedido.numeroPedido}"/>
             </p:column>
@@ -39,9 +46,12 @@
 
         <p:dataTable var="produto" value="#{oberloCsvControlador.produtos}"
                      emptyMessage="Nenhum registro" id="tabelaProduto" style="margin-top: 15px"
-                     rows="10" paginator="true" rowsPerPageTemplate="5,10,15"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Produtos
+            </f:facet>
             <p:column headerText="SKU">
                 <p:outputLabel value="#{produto.skuProduto}"/>
             </p:column>
@@ -55,9 +65,12 @@
 
         <p:dataTable var="pedidoAliexpress" value="#{oberloCsvControlador.pedidosAliexpress}"
                      emptyMessage="Nenhum registro" id="tabelaPedidoAliexpress" style="margin-top: 15px"
-                     rows="10" paginator="true" rowsPerPageTemplate="5,10,15"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Aliexpress
+            </f:facet>
             <p:column headerText="Numr Pedido">
                 <p:outputLabel value="#{pedidoAliexpress.idAliexpress}"/>
             </p:column>
@@ -71,9 +84,12 @@
 
         <p:dataTable var="rastreamento" value="#{oberloCsvControlador.rastreamentosDto}"
                      emptyMessage="Nenhum registro" id="tabelaRastreamento" style="margin-top: 15px"
-                     rows="10" paginator="true" rowsPerPageTemplate="5,10,15"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Correios
+            </f:facet>
             <p:column headerText="Cód Rastreamento">
                 <p:outputLabel value="#{rastreamento.codigoRastreamento}"/>
             </p:column>
@@ -84,9 +100,12 @@
 
         <p:dataTable var="item" value="#{oberloCsvControlador.itens}"
                      emptyMessage="Nenhum registro" id="tabelaItens" style="margin-top: 15px"
-                     rows="10" paginator="true" rowsPerPageTemplate="5,10,15"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Itens
+            </f:facet>
             <p:column headerText="Pedido Shopify">
                 <p:outputLabel value="##{item.pedidoShopify.numeroPedido}"/>
             </p:column>

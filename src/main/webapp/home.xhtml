@@ -2,12 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
 <h:body>
     <h:form>
+        <p:growl id="messagens" showDetail="true"/>
         <p:menubar>
             <p:submenu label="Importar Arquivo">
                 <p:submenu label="Shopify" >
@@ -24,6 +26,13 @@
                 </p:submenu>
             </p:submenu>
         </p:menubar>
+        <p:panelGrid rendered="#{not empty homeControlador.pedidosShopifyDto}" columns="2" style="margin-top: 15px">
+            <f:facet name="header">
+                Pedidos
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.pedidosShopifyDto.size().toString()}"/>
+        </p:panelGrid>
     </h:form>
 </h:body>
 </html>
