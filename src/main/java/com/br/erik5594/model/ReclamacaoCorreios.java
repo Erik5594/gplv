@@ -2,11 +2,12 @@ package com.br.erik5594.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public @Data class ReclamacaoCorreios {
+public @Data class ReclamacaoCorreios implements Serializable{
 
     private BigDecimal idReclamacao = BigDecimal.ZERO;
     private Rastreamento rastreamento;

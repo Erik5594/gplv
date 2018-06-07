@@ -2,10 +2,11 @@ package com.br.erik5594.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public @Data class RastreamentoEventos {
+public @Data class RastreamentoEventos implements Serializable{
 
     private int idEvento;
     private Rastreamento rastreamento;

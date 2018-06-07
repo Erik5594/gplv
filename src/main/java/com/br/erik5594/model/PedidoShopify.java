@@ -2,10 +2,12 @@ package com.br.erik5594.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-public @Data class Pedido {
+public @Data class PedidoShopify implements Serializable{
 
     private int numeroPedido;
     private Date dataPedido;
@@ -13,13 +15,14 @@ public @Data class Pedido {
     private String nomeCidadeCliente;
     private String nomeEstadoCliente;
     private String cepCliente;
+    private List<Item> itens;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Pedido pedido = (Pedido) o;
+        PedidoShopify pedido = (PedidoShopify) o;
         return numeroPedido == pedido.numeroPedido;
     }
 
