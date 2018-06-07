@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,9 +16,9 @@ public @Data class PedidoAliexpressDto implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if(this == null && o == null) return true;
+        if(this != null && o == null) return false;
+        if(this == null && o != null) return false;
         PedidoAliexpressDto that = (PedidoAliexpressDto) o;
         return Objects.equals(idAliexpress, that.idAliexpress);
     }
@@ -25,5 +26,11 @@ public @Data class PedidoAliexpressDto implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), idAliexpress);
+    }
+
+    public String getDataLimiteDisputaFormatada(){
+        if(dataLimiteDisputa == null) return null;
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(dataLimiteDisputa);
     }
 }

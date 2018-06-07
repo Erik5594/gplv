@@ -13,16 +13,15 @@ public @Data class Produto implements Serializable{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if(this == null && o == null) return true;
+        if(this != null && o == null) return false;
+        if(this == null && o != null) return false;
         Produto produto = (Produto) o;
         return Objects.equals(skuProduto, produto.skuProduto);
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), skuProduto);
     }
 }

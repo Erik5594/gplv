@@ -17,9 +17,9 @@ public @Data class Rastreamento implements Serializable{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if(this == null && o == null) return true;
+        if(this != null && o == null) return false;
+        if(this == null && o != null) return false;
         Rastreamento that = (Rastreamento) o;
         return Objects.equals(codigoRastreamento, that.codigoRastreamento);
     }
