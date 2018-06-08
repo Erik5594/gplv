@@ -34,4 +34,8 @@ public @Data class PedidoAliexpressDto implements Serializable {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(dataLimiteDisputa);
     }
+
+    public String getLinkPedidoAliexpress(){
+        return "https://trade.aliexpress.com/order_detail.htm?spm=a2g0s.9042311.0.0.3da2b90a3aiSTY&orderId="+idAliexpress.toString();
+    }
 }

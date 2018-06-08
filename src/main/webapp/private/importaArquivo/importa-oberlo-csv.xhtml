@@ -85,6 +85,11 @@
             <p:column headerText="Status">
                 <p:outputLabel value="#{pedidoAliexpress.statusPedidoAliexpress}"/>
             </p:column>
+            <p:column>
+                <p:button outcome="/private/detalhe/detalhe-pedido-aliexpress" value="Detalhar">
+                    <f:param name="pedidoAliexpress" value="#{pedidoAliexpress.idAliexpress}"/>
+                </p:button>
+            </p:column>
         </p:dataTable>
 
         <p:dataTable var="rastreamento" value="#{oberloCsvControlador.rastreamentosDto}"

@@ -2,6 +2,7 @@ package com.br.erik5594.bo;
 
 import com.br.erik5594.dto.PedidoAliexpressDto;
 import com.br.erik5594.dto.PedidoShopifyDto;
+import com.br.erik5594.model.StatusPedidoAliexpress;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ public class HomeBo implements Serializable{
             Calendar data = Calendar.getInstance();
             data.add(Calendar.DAY_OF_YEAR, 5);
             if(pedidoAliexpressDto.getDataLimiteDisputa() != null
-                    && data.getTime().after(pedidoAliexpressDto.getDataLimiteDisputa())){
+                    && data.getTime().after(pedidoAliexpressDto.getDataLimiteDisputa())
+                    && !pedidoAliexpressDto.getStatusPedidoAliexpress().equals(StatusPedidoAliexpress.CONCLUIDO)){
                 vencendoPrazo.add(pedidoAliexpressDto);
             }
         }

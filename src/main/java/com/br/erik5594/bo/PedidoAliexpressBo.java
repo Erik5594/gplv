@@ -7,8 +7,10 @@ import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.PedidoShopify;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PedidoAliexpressBo implements Serializable{
 
@@ -40,6 +42,18 @@ public class PedidoAliexpressBo implements Serializable{
             pedidosAliexpressDto.add(pedidoAliexpressDto);
         }
         return pedidosAliexpressDto;
+    }
+
+    public PedidoAliexpressDto getPedidoAliexpressById(BigDecimal id){
+        List<PedidoAliexpressDto> todosPedidos = getTodosPedidosAliexpress();
+        PedidoAliexpressDto retorno = null;
+        for(PedidoAliexpressDto pedidoAliexpressDto : todosPedidos){
+            if(Objects.equals(pedidoAliexpressDto.getIdAliexpress(), id)){
+                retorno = pedidoAliexpressDto;
+                break;
+            }
+        }
+        return retorno;
     }
 
 }

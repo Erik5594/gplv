@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -55,7 +56,7 @@ public @Data class OberloCsvControlador implements Serializable {
         while (linha != null) {
             PedidoShopifyDto objOberlo = (PedidoShopifyDto) obterObjetoPedido(linha.split(separador));
             ProdutoDto produtoDto = (ProdutoDto) obterObjetoProduto(linha.split(separador));
-            PedidoAliexpressDto pedidoAliexpressDto = (PedidoAliexpressDto) obterObjetoPedidoAliexpress(linha.split(separador));
+            PedidoAliexpressDto pedidoAliexpressDto = (PedidoAliexpressDto) obterObjetoPedidoAliexpress(linha.split(separador), objOberlo.getDataPedido());
             RastreamentoDto rastreamento = (RastreamentoDto) obterObjetoRastreamento(linha.split(separador));
             ItemDto itemDto = (ItemDto) obterObjetoItem(linha.split(separador), pedidoAliexpressDto, objOberlo, rastreamento, produtoDto);
 
@@ -117,21 +118,13 @@ public @Data class OberloCsvControlador implements Serializable {
         return produtoDto;
     }
 
-    private Object obterObjetoPedidoAliexpress(String[] vetorObjeto) {
+    private Object obterObjetoPedidoAliexpress(String[] vetorObjeto, Date dataPedido) {
         PedidoAliexpressDto pedidoAliexpressDto = new PedidoAliexpressDto();
         pedidoAliexpressDto.setIdAliexpress(new BigDecimal(vetorObjeto[12]));
         Calendar data = Calendar.getInstance();
-        if("86318966362768".equals(pedidoAliexpressDto.getIdAliexpress().toString())){
-            pedidoAliexpressDto.setDataLimiteDisputa(null);
-        }else if("87021841572768".equals(pedidoAliexpressDto.getIdAliexpress().toString())
-                || "86980097902768".equals(pedidoAliexpressDto.getIdAliexpress().toString())
-                || "87199871312768".equals(pedidoAliexpressDto.getIdAliexpress().toString())) {
-            data.add(Calendar.DAY_OF_YEAR, 2);
-            pedidoAliexpressDto.setDataLimiteDisputa(data.getTime());
-        }else{
-            data.add(Calendar.DAY_OF_YEAR, 60);
-            pedidoAliexpressDto.setDataLimiteDisputa(data.getTime());
-        }
+        data.setTime(dataPedido);
+        data.add(Calendar.DAY_OF_YEAR, 90);
+        pedidoAliexpressDto.setDataLimiteDisputa(data.getTime());
         pedidoAliexpressDto.setStatusPedidoAliexpress(StatusPedidoAliexpress.NORMAL);
 
         return pedidoAliexpressDto;
