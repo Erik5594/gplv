@@ -11,12 +11,12 @@
     <h:form id="formOberlo">
         <p:growl id="messagens" showDetail="true"/>
         <p:menubar>
-            <p:menuitem value="XML" url="/home.xhtml"/>
+            <p:menuitem value="Home" url="/home.xhtml"/>
         </p:menubar>
         <p:fileUpload fileUploadListener="#{oberloCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
                       auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaPedido tabelaProduto tabelaPedidoAliexpress tabelaRastreamento tabelaItens" />
 
-        <p:dataTable var="pedido" value="#{oberloCsvControlador.pedidoShopifies}"
+        <p:dataTable var="pedido" value="#{oberloCsvControlador.pedidosShopifyDto}"
                      emptyMessage="Nenhum registro" id="tabelaPedido" style="margin-top: 15px"
                      rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
@@ -41,6 +41,11 @@
             </p:column>
             <p:column headerText="CEP">
                 <p:outputLabel value="#{pedido.cepCliente}"/>
+            </p:column>
+            <p:column>
+                <p:button outcome="/private/detalhe/detalhe-pedido" value="Detalhar">
+                    <f:param name="pedido" value="#{pedido.numeroPedido}"/>
+                </p:button>
             </p:column>
         </p:dataTable>
 

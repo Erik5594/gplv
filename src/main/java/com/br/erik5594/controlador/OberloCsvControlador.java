@@ -1,8 +1,8 @@
 package com.br.erik5594.controlador;
 
-import com.br.erik5594.constantes.Teste;
+import com.br.erik5594.bo.*;
 import com.br.erik5594.dto.*;
-import com.br.erik5594.model.PedidoAliexpress;
+import com.br.erik5594.model.StatusPedidoAliexpress;
 import lombok.Data;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -23,11 +23,17 @@ import java.util.List;
 @ViewScoped
 public @Data class OberloCsvControlador implements Serializable {
 
-    private List<PedidoShopifyDto> pedidoShopifies = new ArrayList<>();
     private List<ProdutoDto> produtos = new ArrayList<>();
     private List<PedidoAliexpressDto> pedidosAliexpress = new ArrayList<>();
     private List<RastreamentoDto> rastreamentosDto = new ArrayList<>();
     private List<ItemDto> itens = new ArrayList<>();
+    private List<PedidoShopifyDto> pedidosShopifyDto = new ArrayList<>();
+
+    private PedidoShopifyBo pedidoBo = new PedidoShopifyBo();
+    private ItemBo itemBo = new ItemBo();
+    private PedidoAliexpressBo pedidoAliexpressBo = new PedidoAliexpressBo();
+    private ProdutoBo produtoBo = new ProdutoBo();
+    private RastreamentoBo rastreamentoBo = new RastreamentoBo();
 
     public void upload(FileUploadEvent evento) {
         FacesMessage messagem;
@@ -46,7 +52,6 @@ public @Data class OberloCsvControlador implements Serializable {
     private void getListaDeObjetoDoArquivo(BufferedReader linhasArquivo, String separador) throws IOException, ParseException {
         String linha = linhasArquivo.readLine();
         linha = linhasArquivo.readLine();
-        pedidoShopifies = new ArrayList<>();
         while (linha != null) {
             PedidoShopifyDto objOberlo = (PedidoShopifyDto) obterObjetoPedido(linha.split(separador));
             ProdutoDto produtoDto = (ProdutoDto) obterObjetoProduto(linha.split(separador));
@@ -54,8 +59,8 @@ public @Data class OberloCsvControlador implements Serializable {
             RastreamentoDto rastreamento = (RastreamentoDto) obterObjetoRastreamento(linha.split(separador));
             ItemDto itemDto = (ItemDto) obterObjetoItem(linha.split(separador), pedidoAliexpressDto, objOberlo, rastreamento, produtoDto);
 
-            if (objOberlo != null && !pedidoShopifies.contains(objOberlo)) {
-                pedidoShopifies.add(objOberlo);
+            if (objOberlo != null && !pedidosShopifyDto.contains(objOberlo)) {
+                pedidosShopifyDto.add(objOberlo);
             }
 
             if (produtoDto != null && !produtos.contains(produtoDto)) {
@@ -77,7 +82,11 @@ public @Data class OberloCsvControlador implements Serializable {
             linha = linhasArquivo.readLine();
         }
         linhasArquivo.close();
-        Teste.pedidosShopifyDto = pedidoShopifies;
+        pedidoBo.salvarListaPedidoShopify(pedidosShopifyDto);
+        itemBo.salvarListaItens(itens);
+        pedidoAliexpressBo.salvarListaPedidoAliexpress(pedidosAliexpress);
+        produtoBo.salvarListaProdutos(produtos);
+        rastreamentoBo.salvarListaRastreamento(rastreamentosDto);
     }
 
     private BufferedReader obterBufferReader(UploadedFile arquivo) throws IOException {
@@ -112,9 +121,18 @@ public @Data class OberloCsvControlador implements Serializable {
         PedidoAliexpressDto pedidoAliexpressDto = new PedidoAliexpressDto();
         pedidoAliexpressDto.setIdAliexpress(new BigDecimal(vetorObjeto[12]));
         Calendar data = Calendar.getInstance();
-        data.add(Calendar.DAY_OF_YEAR, 60);
-        pedidoAliexpressDto.setDataLimiteDisputa(data.getTime());
-        pedidoAliexpressDto.setStatusPedidoAliexpress(StatusPedidoAliexpressDto.NORMAL);
+        if("86318966362768".equals(pedidoAliexpressDto.getIdAliexpress().toString())){
+            pedidoAliexpressDto.setDataLimiteDisputa(null);
+        }else if("87021841572768".equals(pedidoAliexpressDto.getIdAliexpress().toString())
+                || "86980097902768".equals(pedidoAliexpressDto.getIdAliexpress().toString())
+                || "87199871312768".equals(pedidoAliexpressDto.getIdAliexpress().toString())) {
+            data.add(Calendar.DAY_OF_YEAR, 2);
+            pedidoAliexpressDto.setDataLimiteDisputa(data.getTime());
+        }else{
+            data.add(Calendar.DAY_OF_YEAR, 60);
+            pedidoAliexpressDto.setDataLimiteDisputa(data.getTime());
+        }
+        pedidoAliexpressDto.setStatusPedidoAliexpress(StatusPedidoAliexpress.NORMAL);
 
         return pedidoAliexpressDto;
     }

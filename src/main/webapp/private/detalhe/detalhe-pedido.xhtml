@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+    <f:metadata>
+        <o:viewParam name="pedido" value="#{detalhaPedidoControlador.pedidoShopifyDto}"/>
+    </f:metadata>
+    <h:form id="formOberlo">
+        <p:growl id="messagens" showDetail="true"/>
+        <p:menubar>
+            <p:menuitem value="Home" url="/home.xhtml"/>
+        </p:menubar>
+        <h:panelGrid columns="2">
+            <f:facet name="header">
+                Dados Cabeçalho Pedido
+            </f:facet>
+            <p:outputLabel value="Numero Pedido:"/>
+            <p:outputLabel value="##{detalhaPedidoControlador.pedidoShopifyDto.numeroPedido}"/>
+            <p:outputLabel value="Data Criação:"/>
+            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.dataFormatada}"/>
+            <p:outputLabel value="Nome Cliente:"/>
+            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.nomeCliente}"/>
+            <p:outputLabel value="Cidade/UF:"/>
+            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.nomeCidadeCliente}/#{detalhaPedidoControlador.pedidoShopifyDto.nomeEstadoCliente}"/>
+        </h:panelGrid>
+        <p:dataTable var="item" value="#{detalhaPedidoControlador.pedidoShopifyDto.itens}">
+            <p:column headerText="Nome Produto">
+                <p:outputLabel value="#{item.produto.nomeProduto}"/>
+            </p:column>
+            <p:column headerText="Variante">
+                <p:outputLabel value="#{item.produto.varianteProduto}"/>
+            </p:column>
+            <p:column headerText="Quantidade">
+                <p:outputLabel value="#{item.quantidadeProduto}"/>
+            </p:column>
+            <p:column headerText="Pedido Aliexpress">
+                <p:outputLabel value="#{item.pedidoAliexpress.idAliexpress}"/>
+            </p:column>
+            <p:column headerText="Cód Rastreamento">
+                <p:outputLabel value="#{item.rastreamento.codigoRastreamento}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>

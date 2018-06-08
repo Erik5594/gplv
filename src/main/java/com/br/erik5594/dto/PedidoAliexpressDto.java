@@ -1,5 +1,6 @@
 package com.br.erik5594.dto;
 
+import com.br.erik5594.model.StatusPedidoAliexpress;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public @Data class PedidoAliexpressDto implements Serializable {
 
     private BigDecimal idAliexpress = BigDecimal.ZERO;
     private Date dataLimiteDisputa;
-    private StatusPedidoAliexpressDto statusPedidoAliexpress;
+    private StatusPedidoAliexpress statusPedidoAliexpress;
 
     @Override
     public boolean equals(Object o) {

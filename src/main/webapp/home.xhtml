@@ -26,12 +26,54 @@
                 </p:submenu>
             </p:submenu>
         </p:menubar>
-        <p:panelGrid rendered="#{not empty homeControlador.pedidosShopifyDto}" columns="2" style="margin-top: 15px">
+        <p:panelGrid columns="2" style="margin-top: 15px">
             <f:facet name="header">
-                Pedidos
+                Pedidos Shopify
             </f:facet>
             <p:outputLabel value="Quantidade: "/>
-            <p:outputLabel value="#{homeControlador.pedidosShopifyDto.size().toString()}"/>
+            <p:outputLabel value="#{homeControlador.quantidadePedidosShopify}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="2" style="margin-top: 15px">
+            <f:facet name="header">
+                Produtos
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.quantidadeProdutos}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="2" style="margin-top: 15px">
+            <f:facet name="header">
+                Rastreamento
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.quantidadeRastreamentos}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="2" style="margin-top: 15px">
+            <f:facet name="header">
+                Itens
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.quantidadeItens}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="2" style="margin-top: 15px">
+            <f:facet name="header">
+                Pedidos Aliexpress
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.quantidadePedidosAliexpress}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="2" style="margin-top: 15px">
+            <f:facet name="header">
+                Pedidos Aliexpress Sem Data Limite
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.quantidadePedidosAliexpressSemDataLimite}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="3" style="margin-top: 15px">
+            <f:facet name="header">
+                Pedidos Aliexpress Vencendo Prazo
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.qtdePedidoAliexpressVencendoPrazo}"/>
         </p:panelGrid>
     </h:form>
 </h:body>
