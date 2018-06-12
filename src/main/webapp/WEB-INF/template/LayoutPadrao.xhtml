@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="titulo">Gerenciador de Pedido Shopify</ui:insert></title>
+        <h:outputStylesheet library="css" name="sistema.css"/>
+    </h:head>
+    <h:body>
+        <header>
+            <div style="float: left">
+                <h:link outcome="/home">
+                    <h:graphicImage library="imagens" name="LogoBranca_250x.png" width="30px"/>
+                </h:link>
+            </div>
+
+            <div style="float: right; margin-right: 110px">
+                <span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+                    Olá usuário!
+                </span>
+                <h:form style="display: inline-block">
+                    <p:menubar styleClass="menu-sistema">
+                        <p:submenu label="Importar">
+                            <p:menuitem value="Pedido Shopify" outcome="/private/importaArquivo/importa-oberlo-csv"/>
+                            <p:menuitem value="Cliente"/>
+                            <p:menuitem value="Produto"/>
+                        </p:submenu>
+                    </p:menubar>
+                </h:form>
+            </div>
+        </header>
+    </h:body>
+    <div id="conteudo">
+        <ui:insert name="corpo"/>
+    </div>
+<p:separator style="margin-top: 20px"/>
+<footer>Sistema para gerir Pedidos do Shopify</footer>
+</html>

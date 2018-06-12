@@ -1,31 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</h:head>
-<h:body>
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+<ui:define name="titulo">Dashboard</ui:define>
+<ui:define name="corpo">
     <h:form>
         <p:growl id="messagens" showDetail="true"/>
-        <p:menubar>
-            <p:submenu label="Importar Arquivo">
-                <p:submenu label="Shopify" >
-                    <p:submenu label="Pedido">
-                        <p:menuitem value="XML" url="#" disabled="true"/>
-                        <p:menuitem value="CSV" url="#" disabled="true"/>
-                    </p:submenu>
-                </p:submenu>
-                <p:submenu label="Oberlo">
-                    <p:submenu label="Pedido">
-                        <p:menuitem value="XML" url="#" disabled="true"/>
-                        <p:menuitem value="CSV" url="/private/importaArquivo/importa-oberlo-csv.xhtml"/>
-                    </p:submenu>
-                </p:submenu>
-            </p:submenu>
-        </p:menubar>
+
         <p:outputLabel value="Deve mostrar aqui pedidos cujo:"/>
         <br/><br/>
         <p:outputLabel value="1-Prazo de abrir disputa Aliexpress está prestes a vencer e ainda não foi entregue"/>
@@ -97,5 +80,5 @@
             <p:outputLabel value="#{homeControlador.qtdePedidoAliexpressVencendoPrazo}"/>
         </p:panelGrid>
     </h:form>
-</h:body>
-</html>
+</ui:define>
+</ui:composition>
