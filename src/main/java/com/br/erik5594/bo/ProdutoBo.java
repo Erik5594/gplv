@@ -3,8 +3,12 @@ package com.br.erik5594.bo;
 import com.br.erik5594.dao.ProdutoDao;
 import com.br.erik5594.dto.ProdutoDto;
 import com.br.erik5594.model.Produto;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +42,57 @@ public class ProdutoBo implements Serializable{
             produtosDto.add(produtoDto);
         }
         return produtosDto;
+    }
+
+    public List<ProdutoDto> getListaDeObjetoDoArquivo(BufferedReader linhasArquivo, String separador) throws IOException {
+        List<ProdutoDto> produtos = new ArrayList<>();
+        String linha = linhasArquivo.readLine();
+        linha = linhasArquivo.readLine();
+        String nomeProduto = null;
+        while (linha != null) {
+            String[] vetorObjeto = linha.split(separador);
+            if(vetorObjeto.length < 5 ){
+                linha = linhasArquivo.readLine();
+                continue;
+            }
+            if(StringUtils.isNotBlank(vetorObjeto[0])){
+                nomeProduto = vetorObjeto[0];
+            }
+            ProdutoDto produtoDto = (ProdutoDto) obterObjetoProduto(vetorObjeto, nomeProduto);
+            if (produtoDto != null && !produtos.contains(produtoDto)) {
+                produtos.add(produtoDto);
+            }
+            linha = linhasArquivo.readLine();
+        }
+        linhasArquivo.close();
+        return produtos;
+    }
+
+    private Object obterObjetoProduto(String[] vetorObjeto, String nomeProduto) {
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setSkuProduto(vetorObjeto[4]);
+        produtoDto.setNomeProduto(nomeProduto);
+        String variante = null;
+        if(StringUtils.isNotBlank(vetorObjeto[1])){
+            variante = vetorObjeto[1];
+        }
+        if(StringUtils.isNotBlank(vetorObjeto[2])){
+            if(StringUtils.isNotBlank(variante)){
+                variante = variante+"/"+vetorObjeto[2];
+            }else{
+                variante = vetorObjeto[2];
+            }
+        }
+        if(StringUtils.isNotBlank(vetorObjeto[3])){
+            if(StringUtils.isNotBlank(variante)){
+                variante=variante+"/"+vetorObjeto[3];
+            }else{
+                variante = vetorObjeto[3];
+            }
+        }
+        produtoDto.setVarianteProduto(variante);
+
+        return produtoDto;
     }
 
 }

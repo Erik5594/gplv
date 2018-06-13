@@ -1,0 +1,34 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="titulo">Importar Produtos Shopify</ui:define>
+    <ui:define name="corpo">
+        <h:form id="formProdutoShopify">
+        <p:growl id="messagens" showDetail="true"/>
+        <p:fileUpload fileUploadListener="#{shopifyProdutoCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
+                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaProduto" />
+
+        <p:dataTable var="produto" value="#{shopifyProdutoCsvControlador.produtos}"
+                     emptyMessage="Nenhum registro" id="tabelaProduto" style="margin-top: 15px"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
+                     currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Produtos
+            </f:facet>
+            <p:column headerText="SKU">
+                <p:outputLabel value="#{produto.skuProduto}"/>
+            </p:column>
+            <p:column headerText="Produto">
+                <p:outputLabel value="#{produto.nomeProduto}"/>
+            </p:column>
+            <p:column headerText="Variante">
+                <p:outputLabel value="#{produto.varianteProduto}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</ui:define>
+</ui:composition>
