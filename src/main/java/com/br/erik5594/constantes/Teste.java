@@ -12,5 +12,6 @@ public class Teste {
     public static List<Rastreamento> rastreamentos;
     public static List<Produto> produtos;
     public static List<PedidoAliexpress> pedidosAliexpress;
+    public static List<Cliente> clientes;
 
 }

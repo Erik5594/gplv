@@ -1,0 +1,37 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="titulo">Importar Clientes Shopify</ui:define>
+    <ui:define name="corpo">
+        <h:form id="formClienteShopify">
+        <p:growl id="messagens" showDetail="true"/>
+        <p:fileUpload fileUploadListener="#{shopifyClienteCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
+                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaCliente" />
+
+        <p:dataTable var="cliente" value="#{shopifyClienteCsvControlador.clientes}"
+                     emptyMessage="Nenhum registro" id="tabelaCliente" style="margin-top: 15px"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
+                     currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Clientes
+            </f:facet>
+            <p:column headerText="Nome">
+                <p:outputLabel value="#{cliente.primeiroNome}"/>
+            </p:column>
+            <p:column headerText="Sobre Nome">
+                <p:outputLabel value="#{cliente.sobreNome}"/>
+            </p:column>
+            <p:column headerText="E-mail">
+                <p:outputLabel value="#{cliente.email}"/>
+            </p:column>
+            <p:column headerText="Telefone">
+                <p:outputLabel value="#{cliente.telefone}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</ui:define>
+</ui:composition>
