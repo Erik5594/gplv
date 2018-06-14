@@ -15,6 +15,7 @@ public class HomeBo implements Serializable{
     private PedidoAliexpressBo pedidoAliexpressBo = new PedidoAliexpressBo();
     private ProdutoBo produtoBo = new ProdutoBo();
     private RastreamentoBo rastreamentoBo = new RastreamentoBo();
+    private ClienteBo clienteBo = new ClienteBo();
 
     public int quantidadePedidosShopify(){
         return pedidoShopifyBo.getTodosPedidosShopify().size();
@@ -34,6 +35,10 @@ public class HomeBo implements Serializable{
 
     public int quantidadeRastreaemnto(){
         return rastreamentoBo.getTodosRastreamentos().size();
+    }
+
+    public int quantidadeClientes(){
+        return clienteBo.getTodosClientes().size();
     }
 
     public int pedidosSemDataLimite(){

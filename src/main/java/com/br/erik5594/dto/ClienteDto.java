@@ -1,5 +1,6 @@
 package com.br.erik5594.dto;
 
+import com.br.erik5594.util.Util;
 import lombok.Data;
 
 import java.util.Objects;
@@ -29,5 +30,13 @@ public @Data class ClienteDto {
     public int hashCode() {
 
         return Objects.hash(super.hashCode(), email);
+    }
+
+    public String getNumeroTelefoneFormatado(){
+        return Util.formatarNumeroTelefone(this.telefone);
+    }
+
+    public String getCpfCnpjFormatado(){
+        return Util.formataCpfCnpj(this.cpf);
     }
 }

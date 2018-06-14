@@ -22,6 +22,7 @@ public @Data class HomeControlador implements Serializable {
     private int quantidadeRastreamentos;
     private int quantidadePedidosAliexpressSemDataLimite;
     private int qtdePedidoAliexpressVencendoPrazo;
+    private int qtdeClientes;
 
     public HomeControlador(){
         quantidadePedidosShopify = homeBo.quantidadePedidosShopify();
@@ -31,5 +32,6 @@ public @Data class HomeControlador implements Serializable {
         quantidadeRastreamentos = homeBo.quantidadeRastreaemnto();
         quantidadePedidosAliexpressSemDataLimite = homeBo.pedidosSemDataLimite();
         qtdePedidoAliexpressVencendoPrazo = homeBo.pedidosVencendoPrazo();
+        qtdeClientes = homeBo.quantidadeClientes();
     }
 }

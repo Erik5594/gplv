@@ -64,17 +64,16 @@ public class ClienteBo implements Serializable{
         while (linha != null) {
             String[] vetorObjeto = linha.split(separador);
             if(vetorObjeto.length >= 3){
-                if((vetorObjeto.length >= 3 && vetorObjeto.length < 12 && StringUtils.isBlank(vetorObjeto[2]))
-                        || (vetorObjeto.length >= 13 && StringUtils.isBlank(vetorObjeto[2]) && StringUtils.isBlank(vetorObjeto[12]))){
-                    linha = linhasArquivo.readLine();
-                    continue;
-                }
                 ClienteDto clienteDto = obterObjetoCliente(vetorObjeto);
-                if (clienteDto != null && !clientesDto.contains(clienteDto)) {
+                if (clienteDto != null
+                        && (StringUtils.isNotBlank(clienteDto.getEmail()) || StringUtils.isNotBlank(clienteDto.getTelefone()))
+                        && !clientesDto.contains(clienteDto)) {
                     clientesDto.add(clienteDto);
                 }
                 linha = linhasArquivo.readLine();
+                continue;
             }
+            linha = linhasArquivo.readLine();
         }
         linhasArquivo.close();
         return clientesDto;
@@ -82,14 +81,14 @@ public class ClienteBo implements Serializable{
 
     private ClienteDto obterObjetoCliente(String[] vetorObjeto) {
         ClienteDto clienteDto = new ClienteDto();
-        clienteDto.setEmail(vetorObjeto[2]);
+        clienteDto.setEmail(vetorObjeto[2].toLowerCase());
         clienteDto.setPrimeiroNome(vetorObjeto[0]);
         clienteDto.setSobreNome(vetorObjeto[1]);
         if(vetorObjeto.length >= 4){
-            clienteDto.setCpf(vetorObjeto[3]);
+            clienteDto.setCpf(vetorObjeto[3].replaceAll("\\D",""));
         }
         if(vetorObjeto.length >= 13){
-            clienteDto.setTelefone(vetorObjeto[12]);
+            clienteDto.setTelefone(vetorObjeto[12].replaceAll("\\D",""));
         }
         if(vetorObjeto.length >= 5){
             clienteDto.setLogradouro(vetorObjeto[4]);
@@ -104,7 +103,7 @@ public class ClienteBo implements Serializable{
             clienteDto.setEstado(vetorObjeto[8]);
         }
         if(vetorObjeto.length >= 12){
-            clienteDto.setCep(vetorObjeto[11]);
+            clienteDto.setCep(vetorObjeto[11].replaceAll("\\D",""));
         }
         return clienteDto;
     }

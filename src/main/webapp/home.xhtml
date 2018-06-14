@@ -79,6 +79,13 @@
             <p:outputLabel value="Quantidade: "/>
             <p:outputLabel value="#{homeControlador.qtdePedidoAliexpressVencendoPrazo}"/>
         </p:panelGrid>
+        <p:panelGrid columns="3" style="margin-top: 15px">
+            <f:facet name="header">
+                Clientes Cadastrados
+            </f:facet>
+            <p:outputLabel value="Quantidade: "/>
+            <p:outputLabel value="#{homeControlador.qtdeClientes}"/>
+        </p:panelGrid>
     </h:form>
 </ui:define>
 </ui:composition>
