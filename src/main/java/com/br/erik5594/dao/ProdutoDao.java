@@ -16,4 +16,14 @@ public class ProdutoDao implements Serializable{
     public List<Produto> getTodosProdutos(){
         return Teste.produtos;
     }
+
+    public Produto buscarProduto(String skuProduto){
+        Produto produto = new Produto();
+        produto.setSkuProduto(skuProduto);
+        int indexProduto = Teste.produtos.indexOf(produto);
+        if(indexProduto < 0){
+            return null;
+        }
+        return Teste.produtos.get(indexProduto);
+    }
 }

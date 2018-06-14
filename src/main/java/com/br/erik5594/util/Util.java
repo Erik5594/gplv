@@ -2,6 +2,10 @@ package com.br.erik5594.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Util {
     public static String formatarNumeroTelefone(String numeroTelefone){
         if(StringUtils.isNotBlank(numeroTelefone)){
@@ -29,5 +33,15 @@ public class Util {
             }
         }
         return cpfCnpj;
+    }
+
+    public static String formatarData(Date data, String pattern){
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(data);
+    }
+
+    public static Date formatarData(String data, String pattern) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.parse(data);
     }
 }

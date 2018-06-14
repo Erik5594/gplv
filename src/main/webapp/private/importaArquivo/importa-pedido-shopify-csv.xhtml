@@ -1,0 +1,40 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="titulo">Importar Pedidos Shopify</ui:define>
+    <ui:define name="corpo">
+        <h:form id="formClienteShopify">
+        <p:growl id="messagens" showDetail="true"/>
+        <p:fileUpload fileUploadListener="#{shopifyPedidoCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
+                      auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaCliente" />
+
+        <p:dataTable var="pedido" value="#{shopifyPedidoCsvControlador.pedidos}"
+                     emptyMessage="Nenhum registro" id="tabelaCliente" style="margin-top: 15px"
+                     rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
+                     currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">
+                Clientes
+            </f:facet>
+            <p:column headerText="Nome">
+                <p:outputLabel value="##{pedido.numeroPedido}"/>
+            </p:column>
+            <p:column headerText="Cliente">
+                <p:outputLabel value="#{pedido.cliente.primeiroNome} #{pedido.cliente.sobreNome}"/>
+            </p:column>
+            <p:column headerText="Data Pedido">
+                <p:outputLabel value="#{pedido.dataFormatada}"/>
+            </p:column>
+            <p:column headerText="Valor (R$)">
+                <p:outputLabel value="#{pedido.valorTotal}"/>
+            </p:column>
+            <p:column headerText="Enviado">
+                <p:outputLabel value="#{pedido.enviado ? 'Sim':'Não'}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</ui:define>
+</ui:composition>

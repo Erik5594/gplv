@@ -23,13 +23,14 @@ public @Data class ClienteDto {
         if(this != null && o == null) return false;
         if(this == null && o != null) return false;
         ClienteDto that = (ClienteDto) o;
-        return Objects.equals(email, that.email);
+        return Objects.equals(email, that.email) &&
+                Objects.equals(telefone, that.telefone);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), email);
+        return Objects.hash(super.hashCode(), email, telefone);
     }
 
     public String getNumeroTelefoneFormatado(){

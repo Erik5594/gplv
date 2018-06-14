@@ -11,7 +11,6 @@ public @Data class ItemDto implements Serializable{
     private PedidoShopifyDto pedidoShopify;
     private ProdutoDto produto;
     private int quantidadeProduto;
-    private RastreamentoDto rastreamento;
     private PedidoAliexpressDto pedidoAliexpress;
 
     @Override

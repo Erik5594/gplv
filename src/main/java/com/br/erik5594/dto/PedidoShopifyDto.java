@@ -1,9 +1,9 @@
 package com.br.erik5594.dto;
 
+import com.br.erik5594.util.Util;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -12,11 +12,11 @@ public @Data class PedidoShopifyDto implements Serializable{
 
     private int numeroPedido;
     private Date dataPedido;
-    private String nomeCliente;
-    private String nomeCidadeCliente;
-    private String nomeEstadoCliente;
-    private String cepCliente;
+    private ClienteDto cliente;
     private List<ItemDto> itens;
+    private float valorTotal;
+    private boolean enviado;
+    private Date dataCancelamento;
 
     @Override
     public boolean equals(Object o) {
@@ -42,7 +42,11 @@ public @Data class PedidoShopifyDto implements Serializable{
 
     public String getDataFormatada(){
         if(dataPedido == null) return null;
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.format(dataPedido);
+        return Util.formatarData(this.dataPedido, "dd/MM/yyyy");
+    }
+
+    public String getDataCancelamentoFormatada(){
+        if(dataCancelamento == null) return null;
+        return Util.formatarData(this.dataCancelamento, "dd/MM/yyyy");
     }
 }

@@ -1,5 +1,6 @@
 package com.br.erik5594.model;
 
+import com.br.erik5594.dto.PedidoAliexpressDto;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,8 +12,7 @@ public @Data class Item implements Serializable{
     private PedidoShopify pedidoShopify;
     private Produto produto;
     private int quantidadeProduto;
-    private Rastreamento rastreamento;
-    private PedidoAliexpress pedidoAliexpress;
+    private PedidoAliexpressDto pedidoAliexpress;
 
     @Override
     public boolean equals(Object o) {

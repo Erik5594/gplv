@@ -1,5 +1,6 @@
 package com.br.erik5594.bo;
 
+import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.dao.ClienteDao;
 import com.br.erik5594.dto.ClienteDto;
 import com.br.erik5594.model.Cliente;
@@ -104,6 +105,32 @@ public class ClienteBo implements Serializable{
         }
         if(vetorObjeto.length >= 12){
             clienteDto.setCep(vetorObjeto[11].replaceAll("\\D",""));
+        }
+        return clienteDto;
+    }
+
+    public ClienteDto buscarCliente(String email, String telefone){
+        Cliente cliente = new Cliente();
+        cliente.setEmail(email);
+        cliente.setTelefone(telefone);
+
+        ClienteDto clienteDto = new ClienteDto();
+        if(StringUtils.isNotBlank(email)){
+            int indexCliente = Teste.clientes.indexOf(cliente);
+            if(indexCliente < 0){
+                return null;
+            }
+            cliente = Teste.clientes.get(indexCliente);
+            clienteDto.setEmail(cliente.getEmail());
+            clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
+            clienteDto.setSobreNome(cliente.getSobreNome());
+            clienteDto.setCpf(cliente.getCpf());
+            clienteDto.setTelefone(cliente.getTelefone());
+            clienteDto.setCep(cliente.getCep());
+            clienteDto.setLogradouro(cliente.getLogradouro());
+            clienteDto.setComplemento(cliente.getComplemento());
+            clienteDto.setCidade(cliente.getCidade());
+            clienteDto.setEstado(cliente.getEstado());
         }
         return clienteDto;
     }

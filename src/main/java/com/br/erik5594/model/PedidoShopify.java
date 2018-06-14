@@ -3,8 +3,6 @@ package com.br.erik5594.model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -13,11 +11,11 @@ public @Data class PedidoShopify implements Serializable{
 
     private int numeroPedido;
     private Date dataPedido;
-    private String nomeCliente;
-    private String nomeCidadeCliente;
-    private String nomeEstadoCliente;
-    private String cepCliente;
+    private Cliente cliente;
     private List<Item> itens;
+    private float valorTotal;
+    private boolean enviado;
+    private Date dataCancelamento;
 
     @Override
     public boolean equals(Object o) {
@@ -39,10 +37,5 @@ public @Data class PedidoShopify implements Serializable{
 
     public void setDataPedido(Date dataPedido){
         this.dataPedido = new Date(dataPedido.getTime());
-    }
-
-    public String getDataFormatada(){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.format(dataPedido);
     }
 }

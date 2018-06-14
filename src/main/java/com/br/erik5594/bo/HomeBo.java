@@ -30,7 +30,7 @@ public class HomeBo implements Serializable{
     }
 
     public int quantidadeItens(){
-        return itemBo.getTodosItens().size();
+        return 0;
     }
 
     public int quantidadeRastreaemnto(){

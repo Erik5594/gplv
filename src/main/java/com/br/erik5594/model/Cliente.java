@@ -23,12 +23,13 @@ public @Data class Cliente implements Serializable{
         if(this != null && o == null) return false;
         if(this == null && o != null) return false;
         Cliente cliente = (Cliente) o;
-        return Objects.equals(email, cliente.email);
+        return Objects.equals(email, cliente.email) &&
+                Objects.equals(telefone, cliente.telefone);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), email);
+        return Objects.hash(super.hashCode(), email, telefone);
     }
 }

@@ -1,5 +1,6 @@
 package com.br.erik5594.bo;
 
+import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.dao.ProdutoDao;
 import com.br.erik5594.dto.ProdutoDto;
 import com.br.erik5594.model.Produto;
@@ -92,6 +93,18 @@ public class ProdutoBo implements Serializable{
         }
         produtoDto.setVarianteProduto(variante);
 
+        return produtoDto;
+    }
+
+    public ProdutoDto buscarProduto(String skuProduto){
+        Produto produto = produtoDao.buscarProduto(skuProduto);
+        if(produto == null){
+            return null;
+        }
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setVarianteProduto(produto.getVarianteProduto());
+        produtoDto.setNomeProduto(produto.getNomeProduto());
+        produtoDto.setSkuProduto(produto.getSkuProduto());
         return produtoDto;
     }
 
