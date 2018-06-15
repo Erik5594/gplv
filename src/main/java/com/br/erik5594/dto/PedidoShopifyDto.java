@@ -2,6 +2,7 @@ package com.br.erik5594.dto;
 
 import com.br.erik5594.util.Util;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -48,5 +49,8 @@ public @Data class PedidoShopifyDto implements Serializable{
     public String getDataCancelamentoFormatada(){
         if(dataCancelamento == null) return null;
         return Util.formatarData(this.dataCancelamento, "dd/MM/yyyy");
+    }
+    public boolean isPedidoCancelado(){
+        return this.dataCancelamento != null;
     }
 }

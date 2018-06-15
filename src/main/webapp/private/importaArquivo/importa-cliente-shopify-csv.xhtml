@@ -8,6 +8,7 @@
     <ui:define name="corpo">
         <h:form id="formClienteShopify">
         <p:growl id="messagens" showDetail="true"/>
+            <h1 style="text-align: center">Importar Clientes</h1>
         <p:fileUpload fileUploadListener="#{shopifyClienteCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
                       auto="true" sizeLimit="5000000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaCliente" />
 

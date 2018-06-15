@@ -8,6 +8,7 @@
     <ui:define name="corpo">
         <h:form id="formClienteShopify">
         <p:growl id="messagens" showDetail="true"/>
+            <h1 style="text-align: center">Importar Pedidos</h1>
         <p:fileUpload fileUploadListener="#{shopifyPedidoCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
                       auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaCliente" />
 
@@ -33,6 +34,11 @@
             </p:column>
             <p:column headerText="Enviado">
                 <p:outputLabel value="#{pedido.enviado ? 'Sim':'Não'}"/>
+            </p:column>
+            <p:column>
+                <p:button value="Detalhe" outcome="/private/detalhe/detalhe-pedido">
+                    <f:param name="pedido" value="#{pedido.numeroPedido}"/>
+                </p:button>
             </p:column>
         </p:dataTable>
     </h:form>

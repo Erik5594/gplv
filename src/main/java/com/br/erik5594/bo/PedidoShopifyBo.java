@@ -34,6 +34,7 @@ public class PedidoShopifyBo implements Serializable{
             pedido.setDataPedido(pedidoDto.getDataPedido());
             pedido.setEnviado(pedidoDto.isEnviado());
             pedido.setValorTotal(pedidoDto.getValorTotal());
+            pedido.setDataCancelamento(pedidoDto.getDataCancelamento());
 
             ClienteDto clienteDto = pedidoDto.getCliente();
             if(clienteDto != null) {
@@ -90,35 +91,50 @@ public class PedidoShopifyBo implements Serializable{
             pedidoDto.setDataPedido(pedido.getDataPedido());
             pedidoDto.setEnviado(pedido.isEnviado());
             pedidoDto.setValorTotal(pedido.getValorTotal());
+            pedidoDto.setDataCancelamento(pedido.getDataCancelamento());
 
-            ClienteDto clienteDto = pedidoDto.getCliente();
-            Cliente cliente = new Cliente();
-            clienteDto.setEmail(cliente.getEmail());
-            clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
-            clienteDto.setSobreNome(cliente.getSobreNome());
-            clienteDto.setCpf(cliente.getCpf());
-            clienteDto.setTelefone(cliente.getTelefone());
-            clienteDto.setLogradouro(cliente.getLogradouro());
-            clienteDto.setComplemento(cliente.getComplemento());
-            clienteDto.setCidade(cliente.getCidade());
-            clienteDto.setEstado(cliente.getEstado());
-            clienteDto.setCep(cliente.getCep());
-            pedidoDto.setCliente(clienteDto);
-
-            List<ItemDto> itens = new ArrayList<>();
-            for(Item item : pedido.getItens()){
-                ItemDto itemDto = new ItemDto();
-                itemDto.setPedidoShopify(pedidoDto);
-                itemDto.setQuantidadeProduto(item.getQuantidadeProduto());
-
-                ProdutoDto produtoDto = new ProdutoDto();
-                produtoDto.setSkuProduto(item.getProduto().getSkuProduto());
-                produtoDto.setVarianteProduto(item.getProduto().getVarianteProduto());
-                produtoDto.setNomeProduto(item.getProduto().getNomeProduto());
-                itemDto.setProduto(produtoDto);
-                itens.add(itemDto);
+            Cliente cliente = pedido.getCliente();
+            if(cliente != null) {
+                ClienteDto clienteDto = new ClienteDto();
+                clienteDto.setEmail(cliente.getEmail());
+                clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
+                clienteDto.setSobreNome(cliente.getSobreNome());
+                clienteDto.setCpf(cliente.getCpf());
+                clienteDto.setTelefone(cliente.getTelefone());
+                clienteDto.setLogradouro(cliente.getLogradouro());
+                clienteDto.setComplemento(cliente.getComplemento());
+                clienteDto.setCidade(cliente.getCidade());
+                clienteDto.setEstado(cliente.getEstado());
+                clienteDto.setCep(cliente.getCep());
+                pedidoDto.setCliente(clienteDto);
+            }else{
+                pedidoDto.setCliente(null);
             }
-            pedidoDto.setItens(itens);
+
+            List<ItemDto> itensDto = new ArrayList<>();
+            List<Item> itens = pedido.getItens();
+            if(itens != null && !itens.isEmpty()){
+                for(Item item : itens) {
+                    ItemDto itemDto = new ItemDto();
+                    itemDto.setPedidoShopify(pedidoDto);
+                    itemDto.setQuantidadeProduto(item.getQuantidadeProduto());
+
+                    Produto produto = item.getProduto();
+                    if (produto != null) {
+                        ProdutoDto produtoDto = new ProdutoDto();
+                        produtoDto.setSkuProduto(produto.getSkuProduto());
+                        produtoDto.setVarianteProduto(produto.getVarianteProduto());
+                        produtoDto.setNomeProduto(produto.getNomeProduto());
+                        itemDto.setProduto(produtoDto);
+                    } else {
+                        itemDto.setProduto(null);
+                    }
+                    itensDto.add(itemDto);
+                }
+            }else{
+                itensDto = null;
+            }
+            pedidoDto.setItens(itensDto);
 
 
             pedidosShopifyDto.add(pedidoDto);
@@ -136,8 +152,6 @@ public class PedidoShopifyBo implements Serializable{
                     break;
                 }
             }
-            List<ItemDto> itens = itemBo.getListaItensByPedido(pedidoRetorno);
-            pedidoRetorno.setItens(itens);
         }
         return pedidoRetorno;
     }
@@ -174,7 +188,7 @@ public class PedidoShopifyBo implements Serializable{
         ClienteDto clienteDto;
         pedidoDto.setNumeroPedido(Integer.parseInt(vetorObjeto[0].replaceAll("\\D","")));
         pedidoDto.setDataPedido(Util.formatarData(vetorObjeto[4].substring(0,10),"yyyy-MM-dd"));
-        pedidoDto.setValorTotal(Float.parseFloat(vetorObjeto[3]));
+        pedidoDto.setValorTotal(StringUtils.isBlank(vetorObjeto[3]) ? 0f:Float.parseFloat(vetorObjeto[3]));
         pedidoDto.setEnviado("fulfilled".equals(vetorObjeto[2]));
         if(vetorObjeto.length >= 8){
             clienteDto = clienteBo.buscarCliente(vetorObjeto[1].toLowerCase(), vetorObjeto[7].replaceAll("\\D",""));

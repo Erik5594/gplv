@@ -19,18 +19,9 @@ public class ClienteBo implements Serializable{
     public boolean salvarListaClientes(List<ClienteDto> clientesDto){
         List<Cliente> clientes = new ArrayList<>();
         for(ClienteDto clienteDto : clientesDto){
-            Cliente cliente = new Cliente();
-            cliente.setEmail(clienteDto.getEmail());
-            cliente.setPrimeiroNome(clienteDto.getPrimeiroNome());
-            cliente.setSobreNome(clienteDto.getSobreNome());
-            cliente.setCpf(clienteDto.getCpf());
-            cliente.setTelefone(clienteDto.getTelefone());
-            cliente.setLogradouro(clienteDto.getLogradouro());
-            cliente.setComplemento(clienteDto.getComplemento());
-            cliente.setCidade(clienteDto.getCidade());
-            cliente.setEstado(clienteDto.getEstado());
-            cliente.setCep(clienteDto.getCep());
-            clientes.add(cliente);
+            if(clienteDto != null){
+                clientes.add(castClienteDtoToCliente(clienteDto));
+            }
         }
         return clienteDao.salvarListaClientes(clientes);
     }
@@ -42,18 +33,9 @@ public class ClienteBo implements Serializable{
             return clientesDto;
         }
         for(Cliente cliente : clientes){
-            ClienteDto clienteDto = new ClienteDto();
-            clienteDto.setEmail(cliente.getEmail());
-            clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
-            clienteDto.setSobreNome(cliente.getSobreNome());
-            clienteDto.setCpf(cliente.getCpf());
-            clienteDto.setTelefone(cliente.getTelefone());
-            clienteDto.setLogradouro(cliente.getLogradouro());
-            clienteDto.setComplemento(cliente.getComplemento());
-            clienteDto.setCidade(cliente.getCidade());
-            clienteDto.setEstado(cliente.getEstado());
-            clienteDto.setCep(cliente.getCep());
-            clientesDto.add(clienteDto);
+            if(cliente != null){
+                clientesDto.add(castClienteToClienteDto(cliente));
+            }
         }
         return clientesDto;
     }
@@ -110,29 +92,49 @@ public class ClienteBo implements Serializable{
     }
 
     public ClienteDto buscarCliente(String email, String telefone){
-        Cliente cliente = new Cliente();
-        cliente.setEmail(email);
-        cliente.setTelefone(telefone);
-
-        ClienteDto clienteDto = new ClienteDto();
-        if(StringUtils.isNotBlank(email)){
-            int indexCliente = Teste.clientes.indexOf(cliente);
-            if(indexCliente < 0){
-                return null;
+        if(StringUtils.isNotBlank(email) || StringUtils.isNotBlank(telefone)){
+            for(Cliente cliente : Teste.clientes){
+                if(StringUtils.isNotBlank(email) && email.equals(cliente.getEmail())){
+                    return castClienteToClienteDto(cliente);
+                }else if(telefone.equals(cliente.getTelefone())
+                        || (StringUtils.isNotBlank(cliente.getTelefone())
+                        && cliente.getTelefone().startsWith("55")
+                        && cliente.getTelefone().contains(telefone))){
+                    return castClienteToClienteDto(cliente);
+                }
             }
-            cliente = Teste.clientes.get(indexCliente);
-            clienteDto.setEmail(cliente.getEmail());
-            clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
-            clienteDto.setSobreNome(cliente.getSobreNome());
-            clienteDto.setCpf(cliente.getCpf());
-            clienteDto.setTelefone(cliente.getTelefone());
-            clienteDto.setCep(cliente.getCep());
-            clienteDto.setLogradouro(cliente.getLogradouro());
-            clienteDto.setComplemento(cliente.getComplemento());
-            clienteDto.setCidade(cliente.getCidade());
-            clienteDto.setEstado(cliente.getEstado());
         }
+        return null;
+    }
+
+    private ClienteDto castClienteToClienteDto(Cliente cliente){
+        ClienteDto clienteDto = new ClienteDto();
+        clienteDto.setEmail(cliente.getEmail());
+        clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
+        clienteDto.setSobreNome(cliente.getSobreNome());
+        clienteDto.setCpf(cliente.getCpf());
+        clienteDto.setTelefone(cliente.getTelefone());
+        clienteDto.setCep(cliente.getCep());
+        clienteDto.setLogradouro(cliente.getLogradouro());
+        clienteDto.setComplemento(cliente.getComplemento());
+        clienteDto.setCidade(cliente.getCidade());
+        clienteDto.setEstado(cliente.getEstado());
         return clienteDto;
+    }
+
+    private Cliente castClienteDtoToCliente(ClienteDto clienteDto){
+        Cliente cliente = new Cliente();
+        cliente.setEmail(clienteDto.getEmail());
+        cliente.setPrimeiroNome(clienteDto.getPrimeiroNome());
+        cliente.setSobreNome(clienteDto.getSobreNome());
+        cliente.setCpf(clienteDto.getCpf());
+        cliente.setTelefone(clienteDto.getTelefone());
+        cliente.setLogradouro(clienteDto.getLogradouro());
+        cliente.setComplemento(clienteDto.getComplemento());
+        cliente.setCidade(clienteDto.getCidade());
+        cliente.setEstado(clienteDto.getEstado());
+        cliente.setCep(clienteDto.getCep());
+        return cliente;
     }
 
 }
