@@ -2,7 +2,6 @@ package com.br.erik5594.dto;
 
 import com.br.erik5594.util.Util;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +11,7 @@ import java.util.Objects;
 public @Data class PedidoShopifyDto implements Serializable{
 
     private int numeroPedido;
+    private String idPedido;
     private Date dataPedido;
     private ClienteDto cliente;
     private List<ItemDto> itens;
@@ -52,5 +52,9 @@ public @Data class PedidoShopifyDto implements Serializable{
     }
     public boolean isPedidoCancelado(){
         return this.dataCancelamento != null;
+    }
+
+    public String getLinkPedidoShopify(){
+        return "https://poison-dress.myshopify.com/admin/orders/"+idPedido;
     }
 }

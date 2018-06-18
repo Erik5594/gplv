@@ -10,6 +10,7 @@ import java.util.Objects;
 public @Data class PedidoShopify implements Serializable{
 
     private int numeroPedido;
+    private String idPedido;
     private Date dataPedido;
     private Cliente cliente;
     private List<Item> itens;

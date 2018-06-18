@@ -12,41 +12,38 @@
     </f:metadata>
     <h:form id="formOberlo">
         <p:growl id="messagens" showDetail="true"/>
-        <h:panelGrid columns="2">
-            <f:facet name="header">
-                Dados Pedido
-            </f:facet>
-            <p:outputLabel value="Numero Pedido:"/>
-            <p:column>
-                <p:outputLabel value="##{detalhaPedidoControlador.pedidoShopifyDto.numeroPedido}"/>
+            <p:panel header="Dados Pedido">
                 <p:outputLabel rendered="#{detalhaPedidoControlador.pedidoShopifyDto.pedidoCancelado}" style="color: brown"
                                value=" Pedido Cancelado dia #{detalhaPedidoControlador.pedidoShopifyDto.dataCancelamentoFormatada}"/>
-            </p:column>
-            <p:outputLabel value="Data Criação:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.dataFormatada}"/>
-            <p:outputLabel value="Pedido Enviado:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.enviado ? 'Sim':'Não'}"/>
-            <p:outputLabel value="Valor Total (R$):"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.valorTotal}"/>
-        </h:panelGrid>
-
-        <h:panelGrid columns="2" style="margin-top: 15px" rendered="#{detalhaPedidoControlador.pedidoShopifyDto.cliente != null}">
-            <f:facet name="header">
-                Dados Cliente
-            </f:facet>
-            <p:outputLabel value="Nome Cliente:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.primeiroNome} #{detalhaPedidoControlador.pedidoShopifyDto.cliente.sobreNome}"/>
-            <p:outputLabel value="E-mail:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.email}"/>
-            <p:outputLabel value="Telefone:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.telefone}"/>
-            <p:outputLabel value="Cidade:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.cidade}"/>
-            <p:outputLabel value="Estado:"/>
-            <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.estado}"/>
-        </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Pedido:"/>
+                    <p:link href="#{detalhaPedidoControlador.pedidoShopifyDto.linkPedidoShopify}"
+                            value="##{detalhaPedidoControlador.pedidoShopifyDto.numeroPedido}" target="_blank"/>
+                    <p:outputLabel value="Data Criação:"/>
+                    <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.dataFormatada}"/>
+                    <p:outputLabel value="Enviado:"/>
+                    <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.enviado ? 'Sim':'Não'}"/>
+                    <p:outputLabel value="Valor Total (R$):"/>
+                    <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.valorTotal}"/>
+                </h:panelGrid>
+                <p:panel style="margin-top: 15px" >
+                    <h:panelGrid columns="2" rendered="#{detalhaPedidoControlador.pedidoShopifyDto.cliente != null}">
+                        <p:outputLabel value="Nome:"/>
+                        <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.primeiroNome} #{detalhaPedidoControlador.pedidoShopifyDto.cliente.sobreNome}"/>
+                        <p:outputLabel value="E-mail:"/>
+                        <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.email}"/>
+                        <p:outputLabel value="Telefone:"/>
+                        <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.telefone}"/>
+                        <p:outputLabel value="Endereço:"/>
+                        <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.cidade}/#{detalhaPedidoControlador.pedidoShopifyDto.cliente.estado}"/>
+                    </h:panelGrid>
+                </p:panel>
+            </p:panel>
         <p:dataTable var="item" value="#{detalhaPedidoControlador.pedidoShopifyDto.itens}"
-                    emptyMessage="Nenhum Item!">
+                    emptyMessage="Nenhum Item!" style="margin-top: 15px">
+            <f:facet name="header">
+                Itens Pedido
+            </f:facet>
             <p:column headerText="Produto">
                 <p:outputLabel value="#{item.produto != null ? item.produto.nomeProduto:''}"/>
             </p:column>
@@ -55,6 +52,11 @@
             </p:column>
             <p:column headerText="Quantidade">
                 <p:outputLabel value="#{item.quantidadeProduto}"/>
+            </p:column>
+            <p:column headerText="Pedido Aliexpress" rendered="#{item.pedidoAliexpress != null}">
+                <p:button value="#{item.pedidoAliexpress.idAliexpress.toString()}" outcome="/private/detalhe/detalhe-pedido-aliexpress">
+                    <f:param name="pedidoAliexpress" value="#{item.pedidoAliexpress.idAliexpress}"/>
+                </p:button>
             </p:column>
         </p:dataTable>
     </h:form>

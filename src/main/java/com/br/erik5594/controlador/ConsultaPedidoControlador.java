@@ -6,7 +6,9 @@ import com.br.erik5594.model.PedidoShopify;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +26,13 @@ public @Data class ConsultaPedidoControlador implements Serializable{
             pedidosShopifyDto = new ArrayList<>();
             int nrmPedido = Integer.parseInt(numeroPedido.replaceAll("\\D",""));
             PedidoShopifyDto pedido = pedidoShopifyBo.getPedidoShopifyByNumeroPedido(nrmPedido);
-            pedidosShopifyDto.add(pedido);
+            if(pedido == null){
+                pedidosShopifyDto = null;
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Consulta Pedido:", "Nenhum pedido encontrado!");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }else{
+                pedidosShopifyDto.add(pedido);
+            }
         }
     }
 

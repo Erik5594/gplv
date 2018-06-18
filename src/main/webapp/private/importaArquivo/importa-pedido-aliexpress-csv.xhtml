@@ -1,0 +1,16 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="titulo">Importar Pedidos Aliexpress</ui:define>
+    <ui:define name="corpo">
+        <h:form id="formPedidoAliexpress">
+        <p:growl id="messagens" showDetail="true"/>
+            <h1 style="text-align: center">Importar Pedidos Aliexpress</h1>
+        <p:fileUpload fileUploadListener="#{aliexpressPedidoCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
+                      auto="true" sizeLimit="5000000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens" />
+    </h:form>
+</ui:define>
+</ui:composition>

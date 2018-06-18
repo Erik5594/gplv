@@ -12,6 +12,7 @@ public @Data class PedidoAliexpress implements Serializable {
     private BigDecimal idAliexpress = BigDecimal.ZERO;
     private Date dataLimiteDisputa;
     private StatusPedidoAliexpress statusPedidoAliexpress;
+    private Rastreamento rastreamento;
 
     @Override
     public boolean equals(Object o) {

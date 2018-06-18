@@ -1,14 +1,8 @@
 package com.br.erik5594.bo;
 
 import com.br.erik5594.dao.PedidoShopifyDao;
-import com.br.erik5594.dto.ClienteDto;
-import com.br.erik5594.dto.ItemDto;
-import com.br.erik5594.dto.PedidoShopifyDto;
-import com.br.erik5594.dto.ProdutoDto;
-import com.br.erik5594.model.Cliente;
-import com.br.erik5594.model.Item;
-import com.br.erik5594.model.PedidoShopify;
-import com.br.erik5594.model.Produto;
+import com.br.erik5594.dto.*;
+import com.br.erik5594.model.*;
 import com.br.erik5594.util.Util;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,6 +25,7 @@ public class PedidoShopifyBo implements Serializable{
         for(PedidoShopifyDto pedidoDto : pedidosShopifyDto){
             PedidoShopify pedido = new PedidoShopify();
             pedido.setNumeroPedido(pedidoDto.getNumeroPedido());
+            pedido.setIdPedido(pedidoDto.getIdPedido());
             pedido.setDataPedido(pedidoDto.getDataPedido());
             pedido.setEnviado(pedidoDto.isEnviado());
             pedido.setValorTotal(pedidoDto.getValorTotal());
@@ -88,6 +83,7 @@ public class PedidoShopifyBo implements Serializable{
         for(PedidoShopify pedido : pedidosShopify){
             PedidoShopifyDto pedidoDto = new PedidoShopifyDto();
             pedidoDto.setNumeroPedido(pedido.getNumeroPedido());
+            pedidoDto.setIdPedido(pedido.getIdPedido());
             pedidoDto.setDataPedido(pedido.getDataPedido());
             pedidoDto.setEnviado(pedido.isEnviado());
             pedidoDto.setValorTotal(pedido.getValorTotal());
@@ -129,6 +125,26 @@ public class PedidoShopifyBo implements Serializable{
                     } else {
                         itemDto.setProduto(null);
                     }
+                    PedidoAliexpress pedidoAliexpress = item.getPedidoAliexpress();
+                    if(pedidoAliexpress != null){
+                        PedidoAliexpressDto pedidoAliexpressDto = new PedidoAliexpressDto();
+                        pedidoAliexpressDto.setIdAliexpress(pedidoAliexpress.getIdAliexpress());
+                        pedidoAliexpressDto.setDataLimiteDisputa(pedidoAliexpress.getDataLimiteDisputa());
+                        pedidoAliexpressDto.setStatusPedidoAliexpress(pedidoAliexpress.getStatusPedidoAliexpress());
+
+                        Rastreamento rastreamento = pedidoAliexpress.getRastreamento();
+                        if(rastreamento != null){
+                            RastreamentoDto rastreamentoDto = new RastreamentoDto();
+                            rastreamentoDto.setDataUltimaAtualizacao(rastreamento.getDataUltimaAtualizacao());
+                            rastreamentoDto.setCodigoRastreamento(rastreamento.getCodigoRastreamento());
+                            pedidoAliexpressDto.setRastreamento(rastreamentoDto);
+                        }else{
+                            pedidoAliexpressDto.setRastreamento(null);
+                        }
+                        itemDto.setPedidoAliexpress(pedidoAliexpressDto);
+                    }else{
+                        itemDto.setPedidoAliexpress(null);
+                    }
                     itensDto.add(itemDto);
                 }
             }else{
@@ -164,7 +180,7 @@ public class PedidoShopifyBo implements Serializable{
         PedidoShopifyDto pedido = new PedidoShopifyDto();
         while (linha != null) {
             String[] vetorObjeto = linha.split(separador);
-            if(vetorObjeto.length >= 21){
+            if(vetorObjeto.length >= 56){
                 if(numeroPedido != Integer.parseInt(vetorObjeto[0].replaceAll("\\D",""))) {
                     pedido = obterObjetoPedido(vetorObjeto);
                     numeroPedido = pedido.getNumeroPedido();
@@ -190,6 +206,7 @@ public class PedidoShopifyBo implements Serializable{
         pedidoDto.setDataPedido(Util.formatarData(vetorObjeto[15].substring(0,10),"yyyy-MM-dd"));
         pedidoDto.setValorTotal(StringUtils.isBlank(vetorObjeto[11]) ? 0f:Float.parseFloat(vetorObjeto[11]));
         pedidoDto.setEnviado("fulfilled".equals(vetorObjeto[4]));
+        pedidoDto.setIdPedido(vetorObjeto[55]);
         if(vetorObjeto.length >= 8){
             clienteDto = clienteBo.buscarCliente(vetorObjeto[1].toLowerCase(), vetorObjeto[33].replaceAll("\\D",""));
         }else{
@@ -212,4 +229,22 @@ public class PedidoShopifyBo implements Serializable{
         itemDto.setPedidoShopify(pedido);
         return itemDto;
     }
+
+    public boolean vincularPedidoAliexpress(int numeroPedidoShopify, String skuProduto, PedidoAliexpressDto pedidoAliexpressDto){
+        PedidoAliexpress pedidoAliexpress = new PedidoAliexpress();
+        pedidoAliexpress.setStatusPedidoAliexpress(pedidoAliexpressDto.getStatusPedidoAliexpress());
+        pedidoAliexpress.setIdAliexpress(pedidoAliexpressDto.getIdAliexpress());
+        pedidoAliexpress.setDataLimiteDisputa(pedidoAliexpressDto.getDataLimiteDisputa());
+
+        Rastreamento rastreamento = new Rastreamento();
+        rastreamento.setUrlImagemUltimoStatus(pedidoAliexpressDto.getRastreamento().getUrlImagemUltimoStatus());
+        rastreamento.setReclamacaoCorreios(null);
+        rastreamento.setEventos(null);
+        rastreamento.setDataUltimaAtualizacao(pedidoAliexpressDto.getRastreamento().getDataUltimaAtualizacao());
+        rastreamento.setCodigoRastreamento(pedidoAliexpressDto.getRastreamento().getCodigoRastreamento());
+        pedidoAliexpress.setRastreamento(rastreamento);
+
+        return pedidoShopifyDao.vincularPedidoAliexpress(numeroPedidoShopify, skuProduto, pedidoAliexpress);
+    }
+
 }
