@@ -164,7 +164,7 @@ public class PedidoShopifyBo implements Serializable{
         PedidoShopifyDto pedido = new PedidoShopifyDto();
         while (linha != null) {
             String[] vetorObjeto = linha.split(separador);
-            if(vetorObjeto.length >= 7){
+            if(vetorObjeto.length >= 21){
                 if(numeroPedido != Integer.parseInt(vetorObjeto[0].replaceAll("\\D",""))) {
                     pedido = obterObjetoPedido(vetorObjeto);
                     numeroPedido = pedido.getNumeroPedido();
@@ -187,19 +187,19 @@ public class PedidoShopifyBo implements Serializable{
         PedidoShopifyDto pedidoDto = new PedidoShopifyDto();
         ClienteDto clienteDto;
         pedidoDto.setNumeroPedido(Integer.parseInt(vetorObjeto[0].replaceAll("\\D","")));
-        pedidoDto.setDataPedido(Util.formatarData(vetorObjeto[4].substring(0,10),"yyyy-MM-dd"));
-        pedidoDto.setValorTotal(StringUtils.isBlank(vetorObjeto[3]) ? 0f:Float.parseFloat(vetorObjeto[3]));
-        pedidoDto.setEnviado("fulfilled".equals(vetorObjeto[2]));
+        pedidoDto.setDataPedido(Util.formatarData(vetorObjeto[15].substring(0,10),"yyyy-MM-dd"));
+        pedidoDto.setValorTotal(StringUtils.isBlank(vetorObjeto[11]) ? 0f:Float.parseFloat(vetorObjeto[11]));
+        pedidoDto.setEnviado("fulfilled".equals(vetorObjeto[4]));
         if(vetorObjeto.length >= 8){
-            clienteDto = clienteBo.buscarCliente(vetorObjeto[1].toLowerCase(), vetorObjeto[7].replaceAll("\\D",""));
+            clienteDto = clienteBo.buscarCliente(vetorObjeto[1].toLowerCase(), vetorObjeto[33].replaceAll("\\D",""));
         }else{
             clienteDto = clienteBo.buscarCliente(vetorObjeto[1].toLowerCase(), null);
         }
         pedidoDto.setCliente(clienteDto);
 
-        if(vetorObjeto.length >= 9){
-            if(StringUtils.isNotBlank(vetorObjeto[8]) && vetorObjeto[8].length() > 10){
-                pedidoDto.setDataCancelamento(Util.formatarData(vetorObjeto[8].substring(0,10),"yyyy-MM-dd"));
+        if(vetorObjeto.length >= 47){
+            if(StringUtils.isNotBlank(vetorObjeto[46]) && vetorObjeto[46].length() > 10){
+                pedidoDto.setDataCancelamento(Util.formatarData(vetorObjeto[46].substring(0,10),"yyyy-MM-dd"));
             }
         }
         return pedidoDto;
@@ -207,8 +207,8 @@ public class PedidoShopifyBo implements Serializable{
 
     private ItemDto obterObjetoItem(String[] vetorObjeto, PedidoShopifyDto pedido) throws ParseException {
         ItemDto itemDto = new ItemDto();
-        itemDto.setQuantidadeProduto(Integer.parseInt(vetorObjeto[5]));
-        itemDto.setProduto(produtoBo.buscarProduto(vetorObjeto[6]));
+        itemDto.setQuantidadeProduto(Integer.parseInt(vetorObjeto[16]));
+        itemDto.setProduto(produtoBo.buscarProduto(vetorObjeto[20]));
         itemDto.setPedidoShopify(pedido);
         return itemDto;
     }

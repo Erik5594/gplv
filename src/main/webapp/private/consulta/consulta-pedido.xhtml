@@ -3,24 +3,28 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-    <ui:define name="titulo">Importar Pedidos Shopify</ui:define>
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+    <ui:define name="titulo">Consultar Pedidos</ui:define>
     <ui:define name="corpo">
-        <h:form id="formClienteShopify">
+    <h:form id="formConsultaPedido">
         <p:growl id="messagens" showDetail="true"/>
-            <h1 style="text-align: center">Importar Pedidos</h1>
-        <p:fileUpload fileUploadListener="#{shopifyPedidoCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
-                      auto="true" sizeLimit="5000000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaCliente" />
+        <h:panelGrid columns="3">
+            <p:outputLabel value="Numero Pedido:"/>
+            <p:inputText value="#{consultaPedidoControlador.numeroPedido}" id="numeroPedido"/>
+            <p:commandButton value="Buscar" actionListener="#{consultaPedidoControlador.buscarPedido()}"
+            process="@this numeroPedido" update="formConsultaPedido"/>
+        </h:panelGrid>
 
-        <p:dataTable var="pedido" value="#{shopifyPedidoCsvControlador.pedidos}"
-                     emptyMessage="Nenhum registro" id="tabelaCliente" style="margin-top: 15px"
+        <p:dataTable var="pedido" value="#{consultaPedidoControlador.pedidosShopifyDto}"
+                     emptyMessage="Nenhum registro" id="tabelaPedidos" style="margin-top: 15px"
                      rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                      currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
             <f:facet name="header">
-                Clientes
+                Pedidos
             </f:facet>
-            <p:column headerText="Nome">
+            <p:column headerText="Número">
                 <p:outputLabel value="##{pedido.numeroPedido}"/>
             </p:column>
             <p:column headerText="Cliente">
@@ -42,5 +46,5 @@
             </p:column>
         </p:dataTable>
     </h:form>
-</ui:define>
+    </ui:define>
 </ui:composition>

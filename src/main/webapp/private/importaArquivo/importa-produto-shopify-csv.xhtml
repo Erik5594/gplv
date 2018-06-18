@@ -10,7 +10,7 @@
         <p:growl id="messagens" showDetail="true"/>
             <h1 style="text-align: center">Importar Produtos</h1>
         <p:fileUpload fileUploadListener="#{shopifyProdutoCsvControlador.upload}" mode="advanced" label="Selecionar Arquivo"
-                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaProduto" />
+                      auto="true" sizeLimit="5000000" allowTypes="/(\.|\/)(csv|txt)$/" update="messagens tabelaProduto" />
 
         <p:dataTable var="produto" value="#{shopifyProdutoCsvControlador.produtos}"
                      emptyMessage="Nenhum registro" id="tabelaProduto" style="margin-top: 15px"
