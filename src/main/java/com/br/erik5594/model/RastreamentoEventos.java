@@ -13,6 +13,7 @@ public @Data class RastreamentoEventos implements Serializable{
     private Date dataEvento;
     private String localEvento;
     private String mensagemEvento;
+    private StatusPedidoCorreios status;
 
     @Override
     public boolean equals(Object o) {

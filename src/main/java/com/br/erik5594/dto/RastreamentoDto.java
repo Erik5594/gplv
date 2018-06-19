@@ -1,5 +1,6 @@
 package com.br.erik5594.dto;
 
+import com.br.erik5594.model.StatusPedidoCorreios;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +14,8 @@ public @Data class RastreamentoDto implements Serializable{
     private String codigoRastreamento;
     private String urlImagemUltimoStatus;
     private Date dataUltimaAtualizacao;
+    private boolean entregue;
+    private StatusPedidoCorreios status;
     private ReclamacaoCorreiosDto reclamacaoCorreios;
     private List<RastreamentoEventoDto> eventos;
 

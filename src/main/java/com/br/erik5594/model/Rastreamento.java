@@ -12,6 +12,8 @@ public @Data class Rastreamento implements Serializable{
     private String codigoRastreamento;
     private String urlImagemUltimoStatus;
     private Date dataUltimaAtualizacao;
+    private boolean entregue;
+    private StatusPedidoCorreios status;
     private ReclamacaoCorreios reclamacaoCorreios;
     private List<RastreamentoEventos> eventos;
 

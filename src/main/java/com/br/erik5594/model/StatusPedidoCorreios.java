@@ -1,0 +1,5 @@
+package com.br.erik5594.model;
+
+public enum StatusPedidoCorreios {
+    INDEFINIDO, CORREIOS, FISCALIZACAO, DEVOLVIDO, POSTADO, PENDENTE, AGUARDANDO_RETIRADA, ENTREGUE, ATRASADO;
+}
