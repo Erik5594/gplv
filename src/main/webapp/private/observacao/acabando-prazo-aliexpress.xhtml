@@ -10,7 +10,7 @@
         <h:form id="formAcabandoPrazoAliexpress">
             <p:growl id="messagens" showDetail="true"/>
             <h1>Pedidos com a data limite encerrando</h1>
-            <p:dataTable var="pedidoAliexpress" value="#{consultaPedidoControlador.pedidosShopifyDto}"
+            <p:dataTable var="pedidoAliexpress" value="#{aliexpressPedidoDataLimiteControlador.pedidosAliexpress}"
                          emptyMessage="Nenhum registro" id="tabelaPedidosAliexpress" style="margin-top: 15px"
                          rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                          currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
@@ -19,13 +19,13 @@
                     Pedidos Aliexpress
                 </f:facet>
                 <p:column headerText="Número Shopify">
-                    <p:outputLabel value="##{pedidoAliexpress.numeroPedido}"/>
+                    <p:outputLabel value="##{pedidoAliexpress.pedidoShopifyDto.numeroPedido}"/>
                 </p:column>
                 <p:column headerText="Número Pedido Aliexpress">
-                    <p:outputLabel value="#{pedidoAliexpress.cliente.primeiroNome} #{pedidoAliexpress.cliente.sobreNome}"/>
+                    <p:outputLabel value="#{pedidoAliexpress.idAliexpress}"/>
                 </p:column>
                 <p:column headerText="Data Limite Aliexpress">
-                    <p:outputLabel value="#{pedidoAliexpress.dataFormatada}"/>
+                    <p:outputLabel value="#{pedidoAliexpress.dataLimiteDisputaFormatada}"/>
                 </p:column>
             </p:dataTable>
         </h:form>

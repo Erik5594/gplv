@@ -3,6 +3,7 @@ package com.br.erik5594.bo;
 import com.br.erik5594.dao.ProdutoDao;
 import com.br.erik5594.dto.ProdutoDto;
 import com.br.erik5594.model.Produto;
+import com.br.erik5594.util.cast.ProdutoCast;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
@@ -18,11 +19,7 @@ public class ProdutoBo implements Serializable{
     public boolean salvarListaProdutos(List<ProdutoDto> produtosDto){
         List<Produto> produtos = new ArrayList<>();
         for(ProdutoDto produtoDto : produtosDto){
-            Produto produto = new Produto();
-            produto.setVarianteProduto(produtoDto.getVarianteProduto());
-            produto.setSkuProduto(produtoDto.getSkuProduto());
-            produto.setNomeProduto(produtoDto.getNomeProduto());
-            produtos.add(produto);
+            produtos.add(ProdutoCast.castProdutoDto(produtoDto));
         }
         return produtoDao.salvarListaProdutos(produtos);
     }
@@ -34,11 +31,7 @@ public class ProdutoBo implements Serializable{
             return produtosDto;
         }
         for(Produto produto : produtos){
-            ProdutoDto produtoDto = new ProdutoDto();
-            produtoDto.setVarianteProduto(produto.getVarianteProduto());
-            produtoDto.setSkuProduto(produto.getSkuProduto());
-            produtoDto.setNomeProduto(produto.getNomeProduto());
-            produtosDto.add(produtoDto);
+            produtosDto.add(ProdutoCast.castProduto(produto));
         }
         return produtosDto;
     }
@@ -57,7 +50,7 @@ public class ProdutoBo implements Serializable{
             if(StringUtils.isNotBlank(vetorObjeto[1])){
                 nomeProduto = vetorObjeto[1];
             }
-            ProdutoDto produtoDto = (ProdutoDto) obterObjetoProduto(vetorObjeto, nomeProduto);
+            ProdutoDto produtoDto = obterObjetoProduto(vetorObjeto, nomeProduto);
             if (produtoDto != null && !produtos.contains(produtoDto)) {
                 produtos.add(produtoDto);
             }
@@ -67,7 +60,7 @@ public class ProdutoBo implements Serializable{
         return produtos;
     }
 
-    private Object obterObjetoProduto(String[] vetorObjeto, String nomeProduto) {
+    private ProdutoDto obterObjetoProduto(String[] vetorObjeto, String nomeProduto) {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setSkuProduto(vetorObjeto[12]);
         produtoDto.setNomeProduto(nomeProduto);
@@ -95,15 +88,7 @@ public class ProdutoBo implements Serializable{
     }
 
     public ProdutoDto buscarProduto(String skuProduto){
-        Produto produto = produtoDao.buscarProduto(skuProduto);
-        if(produto == null){
-            return null;
-        }
-        ProdutoDto produtoDto = new ProdutoDto();
-        produtoDto.setVarianteProduto(produto.getVarianteProduto());
-        produtoDto.setNomeProduto(produto.getNomeProduto());
-        produtoDto.setSkuProduto(produto.getSkuProduto());
-        return produtoDto;
+        return ProdutoCast.castProduto(produtoDao.buscarProduto(skuProduto));
     }
 
 }

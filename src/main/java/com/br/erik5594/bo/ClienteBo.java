@@ -4,6 +4,7 @@ import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.dao.ClienteDao;
 import com.br.erik5594.dto.ClienteDto;
 import com.br.erik5594.model.Cliente;
+import com.br.erik5594.util.cast.ClienteCast;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
@@ -20,7 +21,7 @@ public class ClienteBo implements Serializable{
         List<Cliente> clientes = new ArrayList<>();
         for(ClienteDto clienteDto : clientesDto){
             if(clienteDto != null){
-                clientes.add(castClienteDtoToCliente(clienteDto));
+                clientes.add(ClienteCast.castClienteDto(clienteDto));
             }
         }
         return clienteDao.salvarListaClientes(clientes);
@@ -34,7 +35,7 @@ public class ClienteBo implements Serializable{
         }
         for(Cliente cliente : clientes){
             if(cliente != null){
-                clientesDto.add(castClienteToClienteDto(cliente));
+                clientesDto.add(ClienteCast.castCliente(cliente));
             }
         }
         return clientesDto;
@@ -95,46 +96,15 @@ public class ClienteBo implements Serializable{
         if(StringUtils.isNotBlank(email) || StringUtils.isNotBlank(telefone)){
             for(Cliente cliente : Teste.clientes){
                 if(StringUtils.isNotBlank(email) && email.equals(cliente.getEmail())){
-                    return castClienteToClienteDto(cliente);
+                    return ClienteCast.castCliente(cliente);
                 }else if(telefone.equals(cliente.getTelefone())
                         || (StringUtils.isNotBlank(cliente.getTelefone())
                         && cliente.getTelefone().startsWith("55")
                         && cliente.getTelefone().contains(telefone))){
-                    return castClienteToClienteDto(cliente);
+                    return ClienteCast.castCliente(cliente);
                 }
             }
         }
         return null;
     }
-
-    private ClienteDto castClienteToClienteDto(Cliente cliente){
-        ClienteDto clienteDto = new ClienteDto();
-        clienteDto.setEmail(cliente.getEmail());
-        clienteDto.setPrimeiroNome(cliente.getPrimeiroNome());
-        clienteDto.setSobreNome(cliente.getSobreNome());
-        clienteDto.setCpf(cliente.getCpf());
-        clienteDto.setTelefone(cliente.getTelefone());
-        clienteDto.setCep(cliente.getCep());
-        clienteDto.setLogradouro(cliente.getLogradouro());
-        clienteDto.setComplemento(cliente.getComplemento());
-        clienteDto.setCidade(cliente.getCidade());
-        clienteDto.setEstado(cliente.getEstado());
-        return clienteDto;
-    }
-
-    private Cliente castClienteDtoToCliente(ClienteDto clienteDto){
-        Cliente cliente = new Cliente();
-        cliente.setEmail(clienteDto.getEmail());
-        cliente.setPrimeiroNome(clienteDto.getPrimeiroNome());
-        cliente.setSobreNome(clienteDto.getSobreNome());
-        cliente.setCpf(clienteDto.getCpf());
-        cliente.setTelefone(clienteDto.getTelefone());
-        cliente.setLogradouro(clienteDto.getLogradouro());
-        cliente.setComplemento(clienteDto.getComplemento());
-        cliente.setCidade(clienteDto.getCidade());
-        cliente.setEstado(clienteDto.getEstado());
-        cliente.setCep(clienteDto.getCep());
-        return cliente;
-    }
-
 }

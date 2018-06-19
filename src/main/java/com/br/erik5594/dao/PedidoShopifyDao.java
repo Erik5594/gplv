@@ -6,6 +6,7 @@ import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.PedidoShopify;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoShopifyDao implements Serializable{
@@ -16,12 +17,16 @@ public class PedidoShopifyDao implements Serializable{
     }
 
     public boolean adicionarPedidoShopify(PedidoShopify pedidoShopify){
-        if(Teste.pedidosShopify != null && !Teste.pedidosShopify.contains(pedidoShopify)){
-            Teste.pedidosShopify.add(pedidoShopify);
-            return true;
+        if(Teste.pedidosShopify != null){
+            if(!Teste.pedidosShopify.contains(pedidoShopify)){
+                Teste.pedidosShopify.add(pedidoShopify);
+                return true;
+            }
         }else{
-            return false;
+            Teste.pedidosShopify = new ArrayList<>();
+            return adicionarPedidoShopify(pedidoShopify);
         }
+        return false;
     }
 
     public List<PedidoShopify> getTodosPedidosShopify(){

@@ -5,6 +5,7 @@ import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.dto.RastreamentoDto;
 import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Rastreamento;
+import com.br.erik5594.util.cast.RastreamentoCast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,13 +18,7 @@ public class RastreamentoBo implements Serializable{
     public boolean salvarListaRastreamento(List<RastreamentoDto> rastreamentosDto){
         List<Rastreamento> rastreamentos = new ArrayList<>();
         for(RastreamentoDto rastreamentoDto : rastreamentosDto){
-            Rastreamento rastreamento = new Rastreamento();
-            rastreamento.setUrlImagemUltimoStatus(rastreamentoDto.getUrlImagemUltimoStatus());
-            rastreamento.setReclamacaoCorreios(null);
-            rastreamento.setEventos(null);
-            rastreamento.setDataUltimaAtualizacao(rastreamentoDto.getDataUltimaAtualizacao());
-            rastreamento.setCodigoRastreamento(rastreamentoDto.getCodigoRastreamento());
-            rastreamentos.add(rastreamento);
+            rastreamentos.add(RastreamentoCast.castRastreamentoDto(rastreamentoDto));
         }
         return rastreamentoDao.salvarListaRastreamento(rastreamentos);
     }
@@ -35,15 +30,13 @@ public class RastreamentoBo implements Serializable{
             return rastreamentosDto;
         }
         for(Rastreamento rastreamento : rastreamentos){
-            RastreamentoDto rastreamentoDto = new RastreamentoDto();
-            rastreamentoDto.setUrlImagemUltimoStatus(rastreamento.getUrlImagemUltimoStatus());
-            rastreamentoDto.setReclamacaoCorreios(null);
-            rastreamentoDto.setEventos(null);
-            rastreamentoDto.setDataUltimaAtualizacao(rastreamento.getDataUltimaAtualizacao());
-            rastreamentoDto.setCodigoRastreamento(rastreamento.getCodigoRastreamento());
-            rastreamentosDto.add(rastreamentoDto);
+            rastreamentosDto.add(RastreamentoCast.castRastreamento(rastreamento));
         }
         return rastreamentosDto;
+    }
+
+    public boolean adicionarRastreamento(RastreamentoDto rastreamentoDto){
+        return rastreamentoDao.adicionarRastreamento(RastreamentoCast.castRastreamentoDto(rastreamentoDto));
     }
 
 }
