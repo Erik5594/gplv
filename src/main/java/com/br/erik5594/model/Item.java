@@ -2,15 +2,31 @@ package com.br.erik5594.model;
 
 import lombok.Data;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public @Data class Item implements Serializable{
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue
     private int idItem;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_shopify")
     private PedidoShopify pedidoShopify;
+
+    @OneToOne
+    @JoinColumn(name = "sku_produto")
     private Produto produto;
+
+    @Column(name = "quantidade")
     private int quantidadeProduto;
+
+    @OneToOne
+    @JoinColumn(name = "pedido_aliexpress")
     private PedidoAliexpress pedidoAliexpress;
 
     @Override

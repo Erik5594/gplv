@@ -2,13 +2,23 @@ package com.br.erik5594.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public @Data class Produto implements Serializable{
 
+    @Id
+    @Column(name = "sku_produto")
     private String skuProduto;
+
+    @Column(name = "nome_produto")
     private String nomeProduto;
+
+    @Column(name = "variante_produto")
     private String varianteProduto;
 
     @Override

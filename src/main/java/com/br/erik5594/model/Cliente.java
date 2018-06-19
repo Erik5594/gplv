@@ -2,19 +2,38 @@ package com.br.erik5594.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public @Data class Cliente implements Serializable{
+
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column(name = "email", length = 60)
     private String email;
+    @Column(name = "primeiro_nome", length = 30)
     private String primeiroNome;
+    @Column(name = "sobre_nome", length = 90)
     private String sobreNome;
+    @Column(name = "cpf_cnpj", length = 14)
     private String cpf;
+    @Column(name = "logradouro")
     private String logradouro;
+    @Column(name = "complemento")
     private String complemento;
+    @Column(name = "cidade")
     private String cidade;
+    @Column(name = "estado")
     private String estado;
+    @Column(name = "telefone")
     private String telefone;
+    @Column(name = "cep", length = 10)
     private String cep;
 
     @Override
