@@ -4,6 +4,7 @@ import com.br.erik5594.dao.ProdutoDao;
 import com.br.erik5594.dto.ProdutoDto;
 import com.br.erik5594.model.Produto;
 import com.br.erik5594.util.cast.ProdutoCast;
+import com.br.erik5594.util.jpa.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
@@ -18,12 +19,13 @@ public class ProdutoBo implements Serializable{
     @Inject
     private ProdutoDao produtoDao;
 
-    public boolean salvarListaProdutos(List<ProdutoDto> produtosDto){
+    @Transactional
+    public void salvarListaProdutos(List<ProdutoDto> produtosDto){
         List<Produto> produtos = new ArrayList<>();
         for(ProdutoDto produtoDto : produtosDto){
             produtos.add(ProdutoCast.castProdutoDto(produtoDto));
         }
-        return produtoDao.salvarListaProdutos(produtos);
+        produtoDao.salvarListaProdutos(produtos);
     }
 
     public List<ProdutoDto> getTodosProdutos(){
