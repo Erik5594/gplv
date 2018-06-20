@@ -5,10 +5,9 @@ import com.br.erik5594.dto.PedidoAliexpressDto;
 import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.dto.RastreamentoDto;
 import com.br.erik5594.model.PedidoAliexpress;
-import com.br.erik5594.model.PedidoShopify;
-import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.util.cast.PedidoAliexpressCast;
 
+import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,9 +19,12 @@ import java.util.Objects;
 
 public class PedidoAliexpressBo implements Serializable{
 
-    private PedidoAliexpressDao pedidoAliexpressDao = new PedidoAliexpressDao();
-    private PedidoShopifyBo pedidoShopifyBo = new PedidoShopifyBo();
-    private RastreamentoBo rastreamentoBo = new RastreamentoBo();
+    @Inject
+    private PedidoAliexpressDao pedidoAliexpressDao;
+    @Inject
+    private PedidoShopifyBo pedidoShopifyBo;
+    @Inject
+    private RastreamentoBo rastreamentoBo;
 
     public List<PedidoAliexpressDto> getTodosPedidosAliexpress(){
         List<PedidoAliexpressDto> pedidosAliexpressDto = new ArrayList<>();

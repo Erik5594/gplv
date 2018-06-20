@@ -6,8 +6,8 @@ import lombok.Data;
 import org.primefaces.event.FileUploadEvent;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.Serializable;

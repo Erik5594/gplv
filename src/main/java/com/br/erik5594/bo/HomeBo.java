@@ -4,18 +4,23 @@ import com.br.erik5594.dto.PedidoAliexpressDto;
 import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.model.StatusPedidoAliexpress;
 
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class HomeBo implements Serializable{
-    private PedidoShopifyBo pedidoShopifyBo = new PedidoShopifyBo();
-    private ItemBo itemBo = new ItemBo();
-    private PedidoAliexpressBo pedidoAliexpressBo = new PedidoAliexpressBo();
-    private ProdutoBo produtoBo = new ProdutoBo();
-    private RastreamentoBo rastreamentoBo = new RastreamentoBo();
-    private ClienteBo clienteBo = new ClienteBo();
+    @Inject
+    private PedidoShopifyBo pedidoShopifyBo;
+    @Inject
+    private PedidoAliexpressBo pedidoAliexpressBo;
+    @Inject
+    private ProdutoBo produtoBo;
+    @Inject
+    private RastreamentoBo rastreamentoBo;
+    @Inject
+    private ClienteBo clienteBo;
 
     public int quantidadePedidosShopify(){
         return pedidoShopifyBo.getTodosPedidosShopify().size();

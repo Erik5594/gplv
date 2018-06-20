@@ -1,6 +1,9 @@
 package com.br.erik5594.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +15,7 @@ public @Data class Item implements Serializable{
     @Id
     @Column(name = "id")
     @GeneratedValue
+    @Setter(value = AccessLevel.PRIVATE)
     private int idItem;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

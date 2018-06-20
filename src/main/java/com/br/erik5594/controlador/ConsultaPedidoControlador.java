@@ -2,13 +2,12 @@ package com.br.erik5594.controlador;
 
 import com.br.erik5594.bo.PedidoShopifyBo;
 import com.br.erik5594.dto.PedidoShopifyDto;
-import com.br.erik5594.model.PedidoShopify;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;

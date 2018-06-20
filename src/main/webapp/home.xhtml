@@ -6,6 +6,10 @@
                 xmlns:p="http://primefaces.org/ui">
 <ui:define name="titulo">Dashboard</ui:define>
 <ui:define name="corpo">
+    <f:metadata>
+        <f:viewParam name="dummy"/>
+        <f:event type="preRenderView" listener="#{homeControlador.carregarDados}"/>
+    </f:metadata>
     <h:form>
         <p:growl id="messagens" showDetail="true"/>
 

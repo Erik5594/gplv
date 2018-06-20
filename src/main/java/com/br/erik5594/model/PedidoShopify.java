@@ -21,7 +21,7 @@ public @Data class PedidoShopify implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date dataPedido;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 

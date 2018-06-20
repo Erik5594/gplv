@@ -1,12 +1,18 @@
 package com.br.erik5594.bo;
 
 import com.br.erik5594.dao.PedidoShopifyDao;
-import com.br.erik5594.dto.*;
-import com.br.erik5594.model.*;
+import com.br.erik5594.dto.ClienteDto;
+import com.br.erik5594.dto.ItemDto;
+import com.br.erik5594.dto.PedidoAliexpressDto;
+import com.br.erik5594.dto.PedidoShopifyDto;
+import com.br.erik5594.model.PedidoAliexpress;
+import com.br.erik5594.model.PedidoShopify;
+import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.util.Util;
 import com.br.erik5594.util.cast.PedidoShopifyCast;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
@@ -16,10 +22,12 @@ import java.util.List;
 
 public class PedidoShopifyBo implements Serializable{
 
-    private PedidoShopifyDao pedidoShopifyDao = new PedidoShopifyDao();
-    private ItemBo itemBo = new ItemBo();
-    private ClienteBo clienteBo = new ClienteBo();
-    private ProdutoBo produtoBo = new ProdutoBo();
+    @Inject
+    private PedidoShopifyDao pedidoShopifyDao;
+    @Inject
+    private ClienteBo clienteBo;
+    @Inject
+    private ProdutoBo produtoBo;
 
     public boolean salvarListaPedidoShopify(List<PedidoShopifyDto> pedidosShopifyDto){
         List<PedidoShopify> pedidosShopify = new ArrayList<>();

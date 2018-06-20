@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class Teste {
+public class TesteCliente {
     public static void main(String[] args){
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("PedidoPU");
         EntityManager entityManager = factory.createEntityManager();
@@ -29,6 +29,6 @@ public class Teste {
 
         entityManager.persist(cliente);
         trx.commit();
-        System.out.println("Teste realizado");
+        System.out.println("TesteCliente realizado");
     }
 }

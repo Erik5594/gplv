@@ -1,6 +1,8 @@
 package com.br.erik5594.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ public @Data class Cliente implements Serializable{
 
     @Id
     @GeneratedValue
+    @Setter(value = AccessLevel.PRIVATE)
     private Long id;
     @Column(name = "email", length = 60)
     private String email;

@@ -7,6 +7,7 @@ import com.br.erik5594.model.Cliente;
 import com.br.erik5594.util.cast.ClienteCast;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,7 +16,8 @@ import java.util.List;
 
 public class ClienteBo implements Serializable{
 
-    private ClienteDao clienteDao = new ClienteDao();
+    @Inject
+    private ClienteDao clienteDao;
 
     public boolean salvarListaClientes(List<ClienteDto> clientesDto){
         List<Cliente> clientes = new ArrayList<>();

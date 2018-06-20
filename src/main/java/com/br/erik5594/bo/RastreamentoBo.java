@@ -1,19 +1,18 @@
 package com.br.erik5594.bo;
 
 import com.br.erik5594.dao.RastreamentoDao;
-import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.dto.RastreamentoDto;
-import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.util.cast.RastreamentoCast;
 
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RastreamentoBo implements Serializable{
-
-    private RastreamentoDao rastreamentoDao = new RastreamentoDao();
+    @Inject
+    private RastreamentoDao rastreamentoDao;
 
     public boolean salvarListaRastreamento(List<RastreamentoDto> rastreamentosDto){
         List<Rastreamento> rastreamentos = new ArrayList<>();

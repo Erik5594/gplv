@@ -13,7 +13,6 @@ public class ItemCast {
         item.setQuantidadeProduto(itemDto.getQuantidadeProduto());
         item.setPedidoShopify(PedidoShopifyCast.castPedidoShopifyDto(itemDto.getPedidoShopify()));
         item.setPedidoAliexpress(PedidoAliexpressCast.castPedidoAliexpressDto(itemDto.getPedidoAliexpress()));
-        item.setIdItem(itemDto.getIdItem());
         return item;
     }
 

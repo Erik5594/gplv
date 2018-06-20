@@ -6,6 +6,7 @@ import com.br.erik5594.model.Produto;
 import com.br.erik5594.util.cast.ProdutoCast;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,7 +15,8 @@ import java.util.List;
 
 public class ProdutoBo implements Serializable{
 
-    private ProdutoDao produtoDao = new ProdutoDao();
+    @Inject
+    private ProdutoDao produtoDao;
 
     public boolean salvarListaProdutos(List<ProdutoDto> produtosDto){
         List<Produto> produtos = new ArrayList<>();

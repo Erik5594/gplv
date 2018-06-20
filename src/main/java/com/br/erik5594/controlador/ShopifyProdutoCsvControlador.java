@@ -5,14 +5,14 @@ import com.br.erik5594.dto.ProdutoDto;
 import com.br.erik5594.util.arquivo.FileUtil;
 import lombok.Data;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.*;
-import java.text.ParseException;
+import java.io.BufferedReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +20,9 @@ import java.util.List;
 @ViewScoped
 public @Data class ShopifyProdutoCsvControlador implements Serializable {
 
+    @Inject
+    private ProdutoBo produtoBo;
     private List<ProdutoDto> produtos = new ArrayList<>();
-    private ProdutoBo produtoBo = new ProdutoBo();
 
     public void upload(FileUploadEvent evento) {
         FacesMessage messagem;

@@ -11,57 +11,63 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
   <dependencies>
 
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+    <!--JPA com Hibernate-->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>5.2.12.Final</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <!-- Drive de Conexao ao Postgres -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>9.4.1212</version>
     </dependency>
 
-
+    <!-- Primefaces -->
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
       <version>6.2</version>
     </dependency>
 
-    <!-- Mojarra (implementacao do JSF) -->
+    <!-- Weld (implementação do CDI) -->
     <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>javax.faces-api</artifactId>
-      <version>2.2</version>
-      <scope>provided</scope>
+      <groupId>org.jboss.weld.servlet</groupId>
+      <artifactId>weld-servlet</artifactId>
+      <version>2.2.9.Final</version>
+      <scope>compile</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces -->
+    <!-- Weld depende do Jandex -->
+    <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>jandex</artifactId>
+      <version>1.2.2.Final</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Mojarra (implementacao do JSF) -->
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.faces</artifactId>
+      <version>2.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Omnifaces JSF 2.1 -->
     <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>omnifaces</artifactId>
-      <version>2.1</version>
+      <version>1.14.1</version>
     </dependency>
 
-
-    <dependency>
-      <groupId>javax.enterprise</groupId>
-      <artifactId>cdi-api</artifactId>
-      <version>2.0</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+    <!-- Upload de Arquivos -->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
@@ -89,16 +95,6 @@
     </dependency>
   </dependencies>
 
-  <repositories>
-    <!-- For 3.5 and older -->
-    <repository>
-      <id>prime-repo</id>
-      <name>PrimeFaces Maven Repository</name>
-      <url>http://repository.primefaces.org</url>
-      <layout>default</layout>
-    </repository>
-  </repositories>
-
   <build>
     <finalName>gplv</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -115,6 +111,10 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.7.0</version>
+          <configuration>
+            <source>1.7</source>
+            <target>1.7</target>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>

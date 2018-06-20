@@ -3,8 +3,7 @@ package com.br.erik5594.controlador;
 import com.br.erik5594.bo.HomeBo;
 import lombok.Data;
 
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -13,7 +12,8 @@ import java.io.Serializable;
 @ViewScoped
 public @Data class HomeControlador implements Serializable {
 
-    private HomeBo homeBo = new HomeBo();
+    @Inject
+    private HomeBo homeBo;
 
     private int quantidadePedidosShopify;
     private int quantidadePedidosAliexpress;
@@ -25,6 +25,12 @@ public @Data class HomeControlador implements Serializable {
     private int qtdeClientes;
 
     public HomeControlador(){
+        System.out.println("Passou por aqui Construtor");
+    }
+
+
+    public void carregarDados(){
+        System.out.println("Passou por aqui");
         quantidadePedidosShopify = homeBo.quantidadePedidosShopify();
         quantidadePedidosAliexpress = homeBo.quantidadePedidosAliexpress();
         quantidadeItens = homeBo.quantidadeItens();
