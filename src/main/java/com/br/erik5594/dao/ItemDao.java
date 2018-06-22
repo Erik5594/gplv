@@ -1,20 +1,30 @@
 package com.br.erik5594.dao;
 
-import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.model.Item;
 import com.br.erik5594.model.PedidoShopify;
+import com.br.erik5594.model.Produto;
 
-import java.io.Serializable;
-import java.util.List;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
-public class ItemDao implements Serializable{
+public class ItemDao {
+    @Inject
+    private EntityManager manager;
 
-    public boolean salvarListaItens(List<Item> itens){
-        Teste.itens = itens;
-        return true;
+    public Item buscarItem(PedidoShopify pedidoShopify, Produto produto){
+        try{
+
+            return manager.createQuery("from Item where pedidoShopify = :pedidoShopify and produto = :produto", Item.class)
+                    .setParameter("pedidoShopify", pedidoShopify)
+                    .setParameter("produto", produto)
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
     }
 
-    public List<Item> getTodosItens(){
-        return Teste.itens;
+    public void editarItem(Item item){
+        manager.merge(item);
     }
 }

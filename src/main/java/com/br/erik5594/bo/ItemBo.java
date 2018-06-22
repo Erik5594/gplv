@@ -1,26 +1,35 @@
 package com.br.erik5594.bo;
 
 import com.br.erik5594.dao.ItemDao;
-import com.br.erik5594.dto.ItemDto;
-import com.br.erik5594.dto.PedidoShopifyDto;
+import com.br.erik5594.dao.PedidoAliexpressDao;
+import com.br.erik5594.dao.PedidoShopifyDao;
+import com.br.erik5594.dao.ProdutoDao;
+import com.br.erik5594.model.Item;
+import com.br.erik5594.model.PedidoAliexpress;
+import com.br.erik5594.model.PedidoShopify;
+import com.br.erik5594.model.Produto;
 
-import java.io.Serializable;
-import java.util.List;
+import javax.inject.Inject;
+import java.math.BigDecimal;
 
-public class ItemBo implements Serializable{
+public class ItemBo {
+    @Inject
+    private ItemDao itemDao;
+    @Inject
+    private PedidoShopifyDao pedidoShopifyDao;
+    @Inject
+    private ProdutoDao produtoDao;
+    @Inject
+    private PedidoAliexpressDao pedidoAliexpressDao;
 
-    private ItemDao itemDao = new ItemDao();
-
-    public boolean salvarListaItens(List<ItemDto> itensDto){
-        return false;
+    public void vincularPedidoAliexpress(int pedidoShopify, String skuProduto, Long idAliexpress){
+        PedidoShopify pedido = pedidoShopifyDao.buscarPedidoShopify(pedidoShopify);
+        Produto produto = produtoDao.buscarProduto(skuProduto);
+        PedidoAliexpress pedidoAliexpress = pedidoAliexpressDao.buscarPedidoAliexpress(idAliexpress);
+        Item item = itemDao.buscarItem(pedido, produto);
+        if(item != null){
+            item.setPedidoAliexpress(pedidoAliexpress);
+            itemDao.editarItem(item);
+        }
     }
-
-    public List<ItemDto> getTodosItens(){
-        return null;
-    }
-
-    public List<ItemDto> getListaItensByPedido(PedidoShopifyDto pedidoShopifyDto){
-        return null;
-    }
-
 }

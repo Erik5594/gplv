@@ -9,6 +9,7 @@ import org.primefaces.event.FileUploadEvent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.Serializable;
@@ -20,9 +21,10 @@ import java.util.List;
 public @Data class ShopifyClienteCsvControlador implements Serializable {
 
     private List<ClienteDto> clientes = new ArrayList<>();
-    private ClienteBo clienteBo = new ClienteBo();
+    @Inject
+    private ClienteBo clienteBo;
 
-    public void upload(FileUploadEvent evento) {
+    public void upload(FileUploadEvent evento) throws Exception {
         FacesMessage messagem;
         try {
             BufferedReader linhasArquivo = FileUtil.obterBufferReader(evento.getFile());

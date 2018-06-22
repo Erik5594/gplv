@@ -20,7 +20,7 @@ public @Data class Cliente implements Serializable{
     private Long id;
     @Column(name = "email", length = 60)
     private String email;
-    @Column(name = "primeiro_nome", length = 30)
+    @Column(name = "primeiro_nome")
     private String primeiroNome;
     @Column(name = "sobre_nome", length = 90)
     private String sobreNome;

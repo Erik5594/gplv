@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ import java.util.List;
 public @Data class ConsultaPedidoControlador implements Serializable{
     private List<PedidoShopifyDto> pedidosShopifyDto;
     private String numeroPedido;
-    private PedidoShopifyBo pedidoShopifyBo = new PedidoShopifyBo();
+    @Inject
+    private PedidoShopifyBo pedidoShopifyBo;
 
     public void buscarPedido(){
         if(StringUtils.isNotBlank(numeroPedido)){

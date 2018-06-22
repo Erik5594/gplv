@@ -1,10 +1,10 @@
 package com.br.erik5594.dao;
 
-import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.model.Produto;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,21 +15,28 @@ public class ProdutoDao implements Serializable{
 
     public void salvarListaProdutos(List<Produto> produtos){
         for(Produto produto : produtos){
-            manager.persist(produto);
+            if(buscarProduto(produto.getSkuProduto()) == null){
+                manager.persist(produto);
+            }
         }
     }
 
     public List<Produto> getTodosProdutos(){
-        return Teste.produtos;
+        return manager.createQuery("from Produto", Produto.class).getResultList();
     }
 
     public Produto buscarProduto(String skuProduto){
-        Produto produto = new Produto();
-        produto.setSkuProduto(skuProduto);
-        int indexProduto = Teste.produtos.indexOf(produto);
-        if(indexProduto < 0){
+        try{
+            return manager.createQuery("from Produto where upper(skuProduto) = :sku", Produto.class)
+                    .setParameter("sku", skuProduto.toUpperCase())
+                    .getSingleResult();
+        }catch (NoResultException e){
             return null;
         }
-        return Teste.produtos.get(indexProduto);
+    }
+
+    public Long totalPrdutos(){
+        String hql = "select count(*) from Produto";
+        return (Long)manager.createQuery(hql).getSingleResult();
     }
 }

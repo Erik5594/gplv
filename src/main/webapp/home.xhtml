@@ -50,20 +50,6 @@
         </p:panelGrid>
         <p:panelGrid columns="2" style="margin-top: 15px">
             <f:facet name="header">
-                Rastreamento
-            </f:facet>
-            <p:outputLabel value="Quantidade: "/>
-            <p:outputLabel value="#{homeControlador.quantidadeRastreamentos}"/>
-        </p:panelGrid>
-        <p:panelGrid columns="2" style="margin-top: 15px">
-            <f:facet name="header">
-                Itens
-            </f:facet>
-            <p:outputLabel value="Quantidade: "/>
-            <p:outputLabel value="#{homeControlador.quantidadeItens}"/>
-        </p:panelGrid>
-        <p:panelGrid columns="2" style="margin-top: 15px">
-            <f:facet name="header">
                 Pedidos Aliexpress
             </f:facet>
             <p:outputLabel value="Quantidade: "/>
@@ -82,6 +68,7 @@
             </f:facet>
             <p:outputLabel value="Quantidade: "/>
             <p:outputLabel value="#{homeControlador.qtdePedidoAliexpressVencendoPrazo}"/>
+            <p:button outcome="/private/observacao/acabando-prazo-aliexpress" value="Ver"/>
         </p:panelGrid>
         <p:panelGrid columns="3" style="margin-top: 15px">
             <f:facet name="header">

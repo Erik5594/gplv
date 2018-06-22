@@ -1,10 +1,10 @@
 package com.br.erik5594.bo;
 
-import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.dao.ClienteDao;
 import com.br.erik5594.dto.ClienteDto;
 import com.br.erik5594.model.Cliente;
 import com.br.erik5594.util.cast.ClienteCast;
+import com.br.erik5594.util.jpa.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
@@ -19,14 +19,15 @@ public class ClienteBo implements Serializable{
     @Inject
     private ClienteDao clienteDao;
 
-    public boolean salvarListaClientes(List<ClienteDto> clientesDto){
+    @Transactional
+    public void salvarListaClientes(List<ClienteDto> clientesDto) throws Exception{
         List<Cliente> clientes = new ArrayList<>();
         for(ClienteDto clienteDto : clientesDto){
             if(clienteDto != null){
                 clientes.add(ClienteCast.castClienteDto(clienteDto));
             }
         }
-        return clienteDao.salvarListaClientes(clientes);
+        clienteDao.salvarListaClientes(clientes);
     }
 
     public List<ClienteDto> getTodosClientes(){
@@ -94,19 +95,14 @@ public class ClienteBo implements Serializable{
         return clienteDto;
     }
 
-    public ClienteDto buscarCliente(String email, String telefone){
+    public ClienteDto buscarCliente(String email, String telefone) throws Exception{
         if(StringUtils.isNotBlank(email) || StringUtils.isNotBlank(telefone)){
-            for(Cliente cliente : Teste.clientes){
-                if(StringUtils.isNotBlank(email) && email.equals(cliente.getEmail())){
-                    return ClienteCast.castCliente(cliente);
-                }else if(telefone.equals(cliente.getTelefone())
-                        || (StringUtils.isNotBlank(cliente.getTelefone())
-                        && cliente.getTelefone().startsWith("55")
-                        && cliente.getTelefone().contains(telefone))){
-                    return ClienteCast.castCliente(cliente);
-                }
-            }
+            return ClienteCast.castCliente(clienteDao.buscarCliente(email, telefone));
         }
         return null;
+    }
+
+    public Long getTotalClientes(){
+        return clienteDao.totalCliente();
     }
 }

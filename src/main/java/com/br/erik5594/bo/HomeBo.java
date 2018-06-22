@@ -1,7 +1,6 @@
 package com.br.erik5594.bo;
 
 import com.br.erik5594.dto.PedidoAliexpressDto;
-import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.model.StatusPedidoAliexpress;
 
 import javax.inject.Inject;
@@ -18,32 +17,22 @@ public class HomeBo implements Serializable{
     @Inject
     private ProdutoBo produtoBo;
     @Inject
-    private RastreamentoBo rastreamentoBo;
-    @Inject
     private ClienteBo clienteBo;
 
-    public int quantidadePedidosShopify(){
-        return pedidoShopifyBo.getTodosPedidosShopify().size();
+    public Long quantidadePedidosShopify(){
+        return pedidoShopifyBo.getTotalPedidosShopify();
     }
 
-    public int quantidadePedidosAliexpress(){
-        return pedidoAliexpressBo.getTodosPedidosAliexpress().size();
+    public Long quantidadePedidosAliexpress(){
+        return pedidoAliexpressBo.getTotalPedidosAliexpress();
     }
 
-    public int quantidadeProdutos(){
-        return produtoBo.getTodosProdutos().size();
+    public Long quantidadeProdutos(){
+        return produtoBo.getTotalProdutos();
     }
 
-    public int quantidadeItens(){
-        return 0;
-    }
-
-    public int quantidadeRastreaemnto(){
-        return rastreamentoBo.getTodosRastreamentos().size();
-    }
-
-    public int quantidadeClientes(){
-        return clienteBo.getTodosClientes().size();
+    public Long quantidadeClientes(){
+        return clienteBo.getTotalClientes();
     }
 
     public int pedidosSemDataLimite(){
@@ -58,17 +47,6 @@ public class HomeBo implements Serializable{
     }
 
     public int pedidosVencendoPrazo(){
-        List<PedidoAliexpressDto> vencendoPrazo = new ArrayList<>();
-        List<PedidoAliexpressDto> todosPedidosAliexpress = pedidoAliexpressBo.getTodosPedidosAliexpress();
-        for(PedidoAliexpressDto pedidoAliexpressDto : todosPedidosAliexpress){
-            Calendar data = Calendar.getInstance();
-            data.add(Calendar.DAY_OF_YEAR, 5);
-            if(pedidoAliexpressDto.getDataLimiteDisputa() != null
-                    && data.getTime().after(pedidoAliexpressDto.getDataLimiteDisputa())
-                    && !pedidoAliexpressDto.getStatusPedidoAliexpress().equals(StatusPedidoAliexpress.CONCLUIDO)){
-                vencendoPrazo.add(pedidoAliexpressDto);
-            }
-        }
-        return vencendoPrazo.size();
+        return pedidoAliexpressBo.pedidosVencendoPrazo().size();
     }
 }

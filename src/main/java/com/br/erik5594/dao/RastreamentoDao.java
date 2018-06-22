@@ -1,33 +1,36 @@
 package com.br.erik5594.dao;
 
-import com.br.erik5594.constantes.Teste;
 import com.br.erik5594.model.Rastreamento;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RastreamentoDao implements Serializable{
+    @Inject
+    private EntityManager manager;
 
-    public boolean salvarListaRastreamento(List<Rastreamento> rastreamentos){
-        Teste.rastreamentos = rastreamentos;
-        return true;
-    }
-
-    public boolean adicionarRastreamento(Rastreamento rastreamento){
-        if(Teste.rastreamentos != null){
-            if(!Teste.rastreamentos.contains(rastreamento)){
-                Teste.rastreamentos.add(rastreamento);
-                return true;
-            }
-        }else{
-            Teste.rastreamentos = new ArrayList<>();
-            return adicionarRastreamento(rastreamento);
+    public void adicionarRastreamento(Rastreamento rastreamento){
+        if(buscarRastreamento(rastreamento.getCodigoRastreamento()) == null){
+            manager.persist(rastreamento);
         }
-        return false;
     }
 
     public List<Rastreamento> getTodosRastreamentos(){
-        return Teste.rastreamentos;
+        return manager.createQuery("from Rastreamento", Rastreamento.class)
+                .getResultList();
     }
+
+    public Rastreamento buscarRastreamento(String codRastreamento){
+        try{
+            return manager.createQuery("from Rastreamento where upper(codigoRastreamento) = :codRastreamento", Rastreamento.class)
+                    .setParameter("codRastreamento", codRastreamento.toUpperCase())
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
+    }
+
 }

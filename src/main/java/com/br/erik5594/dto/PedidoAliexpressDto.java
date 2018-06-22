@@ -4,14 +4,13 @@ import com.br.erik5594.model.StatusPedidoAliexpress;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 public @Data class PedidoAliexpressDto implements Serializable {
 
-    private BigDecimal idAliexpress = BigDecimal.ZERO;
+    private Long idAliexpress;
     private Date dataLimiteDisputa;
     private StatusPedidoAliexpress statusPedidoAliexpress;
     private RastreamentoDto rastreamento;

@@ -22,7 +22,7 @@ public @Data class Item implements Serializable{
     @JoinColumn(name = "pedido_shopify")
     private PedidoShopify pedidoShopify;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sku_produto")
     private Produto produto;
 

@@ -34,11 +34,18 @@ public @Data class PedidoShopifyDto implements Serializable{
     }
 
     public Date getDataPedido(){
+        if(dataPedido == null){
+            return null;
+        }
         return new Date(dataPedido.getTime());
     }
 
     public void setDataPedido(Date dataPedido){
-        this.dataPedido = new Date(dataPedido.getTime());
+        if(dataPedido == null){
+            this.dataPedido = null;
+        }else{
+            this.dataPedido = new Date(dataPedido.getTime());
+        }
     }
 
     public String getDataFormatada(){

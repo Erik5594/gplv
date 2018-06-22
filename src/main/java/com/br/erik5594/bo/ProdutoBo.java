@@ -95,4 +95,7 @@ public class ProdutoBo implements Serializable{
         return ProdutoCast.castProduto(produtoDao.buscarProduto(skuProduto));
     }
 
+    public Long getTotalProdutos(){
+        return produtoDao.totalPrdutos();
+    }
 }

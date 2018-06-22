@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "pedido_shopify")
+@Entity
+@Table(name = "pedido_shopify")
 public @Data class PedidoShopify implements Serializable{
     @Id
     @Column(name = "numero_pedido")
@@ -25,7 +26,7 @@ public @Data class PedidoShopify implements Serializable{
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoShopify")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoShopify", fetch = FetchType.LAZY)
     private List<Item> itens;
 
     @Column(name = "valor_total")
@@ -52,10 +53,17 @@ public @Data class PedidoShopify implements Serializable{
     }
 
     public Date getDataPedido(){
+        if(dataPedido == null){
+            return null;
+        }
         return new Date(dataPedido.getTime());
     }
 
     public void setDataPedido(Date dataPedido){
-        this.dataPedido = new Date(dataPedido.getTime());
+        if(dataPedido == null){
+            this.dataPedido = null;
+        }else {
+            this.dataPedido = new Date(dataPedido.getTime());
+        }
     }
 }

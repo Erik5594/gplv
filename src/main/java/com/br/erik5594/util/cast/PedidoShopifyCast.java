@@ -25,7 +25,7 @@ public class PedidoShopifyCast {
         List<ItemDto> itensDto = new ArrayList<>();
         if(itens != null && !itens.isEmpty()){
             for(Item item : itens){
-                itensDto.add(ItemCast.castItem(item));
+                itensDto.add(ItemCast.castItem(item, pedidoShopifyDto));
             }
         }else{
             itensDto = null;
@@ -50,7 +50,7 @@ public class PedidoShopifyCast {
         List<Item> itens = new ArrayList<>();
         if(itensDto != null && !itensDto.isEmpty()){
             for(ItemDto itemDto : itensDto){
-                itens.add(ItemCast.castItemDto(itemDto));
+                itens.add(ItemCast.castItemDto(itemDto, pedidoShopify));
             }
         }else{
             itens = null;

@@ -7,6 +7,10 @@
                 xmlns:o="http://omnifaces.org/ui">
     <ui:define name="titulo">Acabando Prazo Aliexpress</ui:define>
     <ui:define name="corpo">
+        <f:metadata>
+            <f:viewParam name="dummy"/>
+            <f:event type="preRenderView" listener="#{aliexpressPedidoDataLimiteControlador.carregarPedidosVencendoPrazo}"/>
+        </f:metadata>
         <h:form id="formAcabandoPrazoAliexpress">
             <p:growl id="messagens" showDetail="true"/>
             <h1>Pedidos com a data limite encerrando</h1>
@@ -18,11 +22,13 @@
                 <f:facet name="header">
                     Pedidos Aliexpress
                 </f:facet>
-                <p:column headerText="Número Shopify">
-                    <p:outputLabel value="##{pedidoAliexpress.pedidoShopifyDto.numeroPedido}"/>
+                <p:column>
+                    <p:link href="#{pedidoAliexpress.pedidoShopify.linkPedidoShopify}"
+                            value="##{pedidoAliexpress.pedidoShopify.numeroPedido}" target="_blank"/>
                 </p:column>
                 <p:column headerText="Número Pedido Aliexpress">
-                    <p:outputLabel value="#{pedidoAliexpress.idAliexpress}"/>
+                    <p:link href="#{pedidoAliexpress.linkPedidoAliexpress}"
+                            value="#{pedidoAliexpress.idAliexpress}" target="_blank"/>
                 </p:column>
                 <p:column headerText="Data Limite Aliexpress">
                     <p:outputLabel value="#{pedidoAliexpress.dataLimiteDisputaFormatada}"/>

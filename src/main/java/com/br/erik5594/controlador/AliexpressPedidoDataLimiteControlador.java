@@ -5,6 +5,7 @@ import com.br.erik5594.dto.PedidoAliexpressDto;
 import lombok.Data;
 
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -13,11 +14,11 @@ import java.util.List;
 @ViewScoped
 public @Data class AliexpressPedidoDataLimiteControlador implements Serializable {
 
-    private PedidoAliexpressBo pedidoAliexpressBo = new PedidoAliexpressBo();
+    @Inject
+    private PedidoAliexpressBo pedidoAliexpressBo;
     private List<PedidoAliexpressDto> pedidosAliexpress;
 
-    public AliexpressPedidoDataLimiteControlador(){
-        pedidosAliexpress = pedidoAliexpressBo.getTodosPedidosAliexpress();
+    public void carregarPedidosVencendoPrazo(){
+        pedidosAliexpress = pedidoAliexpressBo.pedidosVencendoPrazo();
     }
-
 }

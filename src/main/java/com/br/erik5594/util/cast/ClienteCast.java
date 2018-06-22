@@ -2,6 +2,7 @@ package com.br.erik5594.util.cast;
 
 import com.br.erik5594.dto.ClienteDto;
 import com.br.erik5594.model.Cliente;
+import org.apache.commons.lang3.StringUtils;
 
 public class ClienteCast {
     public static ClienteDto castCliente(Cliente cliente){
@@ -36,7 +37,11 @@ public class ClienteCast {
         cliente.setComplemento(clienteDto.getComplemento());
         cliente.setCidade(clienteDto.getCidade());
         cliente.setEstado(clienteDto.getEstado());
-        cliente.setCep(clienteDto.getCep());
+        if(StringUtils.isNotBlank(clienteDto.getCep()) && clienteDto.getCep().length() > 10){
+            cliente.setCep(clienteDto.getCep().substring(0,10));
+        }else{
+            cliente.setCep(clienteDto.getCep());
+        }
         return cliente;
     }
 }

@@ -2,6 +2,7 @@ package com.br.erik5594.conversores;
 
 import com.br.erik5594.bo.PedidoShopifyBo;
 import com.br.erik5594.dto.PedidoShopifyDto;
+import com.br.erik5594.util.cdi.CDIServiceLocator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -10,7 +11,13 @@ import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = PedidoShopifyDto.class)
 public class PedidoShopifyConverter implements Converter{
-    private PedidoShopifyBo pedidoShopifyBo = new PedidoShopifyBo();
+
+    //@Inject
+    private PedidoShopifyBo pedidoShopifyBo;
+
+    public PedidoShopifyConverter(){
+        pedidoShopifyBo = CDIServiceLocator.getBean(PedidoShopifyBo.class);
+    }
 
 
     @Override

@@ -15,27 +15,17 @@ public @Data class HomeControlador implements Serializable {
     @Inject
     private HomeBo homeBo;
 
-    private int quantidadePedidosShopify;
-    private int quantidadePedidosAliexpress;
-    private int quantidadeProdutos;
-    private int quantidadeItens;
-    private int quantidadeRastreamentos;
+    private Long quantidadePedidosShopify;
+    private Long quantidadePedidosAliexpress;
+    private Long quantidadeProdutos;
     private int quantidadePedidosAliexpressSemDataLimite;
     private int qtdePedidoAliexpressVencendoPrazo;
-    private int qtdeClientes;
-
-    public HomeControlador(){
-        System.out.println("Passou por aqui Construtor");
-    }
-
+    private Long qtdeClientes;
 
     public void carregarDados(){
-        System.out.println("Passou por aqui");
         quantidadePedidosShopify = homeBo.quantidadePedidosShopify();
         quantidadePedidosAliexpress = homeBo.quantidadePedidosAliexpress();
-        quantidadeItens = homeBo.quantidadeItens();
         quantidadeProdutos = homeBo.quantidadeProdutos();
-        quantidadeRastreamentos = homeBo.quantidadeRastreaemnto();
         quantidadePedidosAliexpressSemDataLimite = homeBo.pedidosSemDataLimite();
         qtdePedidoAliexpressVencendoPrazo = homeBo.pedidosVencendoPrazo();
         qtdeClientes = homeBo.quantidadeClientes();
