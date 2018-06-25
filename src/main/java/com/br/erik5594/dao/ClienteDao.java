@@ -1,6 +1,7 @@
 package com.br.erik5594.dao;
 
 import com.br.erik5594.model.Cliente;
+import com.br.erik5594.util.cast.ClienteCast;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
@@ -17,8 +18,13 @@ public class ClienteDao implements Serializable{
 
     public void salvarListaClientes(List<Cliente> clientes) throws Exception{
         for(Cliente cliente : clientes){
-            if(buscarCliente(cliente.getEmail(), cliente.getTelefone()) == null){
+            Cliente clienteBanco = buscarCliente(cliente.getEmail(), cliente.getTelefone());
+            if(clienteBanco == null){
                 manager.persist(cliente);
+            }else{
+                if(ClienteCast.adcionarAlteracoes(clienteBanco, cliente)){
+                    manager.merge(clienteBanco);
+                }
             }
         }
     }

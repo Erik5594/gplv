@@ -5,6 +5,8 @@ import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.PedidoShopify;
 
+import java.util.Objects;
+
 public class PedidoAliexpressCast {
     public static PedidoAliexpress castPedidoAliexpressDto(PedidoAliexpressDto pedidoAliexpressDto, PedidoShopify pedidoShopify){
         if(pedidoAliexpressDto == null){
@@ -30,5 +32,15 @@ public class PedidoAliexpressCast {
         pedidoAliexpressDto.setIdAliexpress(pedidoAliexpress.getIdAliexpress());
         pedidoAliexpressDto.setDataLimiteDisputa(pedidoAliexpress.getDataLimiteDisputa());
         return pedidoAliexpressDto;
+    }
+
+    public static boolean adicionarAlteracoes(PedidoAliexpress pedidoAliexpressBanco, PedidoAliexpress pedidoAliexpress){
+        boolean retorno = false;
+        if(pedidoAliexpressBanco != null && pedidoAliexpress != null){
+            if(pedidoAliexpressBanco.getRastreamento() == null && pedidoAliexpress.getRastreamento() != null){
+                pedidoAliexpressBanco.setRastreamento(pedidoAliexpress.getRastreamento());
+            }
+        }
+        return retorno;
     }
 }

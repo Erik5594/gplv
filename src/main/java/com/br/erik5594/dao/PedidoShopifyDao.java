@@ -4,6 +4,7 @@ import com.br.erik5594.model.Cliente;
 import com.br.erik5594.model.Item;
 import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Produto;
+import com.br.erik5594.util.cast.PedidoShopifyCast;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
@@ -23,7 +24,8 @@ public class PedidoShopifyDao implements Serializable{
 
     public void salvarListaPedidoShopify(List<PedidoShopify> pedidosShopify) throws Exception{
         for(PedidoShopify pedidoShopify : pedidosShopify){
-            if(buscarPedidoShopify(pedidoShopify.getNumeroPedido()) == null){
+            PedidoShopify pedidoShopifyBanco = buscarPedidoShopify(pedidoShopify.getNumeroPedido());
+            if(pedidoShopifyBanco == null){
                 if(pedidoShopify.getCliente() != null){
                     String telefone = pedidoShopify.getCliente().getTelefone();
                     String email = pedidoShopify.getCliente().getEmail();
@@ -41,6 +43,8 @@ public class PedidoShopifyDao implements Serializable{
                     }
                 }
                 manager.persist(pedidoShopify);
+            }else if(PedidoShopifyCast.adicionarAlteracoes(pedidoShopifyBanco, pedidoShopify)){
+                manager.merge(pedidoShopifyBanco);
             }
         }
     }

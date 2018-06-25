@@ -7,6 +7,7 @@ import com.br.erik5594.model.PedidoShopify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PedidoShopifyCast {
     public static PedidoShopifyDto castPedidoShopify(PedidoShopify pedidoShopify){
@@ -57,5 +58,20 @@ public class PedidoShopifyCast {
         }
         pedidoShopify.setItens(itens);
         return pedidoShopify;
+    }
+
+    public static boolean adicionarAlteracoes(PedidoShopify pedidoShopifyBanco, PedidoShopify pedidoShopify){
+        boolean retorno = false;
+        if(pedidoShopifyBanco != null && pedidoShopify != null){
+            if(!Objects.equals(pedidoShopifyBanco.getDataCancelamento(), pedidoShopify.getDataCancelamento())){
+                pedidoShopifyBanco.setDataCancelamento(pedidoShopify.getDataCancelamento());
+                retorno = true;
+            }
+            if(!Objects.equals(pedidoShopifyBanco.isEnviado(), pedidoShopify.isEnviado())){
+                pedidoShopifyBanco.setEnviado(pedidoShopify.isEnviado());
+                retorno = true;
+            }
+        }
+        return retorno;
     }
 }

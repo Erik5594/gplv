@@ -1,6 +1,7 @@
 package com.br.erik5594.dao;
 
 import com.br.erik5594.model.Produto;
+import com.br.erik5594.util.cast.ProdutoCast;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -15,8 +16,11 @@ public class ProdutoDao implements Serializable{
 
     public void salvarListaProdutos(List<Produto> produtos){
         for(Produto produto : produtos){
-            if(buscarProduto(produto.getSkuProduto()) == null){
+            Produto produtoBanco = buscarProduto(produto.getSkuProduto());
+            if(produtoBanco == null){
                 manager.persist(produto);
+            }else if(ProdutoCast.adicionarAlteracoes(produtoBanco, produto)){
+                manager.merge(produtoBanco);
             }
         }
     }

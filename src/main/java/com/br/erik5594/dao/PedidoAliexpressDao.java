@@ -4,6 +4,8 @@ import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.model.StatusPedidoAliexpress;
+import com.br.erik5594.util.cast.PedidoAliexpressCast;
+import com.br.erik5594.util.cast.PedidoShopifyCast;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -32,7 +34,8 @@ public class PedidoAliexpressDao implements Serializable{
     }
 
     public void adicionarPedidoAliexpress(PedidoAliexpress pedidoAliexpress){
-        if(buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress()) == null){
+        PedidoAliexpress pedidoAliexpressBanco = buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress());
+        if(pedidoAliexpressBanco == null){
             if(pedidoAliexpress.getPedidoShopify() != null && pedidoAliexpress.getPedidoShopify().getNumeroPedido() > 0){
                 PedidoShopify pedidoShopify = pedidoShopifyDao.buscarPedidoShopify(pedidoAliexpress.getPedidoShopify().getNumeroPedido());
                 if(pedidoAliexpress.getDataLimiteDisputa() == null){
@@ -53,6 +56,8 @@ public class PedidoAliexpressDao implements Serializable{
                 pedidoAliexpress.setRastreamento(rastreamento);
             }
             manager.persist(pedidoAliexpress);
+        }else if(PedidoAliexpressCast.adicionarAlteracoes(pedidoAliexpressBanco, pedidoAliexpress)){
+            manager.merge(pedidoAliexpressBanco);
         }
     }
 
