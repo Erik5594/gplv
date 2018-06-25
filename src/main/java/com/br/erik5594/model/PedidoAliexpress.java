@@ -27,10 +27,6 @@ public @Data class PedidoAliexpress implements Serializable {
     @JoinColumn(name = "cod_rastreamento")
     private Rastreamento rastreamento;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_shopify")
-    private PedidoShopify pedidoShopify;
-
     @Override
     public boolean equals(Object o) {
         if(this == null && o == null) return true;

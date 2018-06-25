@@ -1,21 +1,14 @@
 package com.br.erik5594.dao;
 
 import com.br.erik5594.model.PedidoAliexpress;
-import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.model.StatusPedidoAliexpress;
-import com.br.erik5594.util.cast.PedidoAliexpressCast;
-import com.br.erik5594.util.cast.PedidoShopifyCast;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,39 +18,32 @@ public class PedidoAliexpressDao implements Serializable{
     @Inject
     private EntityManager manager;
     @Inject
-    private PedidoShopifyDao pedidoShopifyDao;
-    @Inject
     private RastreamentoDao rastreamentoDao;
 
     public List<PedidoAliexpress> getTodosPedidosAliexpress(){
         return manager.createQuery("from PedidoAliexpress", PedidoAliexpress.class).getResultList();
     }
 
-    public void adicionarPedidoAliexpress(PedidoAliexpress pedidoAliexpress){
-        PedidoAliexpress pedidoAliexpressBanco = buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress());
-        if(pedidoAliexpressBanco == null){
-            if(pedidoAliexpress.getPedidoShopify() != null && pedidoAliexpress.getPedidoShopify().getNumeroPedido() > 0){
-                PedidoShopify pedidoShopify = pedidoShopifyDao.buscarPedidoShopify(pedidoAliexpress.getPedidoShopify().getNumeroPedido());
-                if(pedidoAliexpress.getDataLimiteDisputa() == null){
-                    Calendar data = Calendar.getInstance();
-                    data.setTime(pedidoShopify.getDataPedido());
-                    data.add(Calendar.DAY_OF_YEAR, 90);
-                    pedidoAliexpress.setDataLimiteDisputa(data.getTime());
+    public void salvarListaPedidoAliexpress(List<PedidoAliexpress> listaPedidoAliexpress){
+        for(PedidoAliexpress pedidoAliexpress : listaPedidoAliexpress){
+            PedidoAliexpress pedidoAliexpressBanco = buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress());
+            if(pedidoAliexpressBanco != null){
+                if(pedidoAliexpressBanco.getRastreamento() == null && pedidoAliexpress.getRastreamento() != null){
+                    Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
+                    if(rastreamento != null){
+                        pedidoAliexpressBanco.setRastreamento(rastreamento);
+                    }else{
+                        rastreamento = new Rastreamento();
+                        rastreamento.setCodigoRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
+                        rastreamentoDao.adicionarRastreamento(rastreamento);
+                        pedidoAliexpressBanco.setRastreamento(rastreamento);
+                    }
+                    manager.merge(pedidoAliexpress);
                 }
-                pedidoAliexpress.setPedidoShopify(pedidoShopify);
+            }else{
+                manager.persist(pedidoAliexpress);
             }
-
-            if(pedidoAliexpress.getRastreamento() != null && StringUtils.isNotBlank(pedidoAliexpress.getRastreamento().getCodigoRastreamento())){
-                Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
-                if(rastreamento == null){
-                    rastreamento = new Rastreamento();
-                    rastreamento.setCodigoRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
-                }
-                pedidoAliexpress.setRastreamento(rastreamento);
-            }
-            manager.persist(pedidoAliexpress);
-        }else if(PedidoAliexpressCast.adicionarAlteracoes(pedidoAliexpressBanco, pedidoAliexpress)){
-            manager.merge(pedidoAliexpressBanco);
+            manager.flush();
         }
     }
 

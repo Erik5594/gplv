@@ -1,19 +1,14 @@
 package com.br.erik5594.util.cast;
 
 import com.br.erik5594.dto.PedidoAliexpressDto;
-import com.br.erik5594.dto.PedidoShopifyDto;
 import com.br.erik5594.model.PedidoAliexpress;
-import com.br.erik5594.model.PedidoShopify;
-
-import java.util.Objects;
 
 public class PedidoAliexpressCast {
-    public static PedidoAliexpress castPedidoAliexpressDto(PedidoAliexpressDto pedidoAliexpressDto, PedidoShopify pedidoShopify){
+    public static PedidoAliexpress castPedidoAliexpressDto(PedidoAliexpressDto pedidoAliexpressDto){
         if(pedidoAliexpressDto == null){
             return null;
         }
         PedidoAliexpress pedidoAliexpress = new PedidoAliexpress();
-        pedidoAliexpress.setPedidoShopify(pedidoShopify);
         pedidoAliexpress.setRastreamento(RastreamentoCast.castRastreamentoDto(pedidoAliexpressDto.getRastreamento()));
         pedidoAliexpress.setStatusPedidoAliexpress(pedidoAliexpressDto.getStatusPedidoAliexpress());
         pedidoAliexpress.setIdAliexpress(pedidoAliexpressDto.getIdAliexpress());
@@ -21,26 +16,15 @@ public class PedidoAliexpressCast {
         return pedidoAliexpress;
     }
 
-    public static PedidoAliexpressDto castPedidoAliexpress(PedidoAliexpress pedidoAliexpress, PedidoShopifyDto pedidoShopifyDto){
+    public static PedidoAliexpressDto castPedidoAliexpress(PedidoAliexpress pedidoAliexpress){
         if(pedidoAliexpress == null){
             return null;
         }
         PedidoAliexpressDto pedidoAliexpressDto = new PedidoAliexpressDto();
-        pedidoAliexpressDto.setPedidoShopify(pedidoShopifyDto);
         pedidoAliexpressDto.setRastreamento(RastreamentoCast.castRastreamento(pedidoAliexpress.getRastreamento()));
         pedidoAliexpressDto.setStatusPedidoAliexpress(pedidoAliexpress.getStatusPedidoAliexpress());
         pedidoAliexpressDto.setIdAliexpress(pedidoAliexpress.getIdAliexpress());
         pedidoAliexpressDto.setDataLimiteDisputa(pedidoAliexpress.getDataLimiteDisputa());
         return pedidoAliexpressDto;
-    }
-
-    public static boolean adicionarAlteracoes(PedidoAliexpress pedidoAliexpressBanco, PedidoAliexpress pedidoAliexpress){
-        boolean retorno = false;
-        if(pedidoAliexpressBanco != null && pedidoAliexpress != null){
-            if(pedidoAliexpressBanco.getRastreamento() == null && pedidoAliexpress.getRastreamento() != null){
-                pedidoAliexpressBanco.setRastreamento(pedidoAliexpress.getRastreamento());
-            }
-        }
-        return retorno;
     }
 }
