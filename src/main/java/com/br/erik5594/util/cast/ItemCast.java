@@ -14,7 +14,7 @@ public class ItemCast {
         item.setProduto(ProdutoCast.castProdutoDto(itemDto.getProduto()));
         item.setQuantidadeProduto(itemDto.getQuantidadeProduto());
         item.setPedidoShopify(pedidoShopify);
-        item.setPedidoAliexpress(PedidoAliexpressCast.castPedidoAliexpressDto(itemDto.getPedidoAliexpress(), pedidoShopify));
+        item.setPedidoAliexpress(PedidoAliexpressCast.castPedidoAliexpressDto(itemDto.getPedidoAliexpress()));
         return item;
     }
 
@@ -26,7 +26,7 @@ public class ItemCast {
         itemDto.setProduto(ProdutoCast.castProduto(item.getProduto()));
         itemDto.setQuantidadeProduto(item.getQuantidadeProduto());
         itemDto.setPedidoShopify(pedidoShopifyDto);
-        itemDto.setPedidoAliexpress(PedidoAliexpressCast.castPedidoAliexpress(item.getPedidoAliexpress(), pedidoShopifyDto));
+        itemDto.setPedidoAliexpress(PedidoAliexpressCast.castPedidoAliexpress(item.getPedidoAliexpress()));
         itemDto.setIdItem(item.getIdItem());
         return itemDto;
     }

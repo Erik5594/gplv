@@ -31,8 +31,7 @@ public class PedidoAliexpressBo implements Serializable{
             return pedidosAliexpressDto;
         }
         for(PedidoAliexpress pedidoAliexpress : pedidosAliexpress){
-            PedidoShopifyDto pedidoShopifyDto = PedidoShopifyCast.castPedidoShopify(pedidoAliexpress.getPedidoShopify());
-            pedidosAliexpressDto.add(PedidoAliexpressCast.castPedidoAliexpress(pedidoAliexpress, pedidoShopifyDto));
+            pedidosAliexpressDto.add(PedidoAliexpressCast.castPedidoAliexpress(pedidoAliexpress));
         }
         return pedidosAliexpressDto;
     }
@@ -40,8 +39,7 @@ public class PedidoAliexpressBo implements Serializable{
     public PedidoAliexpressDto getPedidoAliexpressById(Long id){
         PedidoAliexpress pedidoAliexpress = pedidoAliexpressDao.buscarPedidoAliexpress(id);
         if(pedidoAliexpress != null){
-            PedidoShopifyDto pedidoShopifyDto = PedidoShopifyCast.castPedidoShopify(pedidoAliexpress.getPedidoShopify());
-            return PedidoAliexpressCast.castPedidoAliexpress(pedidoAliexpress, pedidoShopifyDto);
+            return PedidoAliexpressCast.castPedidoAliexpress(pedidoAliexpress);
         }
         return null;
     }
@@ -92,8 +90,7 @@ public class PedidoAliexpressBo implements Serializable{
             return pedidosAliexpressDto;
         }
         for(PedidoAliexpress pedidoAliexpress : pedidosAliexpress){
-            PedidoShopifyDto pedidoShopifyDto = PedidoShopifyCast.castPedidoShopify(pedidoAliexpress.getPedidoShopify());
-            pedidosAliexpressDto.add(PedidoAliexpressCast.castPedidoAliexpress(pedidoAliexpress, pedidoShopifyDto));
+            pedidosAliexpressDto.add(PedidoAliexpressCast.castPedidoAliexpress(pedidoAliexpress));
         }
         return pedidosAliexpressDto;
     }
