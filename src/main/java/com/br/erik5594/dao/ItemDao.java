@@ -1,6 +1,7 @@
 package com.br.erik5594.dao;
 
 import com.br.erik5594.model.Item;
+import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Produto;
 
@@ -12,10 +13,10 @@ public class ItemDao {
     @Inject
     private EntityManager manager;
 
-    public Item buscarItem(PedidoShopify pedidoShopify, Produto produto){
+    public Item buscarItem(int pedidoShopify, String produto){
         try{
-
-            return manager.createQuery("from Item where pedidoShopify = :pedidoShopify and produto = :produto", Item.class)
+            String hql = "from Item where id.pedidoShopify.numeroPedido = :pedidoShopify and id.produto.skuProduto = :produto and pedidoAliexpress is null";
+            return manager.createQuery(hql, Item.class)
                     .setParameter("pedidoShopify", pedidoShopify)
                     .setParameter("produto", produto)
                     .getSingleResult();
@@ -26,5 +27,13 @@ public class ItemDao {
 
     public void editarItem(Item item){
         manager.merge(item);
+    }
+
+    public void atualizarIdAliexpress(int pedidoShopify, String skuProduto, PedidoAliexpress pedidoAliexpress){
+        Item item = buscarItem(pedidoShopify, skuProduto);
+        if(item != null){
+            item.setPedidoAliexpress(pedidoAliexpress);
+            editarItem(item);
+        }
     }
 }

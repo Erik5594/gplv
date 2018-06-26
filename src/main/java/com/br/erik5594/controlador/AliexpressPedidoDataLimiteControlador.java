@@ -19,6 +19,8 @@ public @Data class AliexpressPedidoDataLimiteControlador implements Serializable
     private List<PedidoAliexpressDto> pedidosAliexpress;
 
     public void carregarPedidosVencendoPrazo(){
-        pedidosAliexpress = pedidoAliexpressBo.pedidosVencendoPrazo();
+        if(pedidosAliexpress == null || pedidosAliexpress.isEmpty()){
+            pedidosAliexpress = pedidoAliexpressBo.pedidosVencendoPrazo();
+        }
     }
 }

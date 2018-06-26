@@ -14,6 +14,8 @@ public @Data class PedidoAliexpressDto implements Serializable {
     private Date dataLimiteDisputa;
     private StatusPedidoAliexpress statusPedidoAliexpress;
     private RastreamentoDto rastreamento;
+    private int numeroPedidoShopify;
+    private String skuProduto;
 
     @Override
     public boolean equals(Object o) {

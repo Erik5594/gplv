@@ -7,6 +7,7 @@ import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.StatusPedidoAliexpress;
 import com.br.erik5594.util.cast.PedidoAliexpressCast;
 import com.br.erik5594.util.jpa.Transactional;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
@@ -71,6 +72,8 @@ public class PedidoAliexpressBo implements Serializable{
         PedidoAliexpressDto pedidoAliexpressDto = new PedidoAliexpressDto();
         pedidoAliexpressDto.setIdAliexpress(new Long(vetorObjeto[12]));
         pedidoAliexpressDto.setStatusPedidoAliexpress(StatusPedidoAliexpress.NORMAL);
+        pedidoAliexpressDto.setNumeroPedidoShopify(Integer.parseInt(vetorObjeto[0].replaceAll("\\D", "")));
+        pedidoAliexpressDto.setSkuProduto(vetorObjeto[7]);
         return pedidoAliexpressDto;
     }
 

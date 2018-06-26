@@ -13,6 +13,8 @@ public class PedidoAliexpressCast {
         pedidoAliexpress.setStatusPedidoAliexpress(pedidoAliexpressDto.getStatusPedidoAliexpress());
         pedidoAliexpress.setIdAliexpress(pedidoAliexpressDto.getIdAliexpress());
         pedidoAliexpress.setDataLimiteDisputa(pedidoAliexpressDto.getDataLimiteDisputa());
+        pedidoAliexpress.setSkuProduto(pedidoAliexpressDto.getSkuProduto());
+        pedidoAliexpress.setNumeroPedidoShopify(pedidoAliexpressDto.getNumeroPedidoShopify());
         return pedidoAliexpress;
     }
 
@@ -25,6 +27,8 @@ public class PedidoAliexpressCast {
         pedidoAliexpressDto.setStatusPedidoAliexpress(pedidoAliexpress.getStatusPedidoAliexpress());
         pedidoAliexpressDto.setIdAliexpress(pedidoAliexpress.getIdAliexpress());
         pedidoAliexpressDto.setDataLimiteDisputa(pedidoAliexpress.getDataLimiteDisputa());
+        pedidoAliexpressDto.setSkuProduto(pedidoAliexpress.getSkuProduto());
+        pedidoAliexpressDto.setNumeroPedidoShopify(pedidoAliexpress.getNumeroPedidoShopify());
         return pedidoAliexpressDto;
     }
 }

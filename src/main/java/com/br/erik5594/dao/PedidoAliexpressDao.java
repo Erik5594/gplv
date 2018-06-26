@@ -1,6 +1,7 @@
 package com.br.erik5594.dao;
 
 import com.br.erik5594.model.PedidoAliexpress;
+import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.model.StatusPedidoAliexpress;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,10 @@ public class PedidoAliexpressDao implements Serializable{
     private EntityManager manager;
     @Inject
     private RastreamentoDao rastreamentoDao;
+    @Inject
+    private ItemDao itemDao;
+    @Inject
+    private PedidoShopifyDao pedidoShopifyDao;
 
     public List<PedidoAliexpress> getTodosPedidosAliexpress(){
         return manager.createQuery("from PedidoAliexpress", PedidoAliexpress.class).getResultList();
@@ -29,23 +34,41 @@ public class PedidoAliexpressDao implements Serializable{
         for(PedidoAliexpress pedidoAliexpress : listaPedidoAliexpress){
             PedidoAliexpress pedidoAliexpressBanco = buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress());
             if(pedidoAliexpressBanco != null){
-                if(pedidoAliexpressBanco.getRastreamento() == null
-                        && pedidoAliexpress.getRastreamento() != null
-                        && StringUtils.isNotBlank(pedidoAliexpress.getRastreamento().getCodigoRastreamento())){
-                    Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
-                    if(rastreamento != null){
-                        pedidoAliexpressBanco.setRastreamento(rastreamento);
-                    }
-                    manager.merge(pedidoAliexpress);
-                }
+                setarRastreamento(pedidoAliexpress, pedidoAliexpressBanco);
+                setarDataLimite(pedidoAliexpressBanco, pedidoAliexpress.getNumeroPedidoShopify());
+                manager.merge(pedidoAliexpressBanco);
             }else{
                 if(pedidoAliexpress.getRastreamento() != null && StringUtils.isNotBlank(pedidoAliexpress.getRastreamento().getCodigoRastreamento())){
                  Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
                  pedidoAliexpress.setRastreamento(rastreamento);
                 }
+                setarDataLimite(pedidoAliexpress, pedidoAliexpress.getNumeroPedidoShopify());
                 manager.persist(pedidoAliexpress);
             }
-            manager.flush();
+            itemDao.atualizarIdAliexpress(pedidoAliexpress.getNumeroPedidoShopify(), pedidoAliexpress.getSkuProduto(), pedidoAliexpress);
+        }
+    }
+
+    private void setarRastreamento(PedidoAliexpress pedidoAliexpress, PedidoAliexpress pedidoAliexpressBanco) {
+        if(pedidoAliexpressBanco.getRastreamento() == null
+                && pedidoAliexpress.getRastreamento() != null
+                && StringUtils.isNotBlank(pedidoAliexpress.getRastreamento().getCodigoRastreamento())){
+            Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
+            if(rastreamento != null){
+                pedidoAliexpressBanco.setRastreamento(rastreamento);
+            }
+        }
+    }
+
+    private void setarDataLimite(PedidoAliexpress pedidoAliexpressBanco, int numeroPedidoShopify) {
+        if(pedidoAliexpressBanco.getDataLimiteDisputa() == null){
+            PedidoShopify pedidoShopify = pedidoShopifyDao.buscarPedidoShopify(numeroPedidoShopify);
+            if(pedidoShopify != null && pedidoShopify.getDataPedido() != null){
+                Calendar data = Calendar.getInstance();
+                data.setTime(pedidoShopify.getDataPedido());
+                data.set(Calendar.DAY_OF_YEAR, 90);
+                pedidoAliexpressBanco.setDataLimiteDisputa(data.getTime());
+            }
         }
     }
 

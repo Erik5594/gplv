@@ -27,6 +27,12 @@ public @Data class PedidoAliexpress implements Serializable {
     @JoinColumn(name = "cod_rastreamento")
     private Rastreamento rastreamento;
 
+    @Transient
+    private int numeroPedidoShopify;
+
+    @Transient
+    private String skuProduto;
+
     @Override
     public boolean equals(Object o) {
         if(this == null && o == null) return true;
