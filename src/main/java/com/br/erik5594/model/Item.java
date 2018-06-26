@@ -1,9 +1,6 @@
 package com.br.erik5594.model;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,19 +9,8 @@ import java.util.Objects;
 @Entity
 public @Data class Item implements Serializable{
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    @Setter(value = AccessLevel.PRIVATE)
-    private int idItem;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "pedido_shopify")
-    private PedidoShopify pedidoShopify;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sku_produto")
-    private Produto produto;
+    @EmbeddedId
+    private ItemPk id;
 
     @Column(name = "quantidade")
     private int quantidadeProduto;
@@ -39,13 +25,11 @@ public @Data class Item implements Serializable{
         if(this != null && o == null) return false;
         if(this == null && o != null) return false;
         Item item = (Item) o;
-        return Objects.equals(pedidoShopify, item.pedidoShopify) &&
-                Objects.equals(produto, item.produto);
+        return Objects.equals(id, item.id);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(super.hashCode(), pedidoShopify, produto);
+        return Objects.hash(super.hashCode(), id);
     }
 }

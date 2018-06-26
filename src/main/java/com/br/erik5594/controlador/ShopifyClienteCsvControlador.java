@@ -27,6 +27,8 @@ public @Data class ShopifyClienteCsvControlador implements Serializable {
     public void upload(FileUploadEvent evento) throws Exception {
         FacesMessage messagem;
         try {
+            salvarClienteDefault();
+
             BufferedReader linhasArquivo = FileUtil.obterBufferReader(evento.getFile());
             clientes = clienteBo.getListaDeObjetoDoArquivo(linhasArquivo, ",");
             clienteBo.salvarListaClientes(clientes);
@@ -37,5 +39,17 @@ public @Data class ShopifyClienteCsvControlador implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, messagem);
             e.printStackTrace();
         }
+    }
+
+    private void salvarClienteDefault() throws Exception {
+        clientes.add(getClienteDefault());
+        clienteBo.salvarListaClientes(clientes);
+        clientes = new ArrayList<>();
+    }
+
+    private ClienteDto getClienteDefault(){
+        ClienteDto clienteDto = new ClienteDto();
+        clienteDto.setPrimeiroNome("Cliente não indentificado");
+        return clienteDto;
     }
 }

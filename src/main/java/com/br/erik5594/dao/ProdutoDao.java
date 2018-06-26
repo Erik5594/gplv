@@ -25,6 +25,17 @@ public class ProdutoDao implements Serializable{
         }
     }
 
+    public void salvarProduto(Produto produto){
+        if(produto != null){
+            Produto produtoBanco = buscarProduto(produto.getSkuProduto());
+            if(produtoBanco == null){
+                manager.persist(produto);
+            }else if(ProdutoCast.adicionarAlteracoes(produtoBanco, produto)){
+                manager.merge(produtoBanco);
+            }
+        }
+    }
+
     public List<Produto> getTodosProdutos(){
         return manager.createQuery("from Produto", Produto.class).getResultList();
     }

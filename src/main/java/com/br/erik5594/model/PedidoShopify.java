@@ -26,7 +26,7 @@ public @Data class PedidoShopify implements Serializable{
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoShopify", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id.pedidoShopify", fetch = FetchType.LAZY)
     private List<Item> itens;
 
     @Column(name = "valor_total")

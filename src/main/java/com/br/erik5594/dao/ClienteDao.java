@@ -29,8 +29,17 @@ public class ClienteDao implements Serializable{
         }
     }
 
-    public List<Cliente> getTodosClientes(){
-        return manager.createQuery("from Cliente", Cliente.class).getResultList();
+    public void salvarCliente(Cliente cliente) throws Exception{
+        if(cliente != null){
+            Cliente clienteBanco = buscarCliente(cliente.getEmail(), cliente.getTelefone());
+            if(clienteBanco == null){
+                manager.persist(cliente);
+            }else{
+                if(ClienteCast.adcionarAlteracoes(clienteBanco, cliente)){
+                    manager.merge(clienteBanco);
+                }
+            }
+        }
     }
 
     public Cliente buscarCliente(String email, String telefone) throws Exception{

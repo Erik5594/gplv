@@ -23,7 +23,7 @@ public @Data class PedidoAliexpress implements Serializable {
     @Column(name = "status_pedido_aliexpress")
     private StatusPedidoAliexpress statusPedidoAliexpress;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "cod_rastreamento")
     private Rastreamento rastreamento;
 

@@ -3,6 +3,7 @@ package com.br.erik5594.dao;
 import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.model.StatusPedidoAliexpress;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -28,19 +29,20 @@ public class PedidoAliexpressDao implements Serializable{
         for(PedidoAliexpress pedidoAliexpress : listaPedidoAliexpress){
             PedidoAliexpress pedidoAliexpressBanco = buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress());
             if(pedidoAliexpressBanco != null){
-                if(pedidoAliexpressBanco.getRastreamento() == null && pedidoAliexpress.getRastreamento() != null){
+                if(pedidoAliexpressBanco.getRastreamento() == null
+                        && pedidoAliexpress.getRastreamento() != null
+                        && StringUtils.isNotBlank(pedidoAliexpress.getRastreamento().getCodigoRastreamento())){
                     Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
                     if(rastreamento != null){
-                        pedidoAliexpressBanco.setRastreamento(rastreamento);
-                    }else{
-                        rastreamento = new Rastreamento();
-                        rastreamento.setCodigoRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
-                        rastreamentoDao.adicionarRastreamento(rastreamento);
                         pedidoAliexpressBanco.setRastreamento(rastreamento);
                     }
                     manager.merge(pedidoAliexpress);
                 }
             }else{
+                if(pedidoAliexpress.getRastreamento() != null && StringUtils.isNotBlank(pedidoAliexpress.getRastreamento().getCodigoRastreamento())){
+                 Rastreamento rastreamento = rastreamentoDao.buscarRastreamento(pedidoAliexpress.getRastreamento().getCodigoRastreamento());
+                 pedidoAliexpress.setRastreamento(rastreamento);
+                }
                 manager.persist(pedidoAliexpress);
             }
             manager.flush();

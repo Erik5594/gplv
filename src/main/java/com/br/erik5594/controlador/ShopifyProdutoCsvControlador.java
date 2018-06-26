@@ -27,6 +27,7 @@ public @Data class ShopifyProdutoCsvControlador implements Serializable {
     public void upload(FileUploadEvent evento) {
         FacesMessage messagem;
         try {
+            salvarProdutoDefault();
             BufferedReader linhasArquivo = FileUtil.obterBufferReader(evento.getFile());
             produtos = produtoBo.getListaDeObjetoDoArquivo(linhasArquivo, ",");
             produtoBo.salvarListaProdutos(produtos);
@@ -37,5 +38,18 @@ public @Data class ShopifyProdutoCsvControlador implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, messagem);
             e.printStackTrace();
         }
+    }
+
+    private void salvarProdutoDefault() {
+        produtos.add(getProdutoDefault());
+        produtoBo.salvarListaProdutos(produtos);
+        produtos = new ArrayList<>();
+    }
+
+    private ProdutoDto getProdutoDefault() {
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setSkuProduto("nao-identificado");
+        produtoDto.setNomeProduto("Produto não identificado");
+        return produtoDto;
     }
 }

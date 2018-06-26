@@ -30,18 +30,9 @@ public class ClienteBo implements Serializable{
         clienteDao.salvarListaClientes(clientes);
     }
 
-    public List<ClienteDto> getTodosClientes(){
-        List<ClienteDto> clientesDto = new ArrayList<>();
-        List<Cliente> clientes = clienteDao.getTodosClientes();
-        if(clientes == null){
-            return clientesDto;
-        }
-        for(Cliente cliente : clientes){
-            if(cliente != null){
-                clientesDto.add(ClienteCast.castCliente(cliente));
-            }
-        }
-        return clientesDto;
+    @Transactional
+    public void salvarCliente(ClienteDto clienteDto) throws Exception{
+        clienteDao.salvarCliente(ClienteCast.castClienteDto(clienteDto));
     }
 
     public List<ClienteDto> getListaDeObjetoDoArquivo(BufferedReader linhasArquivo, String separador) throws IOException {

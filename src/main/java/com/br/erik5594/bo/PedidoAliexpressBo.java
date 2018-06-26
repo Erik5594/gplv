@@ -1,28 +1,26 @@
 package com.br.erik5594.bo;
 
 import com.br.erik5594.dao.PedidoAliexpressDao;
-import com.br.erik5594.dao.RastreamentoDao;
-import com.br.erik5594.dto.*;
-import com.br.erik5594.model.*;
-import com.br.erik5594.util.cast.ItemCast;
+import com.br.erik5594.dto.PedidoAliexpressDto;
+import com.br.erik5594.dto.RastreamentoDto;
+import com.br.erik5594.model.PedidoAliexpress;
+import com.br.erik5594.model.StatusPedidoAliexpress;
 import com.br.erik5594.util.cast.PedidoAliexpressCast;
-import com.br.erik5594.util.cast.PedidoShopifyCast;
-import com.br.erik5594.util.cast.RastreamentoCast;
 import com.br.erik5594.util.jpa.Transactional;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class PedidoAliexpressBo implements Serializable{
 
     @Inject
     private PedidoAliexpressDao pedidoAliexpressDao;
+    @Inject
+    private RastreamentoBo rastreamentoBo;
 
     public List<PedidoAliexpressDto> getTodosPedidosAliexpress(){
         List<PedidoAliexpressDto> pedidosAliexpressDto = new ArrayList<>();
@@ -49,12 +47,14 @@ public class PedidoAliexpressBo implements Serializable{
         String linha = linhasArquivo.readLine();
         linha = linhasArquivo.readLine();
         String numeroPedido = "";
-        PedidoAliexpressDto pedidoAliexpress = new PedidoAliexpressDto();
+        PedidoAliexpressDto pedidoAliexpress;
         while (linha != null) {
             String[] vetorObjeto = linha.split(separador);
             if(vetorObjeto.length >= 13){
                 if(!numeroPedido.equals(vetorObjeto[12])) {
                     pedidoAliexpress = obterObjetoPedido(vetorObjeto);
+                    RastreamentoDto rastreamentoDto = obterObjetoRastreamento(vetorObjeto[11]);
+                    pedidoAliexpress.setRastreamento(rastreamentoDto);
                     numeroPedido = pedidoAliexpress.getIdAliexpress().toString();
                     pedidosAliexpressDto.add(pedidoAliexpress);
                 }
@@ -69,14 +69,19 @@ public class PedidoAliexpressBo implements Serializable{
 
     private PedidoAliexpressDto obterObjetoPedido(String[] vetorObjeto) {
         PedidoAliexpressDto pedidoAliexpressDto = new PedidoAliexpressDto();
-
-        RastreamentoDto rastreamentoDto = new RastreamentoDto();
-        rastreamentoDto.setCodigoRastreamento(vetorObjeto[11]);
-
-        pedidoAliexpressDto.setRastreamento(rastreamentoDto);
         pedidoAliexpressDto.setIdAliexpress(new Long(vetorObjeto[12]));
         pedidoAliexpressDto.setStatusPedidoAliexpress(StatusPedidoAliexpress.NORMAL);
         return pedidoAliexpressDto;
+    }
+
+    private RastreamentoDto obterObjetoRastreamento(String codigoRastreamento) {
+        RastreamentoDto rastreamentoDto = rastreamentoBo.buscarRastreamento(codigoRastreamento);
+        if(rastreamentoDto == null){
+            rastreamentoDto = new RastreamentoDto();
+            rastreamentoDto.setCodigoRastreamento(codigoRastreamento);
+            rastreamentoBo.adicionarRastreamento(rastreamentoDto);
+        }
+        return rastreamentoDto;
     }
 
     public Long getTotalPedidosAliexpress(){
@@ -95,6 +100,7 @@ public class PedidoAliexpressBo implements Serializable{
         return pedidosAliexpressDto;
     }
 
+    @Transactional
     public void salvarListaPedidoAliexpress(List<PedidoAliexpressDto> pedidosAliexpressDto){
         List<PedidoAliexpress> pedidosAliexpress = new ArrayList<>();
         for(PedidoAliexpressDto pedidoAliexpressDto : pedidosAliexpressDto){

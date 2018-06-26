@@ -28,6 +28,11 @@ public class ProdutoBo implements Serializable{
         produtoDao.salvarListaProdutos(produtos);
     }
 
+    @Transactional
+    public void salvarProduto(ProdutoDto produtoDto){
+        produtoDao.salvarProduto(ProdutoCast.castProdutoDto(produtoDto));
+    }
+
     public List<ProdutoDto> getTodosProdutos(){
         List<ProdutoDto> produtosDto = new ArrayList<>();
         List<Produto> produtos = produtoDao.getTodosProdutos();

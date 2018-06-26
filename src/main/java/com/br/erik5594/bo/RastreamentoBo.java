@@ -27,6 +27,10 @@ public class RastreamentoBo implements Serializable{
         return rastreamentosDto;
     }
 
+    public RastreamentoDto buscarRastreamento(String codRastreamento){
+        return RastreamentoCast.castRastreamento(rastreamentoDao.buscarRastreamento(codRastreamento));
+    }
+
     @Transactional
     public void adicionarRastreamento(RastreamentoDto rastreamentoDto){
         rastreamentoDao.adicionarRastreamento(RastreamentoCast.castRastreamentoDto(rastreamentoDto));

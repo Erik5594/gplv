@@ -23,6 +23,12 @@ public class PedidoShopifyBo implements Serializable{
     @Inject
     private PedidoShopifyDao pedidoShopifyDao;
 
+    @Inject
+    private ClienteBo clienteBo;
+
+    @Inject
+    private ProdutoBo produtoBo;
+
     @Transactional
     public void salvarListaPedidoShopify(List<PedidoShopifyDto> pedidosShopifyDto) throws Exception{
         List<PedidoShopify> pedidosShopify = new ArrayList<>();
@@ -30,18 +36,6 @@ public class PedidoShopifyBo implements Serializable{
             pedidosShopify.add(PedidoShopifyCast.castPedidoShopifyDto(pedidoDto));
         }
         pedidoShopifyDao.salvarListaPedidoShopify(pedidosShopify);
-    }
-
-    public List<PedidoShopifyDto> getTodosPedidosShopify(){
-        List<PedidoShopifyDto> pedidosShopifyDto = new ArrayList<>();
-        List<PedidoShopify> pedidosShopify = pedidoShopifyDao.getTodosPedidosShopify();
-        if(pedidosShopify == null){
-            return pedidosShopifyDto;
-        }
-        for(PedidoShopify pedido : pedidosShopify){
-            pedidosShopifyDto.add(PedidoShopifyCast.castPedidoShopify(pedido));
-        }
-        return pedidosShopifyDto;
     }
 
     public PedidoShopifyDto getPedidoShopifyByNumeroPedido(int numeroPedido){
@@ -59,6 +53,8 @@ public class PedidoShopifyBo implements Serializable{
             if(vetorObjeto.length >= 56){
                 if(numeroPedido != Integer.parseInt(vetorObjeto[0].replaceAll("\\D",""))) {
                     pedido = obterObjetoPedido(vetorObjeto);
+                    ClienteDto cliente = obterObjetoCliente(vetorObjeto);
+                    pedido.setCliente(cliente);
                     numeroPedido = pedido.getNumeroPedido();
                     pedidosDto.add(pedido);
                 }
@@ -94,13 +90,56 @@ public class PedidoShopifyBo implements Serializable{
         return pedidoDto;
     }
 
-    private ItemDto obterObjetoItem(String[] vetorObjeto, PedidoShopifyDto pedido) throws ParseException {
+    private ClienteDto obterObjetoCliente(String[] vetorObjeto) throws Exception {
+        String email = StringUtils.isNotBlank(vetorObjeto[1]) ? vetorObjeto[1].toLowerCase():null;
+        String telefone = StringUtils.isNotBlank(vetorObjeto[33]) ? vetorObjeto[33].replaceAll("\\D",""):null;
+        ClienteDto clienteDto = clienteBo.buscarCliente(email, telefone);
+
+        if(clienteDto == null){
+            clienteDto = new ClienteDto();
+            clienteDto.setTelefone(email);
+            clienteDto.setTelefone(telefone);
+            clienteDto.setPrimeiroNome(vetorObjeto[24]);
+            clienteDto.setEstado(vetorObjeto[31]);
+            clienteDto.setCidade(vetorObjeto[29]);
+            clienteDto.setComplemento(vetorObjeto[27]);
+            clienteDto.setLogradouro(vetorObjeto[26]);
+            clienteDto.setCep(vetorObjeto[30]);
+            clienteDto.setCpf(vetorObjeto[28]);
+            clienteDto.setSobreNome(null);
+            clienteBo.salvarCliente(clienteDto);
+        }
+
+        return clienteDto;
+    }
+
+    private ItemDto obterObjetoItem(String[] vetorObjeto, PedidoShopifyDto pedido) {
         ItemDto itemDto = new ItemDto();
         itemDto.setQuantidadeProduto(Integer.parseInt(vetorObjeto[16]));
-        ProdutoDto produtoDto = new ProdutoDto();
-        produtoDto.setSkuProduto(vetorObjeto[20]);
-        itemDto.setProduto(produtoDto);
         itemDto.setPedidoShopify(pedido);
+        ProdutoDto produtoDto = produtoBo.buscarProduto(vetorObjeto[20]);
+        if(produtoDto == null){
+            produtoDto = new ProdutoDto();
+            String[] produtoVetor = vetorObjeto[17].split(" - ");
+            produtoDto.setSkuProduto(vetorObjeto[20]);
+            if(produtoVetor.length >= 3){
+                produtoDto.setNomeProduto(produtoVetor[0]+" "+produtoVetor[1]);
+                produtoDto.setVarianteProduto(produtoVetor[2]);
+            }else if(produtoVetor.length == 2){
+                produtoDto.setNomeProduto(produtoVetor[0]);
+                produtoDto.setVarianteProduto(produtoVetor[1]);
+            }else if(produtoVetor.length == 1){
+                produtoDto.setNomeProduto(produtoVetor[0]);
+                produtoDto.setVarianteProduto(null);
+            }else{
+                produtoDto.setSkuProduto("nao-identificado");
+                produtoDto.setNomeProduto(null);
+                produtoDto.setVarianteProduto(null);
+            }
+
+            produtoBo.salvarProduto(produtoDto);
+        }
+        itemDto.setProduto(produtoDto);
         return itemDto;
     }
 
