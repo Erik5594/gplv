@@ -5,12 +5,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
-    <ui:define name="titulo">Importar Clientes Shopify</ui:define>
+    <ui:define name="titulo">Pedido Shopify</ui:define>
     <ui:define name="corpo">
     <f:metadata>
         <o:viewParam name="pedido" value="#{detalhaPedidoControlador.pedidoShopifyDto}"/>
     </f:metadata>
-    <h:form id="formOberlo">
+    <h:form id="formPedidoShopify">
         <p:growl id="messagens" showDetail="true"/>
             <p:panel header="Dados Pedido">
                 <p:outputLabel rendered="#{detalhaPedidoControlador.pedidoShopifyDto.pedidoCancelado}" style="color: brown"
@@ -26,7 +26,7 @@
                     <p:outputLabel value="Valor Total (R$):"/>
                     <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.valorTotal}"/>
                 </h:panelGrid>
-                <p:panel style="margin-top: 15px" >
+                <p:fieldset legend="Cliente">
                     <h:panelGrid columns="2" rendered="#{detalhaPedidoControlador.pedidoShopifyDto.cliente != null}">
                         <p:outputLabel value="Nome:"/>
                         <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.primeiroNome} #{detalhaPedidoControlador.pedidoShopifyDto.cliente.sobreNome}"/>
@@ -37,7 +37,7 @@
                         <p:outputLabel value="Endereço:"/>
                         <p:outputLabel value="#{detalhaPedidoControlador.pedidoShopifyDto.cliente.cidade}/#{detalhaPedidoControlador.pedidoShopifyDto.cliente.estado}"/>
                     </h:panelGrid>
-                </p:panel>
+                </p:fieldset>
             </p:panel>
         <p:dataTable var="item" value="#{detalhaPedidoControlador.pedidoShopifyDto.itens}"
                     emptyMessage="Nenhum Item!" style="margin-top: 15px">
@@ -53,12 +53,25 @@
             <p:column headerText="Quantidade">
                 <p:outputLabel value="#{item.quantidadeProduto}"/>
             </p:column>
-            <p:column headerText="Pedido Aliexpress" rendered="#{item.pedidoAliexpress != null}">
-                <p:button value="#{item.pedidoAliexpress.idAliexpress.toString()}" outcome="/private/detalhe/detalhe-pedido-aliexpress">
-                    <f:param name="pedidoAliexpress" value="#{item.pedidoAliexpress.idAliexpress}"/>
-                </p:button>
+            <p:column headerText="Pedido Aliexpress">
+                <p:commandButton update=":formPedidoShopify:dialogPedidoAliexpress" oncomplete="PF('dialogPedidoAliexpress').show()" icon="ui-icon-search"
+                                 title="Ver Detalhe" value="#{item.pedidoAliexpress.idAliexpress.toString()}">
+                    <f:setPropertyActionListener value="#{item.pedidoAliexpress}" target="#{detalhaPedidoControlador.pedidoAliexpressDto}"/>
+                </p:commandButton>
             </p:column>
         </p:dataTable>
+        <p:dialog header="Pedido Aliexpress - #{detalhaPedidoControlador.pedidoAliexpressDto.idAliexpress}" widgetVar="dialogPedidoAliexpress" id="dialogPedidoAliexpress" resizable="false"
+                  modal="true">
+            <h:panelGrid columns="2">
+                <p:outputLabel value="N° Pedido:" style="font-weight: bold"/>
+                <p:link href="#{detalhaPedidoControlador.pedidoAliexpressDto.linkPedidoAliexpress}"
+                        value="#{detalhaPedidoControlador.pedidoAliexpressDto.idAliexpress}" target="_blank"/>
+                <p:outputLabel value="Data Limite:" style="font-weight: bold"/>
+                <p:outputLabel value="#{detalhaPedidoControlador.pedidoAliexpressDto.dataLimiteDisputaFormatada}"/>
+                <p:outputLabel value="Status:" style="font-weight: bold"/>
+                <p:outputLabel value="#{detalhaPedidoControlador.pedidoAliexpressDto.statusPedidoAliexpress.descricao}"/>
+            </h:panelGrid>
+        </p:dialog>
     </h:form>
     </ui:define>
 </ui:composition>

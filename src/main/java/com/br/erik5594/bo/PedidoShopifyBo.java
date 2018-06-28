@@ -146,4 +146,8 @@ public class PedidoShopifyBo implements Serializable{
     public Long getTotalPedidosShopify(){
         return pedidoShopifyDao.totalPedidos();
     }
+
+    public PedidoShopifyDto buscarPedidoByIdAliexpress(Long idAliexpress){
+        return PedidoShopifyCast.castPedidoShopify(pedidoShopifyDao.buscarPedidoByIdAliexpress(idAliexpress));
+    }
 }

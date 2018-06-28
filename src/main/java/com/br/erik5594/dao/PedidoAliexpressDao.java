@@ -49,6 +49,16 @@ public class PedidoAliexpressDao implements Serializable{
         }
     }
 
+    public void atualizarStatusPedidosAliexpress(List<PedidoAliexpress> listaPedidoAliexpress){
+        for(PedidoAliexpress pedidoAliexpress : listaPedidoAliexpress){
+            PedidoAliexpress pedidoAliexpressBanco = buscarPedidoAliexpress(pedidoAliexpress.getIdAliexpress());
+            if(pedidoAliexpressBanco != null){
+                pedidoAliexpressBanco.setStatusPedidoAliexpress(pedidoAliexpress.getStatusPedidoAliexpress());
+                manager.merge(pedidoAliexpressBanco);
+            }
+        }
+    }
+
     private void setarRastreamento(PedidoAliexpress pedidoAliexpress, PedidoAliexpress pedidoAliexpressBanco) {
         if(pedidoAliexpressBanco.getRastreamento() == null
                 && pedidoAliexpress.getRastreamento() != null
@@ -66,7 +76,7 @@ public class PedidoAliexpressDao implements Serializable{
             if(pedidoShopify != null && pedidoShopify.getDataPedido() != null){
                 Calendar data = Calendar.getInstance();
                 data.setTime(pedidoShopify.getDataPedido());
-                data.set(Calendar.DAY_OF_YEAR, 90);
+                data.add(Calendar.DAY_OF_YEAR, 90);
                 pedidoAliexpressBanco.setDataLimiteDisputa(data.getTime());
             }
         }
@@ -91,6 +101,7 @@ public class PedidoAliexpressDao implements Serializable{
 
         List<StatusPedidoAliexpress> status = new ArrayList<>();
         status.add(StatusPedidoAliexpress.CONCLUIDO);
+        status.add(StatusPedidoAliexpress.REEMBOLSADO);
         status.add(StatusPedidoAliexpress.DISPUTA);
         String hql = "from PedidoAliexpress where dataLimiteDisputa < :dataMaxima and statusPedidoAliexpress not in (:status)";
 

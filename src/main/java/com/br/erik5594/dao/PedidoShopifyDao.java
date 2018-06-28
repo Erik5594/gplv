@@ -18,6 +18,8 @@ public class PedidoShopifyDao implements Serializable{
     private ProdutoDao produtoDao;
     @Inject
     private ClienteDao clienteDao;
+    @Inject
+    private ItemDao itemDao;
 
     public void salvarListaPedidoShopify(List<PedidoShopify> pedidosShopify) throws Exception{
         for(PedidoShopify pedidoShopify : pedidosShopify){
@@ -67,5 +69,20 @@ public class PedidoShopifyDao implements Serializable{
     public Long totalPedidos(){
         String hql = "select count(*) from PedidoShopify";
         return (Long)manager.createQuery(hql).getSingleResult();
+    }
+
+    public PedidoShopify buscarPedidoByIdAliexpress(Long idAliexpress){
+        try{
+            String hql = "select i.id.pedidoShopify from Item as i where i.pedidoAliexpress.idAliexpress = :idPedidoAliexpress";
+            List<PedidoShopify> pedidoShopify = (List<PedidoShopify>) manager.createQuery(hql)
+                    .setParameter("idPedidoAliexpress", idAliexpress)
+                    .getResultList();
+            if(pedidoShopify != null && !pedidoShopify.isEmpty()){
+                return pedidoShopify.get(0);
+            }
+            return null;
+        }catch (NoResultException e){
+            return null;
+        }
     }
 }

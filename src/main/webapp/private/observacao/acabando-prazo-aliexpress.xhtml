@@ -18,18 +18,47 @@
                          emptyMessage="Nenhum registro" id="tabelaPedidosAliexpress" style="margin-top: 15px"
                          rows="3" paginator="true" rowsPerPageTemplate="5,10,20,40,80"
                          currentPageReportTemplate="Intervalo {startRecord}-{endRecord} do total de {totalRecords} registros"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            selection="#{aliexpressPedidoDataLimiteControlador.pedidosAliexpressSelecionados}" rowKey="#{pedidoAliexpress.idAliexpress}">
                 <f:facet name="header">
                     Pedidos Aliexpress
                 </f:facet>
-                <p:column headerText="Número Pedido Aliexpress">
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="Número Pedido Aliexpress" sortBy="#{pedidoAliexpress.idAliexpress}" filterBy="#{pedidoAliexpress.idAliexpress}"
+                          filterMatchMode="contains">
                     <p:link href="#{pedidoAliexpress.linkPedidoAliexpress}"
                             value="#{pedidoAliexpress.idAliexpress}" target="_blank"/>
                 </p:column>
-                <p:column headerText="Data Limite Aliexpress">
+                <p:column headerText="Data Limite Aliexpress" sortBy="#{pedidoAliexpress.dataLimiteDisputa}">
                     <p:outputLabel value="#{pedidoAliexpress.dataLimiteDisputaFormatada}"/>
                 </p:column>
+                <p:column headerText="Status Pedido" sortBy="#{pedidoAliexpress.statusPedidoAliexpress.descricao}">
+                    <p:outputLabel value="#{pedidoAliexpress.statusPedidoAliexpress.descricao}"/>
+                </p:column>
+                <p:column>
+                    <p:button value="Detalhe" outcome="/private/detalhe/detalhe-pedido">
+                        <f:param name="pedido" value="#{aliexpressPedidoDataLimiteControlador.buscarNumeroPedidoShopify(pedidoAliexpress.idAliexpress)}"/>
+                    </p:button>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton process="tabelaPedidosAliexpress" update=":formAcabandoPrazoAliexpress:atualizarStatus" icon="ui-icon-search" value="Atualizar Status" oncomplete="PF('atualizarStatus').show()" />
+                </f:facet>
             </p:dataTable>
+
+            <p:dialog header="Atualizar Status" id="atualizarStatus" widgetVar="atualizarStatus" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputLabel value="Quantidade a ser alterado: #{aliexpressPedidoDataLimiteControlador.pedidosAliexpressSelecionados.size().toString()} registro(s)"/>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Novo Status:"/>
+                    <p:selectOneMenu value="#{aliexpressPedidoDataLimiteControlador.statusPedidoAliexpressSelecionado}"
+                                     converter="statusPedidoAliexpressConverter">
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione"/>
+                        <f:selectItems value="#{aliexpressPedidoDataLimiteControlador.statusPedidoAliexpress}"
+                                       var="status" itemLabel="#{status.descricao}" itemValue="#{status.descricao}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Atualizar" oncomplete="PF('atualizarStatus').hide()" actionListener="#{aliexpressPedidoDataLimiteControlador.atualizarStatus()}"
+                                     update="formAcabandoPrazoAliexpress"/>
+                </h:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

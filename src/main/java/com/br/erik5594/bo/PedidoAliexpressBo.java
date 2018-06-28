@@ -111,4 +111,13 @@ public class PedidoAliexpressBo implements Serializable{
         }
         pedidoAliexpressDao.salvarListaPedidoAliexpress(pedidosAliexpress);
     }
+
+    @Transactional
+    public void atualizarStatusPedidosAliexpress(List<PedidoAliexpressDto> pedidosAliexpressDto){
+        List<PedidoAliexpress> pedidosAliexpress = new ArrayList<>();
+        for(PedidoAliexpressDto pedidoAliexpressDto : pedidosAliexpressDto){
+            pedidosAliexpress.add(PedidoAliexpressCast.castPedidoAliexpressDto(pedidoAliexpressDto));
+        }
+        pedidoAliexpressDao.atualizarStatusPedidosAliexpress(pedidosAliexpress);
+    }
 }

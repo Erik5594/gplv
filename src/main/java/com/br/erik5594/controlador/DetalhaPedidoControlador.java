@@ -1,5 +1,6 @@
 package com.br.erik5594.controlador;
 
+import com.br.erik5594.dto.PedidoAliexpressDto;
 import com.br.erik5594.dto.PedidoShopifyDto;
 import lombok.Data;
 
@@ -11,5 +12,6 @@ import java.io.Serializable;
 @ViewScoped
 public @Data class DetalhaPedidoControlador implements Serializable{
     private PedidoShopifyDto pedidoShopifyDto;
+    private PedidoAliexpressDto pedidoAliexpressDto;
 
 }

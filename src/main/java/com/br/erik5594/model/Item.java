@@ -15,7 +15,7 @@ public @Data class Item implements Serializable{
     @Column(name = "quantidade")
     private int quantidadeProduto;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pedido_aliexpress")
     private PedidoAliexpress pedidoAliexpress;
 

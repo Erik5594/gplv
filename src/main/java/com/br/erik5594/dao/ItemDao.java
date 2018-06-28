@@ -2,8 +2,6 @@ package com.br.erik5594.dao;
 
 import com.br.erik5594.model.Item;
 import com.br.erik5594.model.PedidoAliexpress;
-import com.br.erik5594.model.PedidoShopify;
-import com.br.erik5594.model.Produto;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
