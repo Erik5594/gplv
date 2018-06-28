@@ -1,11 +1,15 @@
 package com.br.erik5594.dao;
 
 import com.br.erik5594.model.Rastreamento;
+import com.br.erik5594.model.StatusPedidoCorreios;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class RastreamentoDao implements Serializable{
@@ -19,7 +23,19 @@ public class RastreamentoDao implements Serializable{
     }
 
     public List<Rastreamento> getTodosRastreamentos(){
-        return manager.createQuery("from Rastreamento", Rastreamento.class)
+        Calendar data = Calendar.getInstance();
+        data.add(Calendar.HOUR_OF_DAY, -8);
+
+        List<StatusPedidoCorreios> status = new ArrayList<>();
+        status.add(StatusPedidoCorreios.ENTREGUE);
+        status.add(StatusPedidoCorreios.DEVOLVIDO);
+        String hql = "from Rastreamento " +
+                "where (dataUltimaAtualizacao < :dataUltimaAtualizacao or dataUltimaAtualizacao is null) " +
+                "and (status not in (:status) or status is null)";
+
+        return manager.createQuery(hql, Rastreamento.class)
+                .setParameter("dataUltimaAtualizacao",data, TemporalType.DATE)
+                .setParameter("status",status)
                 .getResultList();
     }
 

@@ -18,7 +18,6 @@ public class RastreamentoCast {
         rastreamentoDto.setCodigoRastreamento(rastreamento.getCodigoRastreamento());
         rastreamentoDto.setReclamacaoCorreios(ReclamacaoCorreiosCast.castReclamacaoCorreios(rastreamento.getReclamacaoCorreios()));
         rastreamentoDto.setUrlImagemUltimoStatus(rastreamento.getUrlImagemUltimoStatus());
-        rastreamentoDto.setEntregue(rastreamento.isEntregue());
         rastreamentoDto.setStatus(rastreamento.getStatus());
         List<RastreamentoEventos> eventos = rastreamento.getEventos();
         List<RastreamentoEventoDto> eventosDto = new ArrayList<>();
@@ -43,7 +42,6 @@ public class RastreamentoCast {
         rastreamento.setCodigoRastreamento(rastreamentoDto.getCodigoRastreamento());
         rastreamento.setReclamacaoCorreios(ReclamacaoCorreiosCast.castReclamacaoCorreiosDto(rastreamentoDto.getReclamacaoCorreios()));
         rastreamento.setUrlImagemUltimoStatus(rastreamentoDto.getUrlImagemUltimoStatus());
-        rastreamento.setEntregue(rastreamentoDto.isEntregue());
         rastreamento.setStatus(rastreamentoDto.getStatus());
         List<RastreamentoEventos> eventos = new ArrayList<>();
         List<RastreamentoEventoDto> eventosDto = rastreamentoDto.getEventos();

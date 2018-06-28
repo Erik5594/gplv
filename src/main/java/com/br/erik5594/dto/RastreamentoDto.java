@@ -14,7 +14,6 @@ public @Data class RastreamentoDto implements Serializable{
     private String codigoRastreamento;
     private String urlImagemUltimoStatus;
     private Date dataUltimaAtualizacao;
-    private boolean entregue;
     private StatusPedidoCorreios status;
     private ReclamacaoCorreiosDto reclamacaoCorreios;
     private List<RastreamentoEventoDto> eventos;
@@ -35,7 +34,7 @@ public @Data class RastreamentoDto implements Serializable{
 
     public String getDataUltimaAtualizacaoFormatada(){
         if(dataUltimaAtualizacao == null) return null;
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return format.format(dataUltimaAtualizacao);
     }
 }

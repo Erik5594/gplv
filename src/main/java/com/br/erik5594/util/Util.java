@@ -10,13 +10,17 @@ public class Util {
     public static String formatarNumeroTelefone(String numeroTelefone){
         if(StringUtils.isNotBlank(numeroTelefone)){
             if(numeroTelefone.length() >= 4){
-                if(numeroTelefone.length() >= 11) {
+                if(numeroTelefone.length() == 13) {
+                    numeroTelefone = "+" + numeroTelefone.substring(0, 2) + " (" + numeroTelefone.substring(2, 4) + ") " + numeroTelefone.substring(4, 9) + "-" + numeroTelefone.substring(9);
+                }else if(numeroTelefone.length() == 12){
+                    numeroTelefone = "+"+numeroTelefone.substring(0, 2)+" (" + numeroTelefone.substring(2, 4) + ") " + numeroTelefone.substring(4,8)+"-"+numeroTelefone.substring(8);
+                }else if(numeroTelefone.length() == 11) {
                     numeroTelefone = "(" + numeroTelefone.substring(0, 2) + ") " + numeroTelefone.substring(2,7)+"-"+numeroTelefone.substring(7);
-                }else if (numeroTelefone.length() >= 10){
+                }else if (numeroTelefone.length() == 10){
                     numeroTelefone = "(" + numeroTelefone.substring(0, 2) + ") " + numeroTelefone.substring(2,6)+"-"+numeroTelefone.substring(6);
-                }else if (numeroTelefone.length() >= 9){
+                }else if (numeroTelefone.length() == 9){
                     numeroTelefone = numeroTelefone.substring(0,5)+"-"+numeroTelefone.substring(5);
-                }else{
+                }else if (numeroTelefone.length() < 9){
                     numeroTelefone = numeroTelefone.substring(0,4)+"-"+numeroTelefone.substring(4);
                 }
             }

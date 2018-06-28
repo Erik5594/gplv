@@ -21,8 +21,6 @@ public @Data class Rastreamento implements Serializable{
     @Column(name = "data_ultima_atualizacao")
     private Date dataUltimaAtualizacao;
 
-    private boolean entregue;
-
     @Enumerated(EnumType.STRING)
     private StatusPedidoCorreios status;
 
