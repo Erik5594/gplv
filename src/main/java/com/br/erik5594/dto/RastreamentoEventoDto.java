@@ -1,6 +1,5 @@
 package com.br.erik5594.dto;
 
-import com.br.erik5594.model.StatusPedidoCorreios;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,12 +8,11 @@ import java.util.Objects;
 
 public @Data class RastreamentoEventoDto implements Serializable{
 
-    private int idEvento;
+    private Long idEvento;
     private RastreamentoDto rastreamento;
     private Date dataEvento;
     private String localEvento;
     private String mensagemEvento;
-    private StatusPedidoCorreios status;
 
     @Override
     public boolean equals(Object o) {

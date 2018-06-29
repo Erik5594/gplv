@@ -24,10 +24,10 @@ public @Data class Rastreamento implements Serializable{
     @Enumerated(EnumType.STRING)
     private StatusPedidoCorreios status;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "rastreamento", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "rastreamento", fetch = FetchType.LAZY)
     private ReclamacaoCorreios reclamacaoCorreios;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rastreamento")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "rastreamento")
     private List<RastreamentoEventos> eventos;
 
     @Override

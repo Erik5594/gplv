@@ -7,12 +7,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity(name = "eventos_rastreamento")
+@Entity
+@Table(name = "eventos_rastreamento")
 public @Data class RastreamentoEventos implements Serializable{
 
     @Id
     @GeneratedValue
-    private int idEvento;
+    @Column(name = "id_evento")
+    private Long idEvento;
 
     @ManyToOne
     @JoinColumn(name = "cod_rastreamento")
@@ -27,9 +29,6 @@ public @Data class RastreamentoEventos implements Serializable{
 
     @Column(name = "mensagem_evento")
     private String mensagemEvento;
-
-    @Enumerated(value = EnumType.STRING)
-    private StatusPedidoCorreios status;
 
     @Override
     public boolean equals(Object o) {

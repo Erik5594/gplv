@@ -53,28 +53,42 @@
             <p:column headerText="Quantidade" width="9%">
                 <p:outputLabel value="#{item.quantidadeProduto}"/>
             </p:column>
-            <p:column headerText="Pedido Aliexpress" width="12%">
-                <p:commandButton update=":formPedidoShopify:dialogPedidoAliexpress" oncomplete="PF('dialogPedidoAliexpress').show()" icon="ui-icon-search"
-                                 title="Ver Detalhe" value="#{item.pedidoAliexpress.idAliexpress.toString()}">
-                    <f:setPropertyActionListener value="#{item.pedidoAliexpress}" target="#{detalhaPedidoControlador.pedidoAliexpressDto}"/>
+            <p:column headerText="Ped Aliexpress" width="9%" rendered="#{item.pedidoAliexpress != null}">
+                <p:outputLabel value="#{item.pedidoAliexpress.idAliexpress}"/>
+            </p:column>
+            <p:column headerText="Data Limite" width="9%" rendered="#{item.pedidoAliexpress != null}">
+                <p:outputLabel value="#{item.pedidoAliexpress.dataLimiteDisputaFormatada}"/>
+            </p:column>
+            <p:column headerText="Status" width="9%" rendered="#{item.pedidoAliexpress != null}">
+                <p:outputLabel value="#{item.pedidoAliexpress.statusPedidoAliexpress}"/>
+            </p:column>
+            <p:column headerText="Cód Rastreamento" width="12%" rendered="#{item.pedidoAliexpress != null}">
+                <p:commandButton update=":formPedidoShopify:dialogRastreamento" oncomplete="PF('dialogRastreamento').show()" icon="ui-icon-search"
+                                 title="Ver Detalhe" value="#{item.pedidoAliexpress.rastreamento.codigoRastreamento}">
+                    <f:setPropertyActionListener value="#{item.pedidoAliexpress.rastreamento}" target="#{detalhaPedidoControlador.rastreamentoDto}"/>
                 </p:commandButton>
             </p:column>
         </p:dataTable>
-        <p:dialog header="Pedido Aliexpress - #{detalhaPedidoControlador.pedidoAliexpressDto.idAliexpress}" widgetVar="dialogPedidoAliexpress" id="dialogPedidoAliexpress" resizable="false"
+        <p:dialog header="Rastreamento - #{detalhaPedidoControlador.rastreamentoDto.codigoRastreamento}" widgetVar="dialogRastreamento" id="dialogRastreamento" resizable="false"
                   modal="true">
             <h:panelGrid columns="2">
-                <p:outputLabel value="N° Pedido:" style="font-weight: bold"/>
-                <p:link href="#{detalhaPedidoControlador.pedidoAliexpressDto.linkPedidoAliexpress}"
-                        value="#{detalhaPedidoControlador.pedidoAliexpressDto.idAliexpress}" target="_blank"/>
-                <p:outputLabel value="Data Limite:" style="font-weight: bold"/>
-                <p:outputLabel value="#{detalhaPedidoControlador.pedidoAliexpressDto.dataLimiteDisputaFormatada}"/>
+                <p:outputLabel value="Data Ultima Atualização:" style="font-weight: bold"/>
+                <p:inputText value="#{detalhaPedidoControlador.rastreamentoDto.dataUltimaAtualizacaoFormatada}" disabled="true"/>
                 <p:outputLabel value="Status:" style="font-weight: bold"/>
-                <p:outputLabel value="#{detalhaPedidoControlador.pedidoAliexpressDto.statusPedidoAliexpress.descricao}"/>
-                <p:outputLabel value="Cód Rastreamento " style="font-weight: bold"
-                               rendered="#{detalhaPedidoControlador.pedidoAliexpressDto.rastreamento != null}"/>
-                <p:outputLabel value="#{detalhaPedidoControlador.pedidoAliexpressDto.rastreamento.codigoRastreamento}"
-                               rendered="#{detalhaPedidoControlador.pedidoAliexpressDto.rastreamento != null}"/>
+                <p:inputText value="#{detalhaPedidoControlador.rastreamentoDto.status.descricao}" disabled="true"/>
             </h:panelGrid>
+            <p:dataTable value="#{detalhaPedidoControlador.rastreamentoDto.eventos}" var="evento"
+                         rendered="#{detalhaPedidoControlador.rastreamentoDto.eventos != null}" emptyMessage="Nenhum evento">
+                <p:column headerText="Data">
+                    <p:outputLabel value="#{evento.dataEvento}"/>
+                </p:column>
+                <p:column headerText="Local">
+                    <p:outputLabel value="#{evento.localEvento}"/>
+                </p:column>
+                <p:column headerText="Mensagem">
+                    <p:outputLabel value="#{evento.mensagemEvento}"/>
+                </p:column>
+            </p:dataTable>
         </p:dialog>
         <p:commandButton value="teste" actionListener="#{rastreamentoControlador.buscarCodigoRastreamento()}"/>
     </h:form>

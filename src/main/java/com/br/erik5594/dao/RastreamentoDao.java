@@ -29,6 +29,7 @@ public class RastreamentoDao implements Serializable{
         List<StatusPedidoCorreios> status = new ArrayList<>();
         status.add(StatusPedidoCorreios.ENTREGUE);
         status.add(StatusPedidoCorreios.DEVOLVIDO);
+        status.add(StatusPedidoCorreios.EXTRAVIADO);
         String hql = "from Rastreamento " +
                 "where (dataUltimaAtualizacao < :dataUltimaAtualizacao or dataUltimaAtualizacao is null) " +
                 "and (status not in (:status) or status is null)";
@@ -48,5 +49,19 @@ public class RastreamentoDao implements Serializable{
             return null;
         }
     }
+
+    public Rastreamento atualizarRastreamento(Rastreamento rastreamento){
+        manager.detach(rastreamento);
+        Rastreamento rastreamentoBanco = buscarRastreamento(rastreamento.getCodigoRastreamento());
+        if(rastreamentoBanco != null){
+            rastreamentoBanco.setDataUltimaAtualizacao(rastreamento.getDataUltimaAtualizacao());
+            rastreamentoBanco.setUrlImagemUltimoStatus(rastreamento.getUrlImagemUltimoStatus());
+            rastreamentoBanco.setStatus(rastreamento.getStatus());
+            return manager.merge(rastreamentoBanco);
+        }
+        return null;
+    }
+
+
 
 }

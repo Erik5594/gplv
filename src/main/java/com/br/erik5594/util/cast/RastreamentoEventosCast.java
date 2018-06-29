@@ -1,10 +1,12 @@
 package com.br.erik5594.util.cast;
 
+import com.br.erik5594.dto.RastreamentoDto;
 import com.br.erik5594.dto.RastreamentoEventoDto;
+import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.model.RastreamentoEventos;
 
 public class RastreamentoEventosCast {
-    public static RastreamentoEventos castRastreamentoEventosDto(RastreamentoEventoDto rastreamentoEventoDto){
+    public static RastreamentoEventos castRastreamentoEventosDto(RastreamentoEventoDto rastreamentoEventoDto, Rastreamento rastreamento){
         if(rastreamentoEventoDto == null){
             return null;
         }
@@ -13,12 +15,11 @@ public class RastreamentoEventosCast {
         rastreamentoEventos.setIdEvento(rastreamentoEventoDto.getIdEvento());
         rastreamentoEventos.setLocalEvento(rastreamentoEventoDto.getLocalEvento());
         rastreamentoEventos.setMensagemEvento(rastreamentoEventoDto.getMensagemEvento());
-        rastreamentoEventos.setRastreamento(RastreamentoCast.castRastreamentoDto(rastreamentoEventoDto.getRastreamento()));
-        rastreamentoEventos.setStatus(rastreamentoEventoDto.getStatus());
+        rastreamentoEventos.setRastreamento(rastreamento);
         return rastreamentoEventos;
     }
 
-    public static RastreamentoEventoDto castRastreamentoEventos(RastreamentoEventos rastreamentoEventos){
+    public static RastreamentoEventoDto castRastreamentoEventos(RastreamentoEventos rastreamentoEventos, RastreamentoDto rastreamentoDto){
         if(rastreamentoEventos == null){
             return null;
         }
@@ -27,8 +28,7 @@ public class RastreamentoEventosCast {
         rastreamentoEventoDto.setIdEvento(rastreamentoEventos.getIdEvento());
         rastreamentoEventoDto.setLocalEvento(rastreamentoEventos.getLocalEvento());
         rastreamentoEventoDto.setMensagemEvento(rastreamentoEventos.getMensagemEvento());
-        rastreamentoEventoDto.setRastreamento(RastreamentoCast.castRastreamento(rastreamentoEventos.getRastreamento()));
-        rastreamentoEventoDto.setStatus(rastreamentoEventos.getStatus());
+        rastreamentoEventoDto.setRastreamento(rastreamentoDto);
         return rastreamentoEventoDto;
     }
 }

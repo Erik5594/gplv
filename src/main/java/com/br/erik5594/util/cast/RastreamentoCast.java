@@ -23,7 +23,7 @@ public class RastreamentoCast {
         List<RastreamentoEventoDto> eventosDto = new ArrayList<>();
         if(eventos != null && !eventos.isEmpty()) {
             for (RastreamentoEventos evento : eventos) {
-                RastreamentoEventoDto eventoDto = RastreamentoEventosCast.castRastreamentoEventos(evento);
+                RastreamentoEventoDto eventoDto = RastreamentoEventosCast.castRastreamentoEventos(evento, rastreamentoDto);
                 eventosDto.add(eventoDto);
             }
         }else{
@@ -47,7 +47,7 @@ public class RastreamentoCast {
         List<RastreamentoEventoDto> eventosDto = rastreamentoDto.getEventos();
         if(eventosDto != null && !eventosDto.isEmpty()) {
             for (RastreamentoEventoDto eventoDto : eventosDto) {
-                RastreamentoEventos evento = RastreamentoEventosCast.castRastreamentoEventosDto(eventoDto);
+                RastreamentoEventos evento = RastreamentoEventosCast.castRastreamentoEventosDto(eventoDto, rastreamento);
                 eventos.add(evento);
             }
         }else{

@@ -9,7 +9,9 @@ public enum StatusPedidoCorreios {
     PENDENTE(5, "Está pendente"),
     AGUARDANDO_RETIRADA(6, "Aguardando a retirada no Correios"),
     ENTREGUE(7, "Foi entregue"),
-    ATRASADO(8, "Está atrasado");
+    ATRASADO(8, "Está atrasado"),
+    NAO_ENCONTRADO(9, "Não encontrado"),
+    EXTRAVIADO(10, "Foi extraviado");
 
     private int codStatus;
     private String descricao;
