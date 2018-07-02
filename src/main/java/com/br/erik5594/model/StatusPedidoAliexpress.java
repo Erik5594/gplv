@@ -14,5 +14,9 @@ public enum StatusPedidoAliexpress {
     public String getDescricao(){
         return this.descricao;
     }
+    
+    public int getCodStatus(){
+        return this.codStatus;
+    }
 
 }

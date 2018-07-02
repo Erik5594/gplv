@@ -1,5 +1,12 @@
 package com.br.erik5594.bo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.inject.Inject;
+
 import com.br.erik5594.dao.RastreamentoEventosDao;
 import com.br.erik5594.dto.RastreamentoDto;
 import com.br.erik5594.dto.RastreamentoEventoDto;
@@ -9,14 +16,13 @@ import com.br.erik5594.util.cast.RastreamentoCast;
 import com.br.erik5594.util.cast.RastreamentoEventosCast;
 import com.br.erik5594.util.jpa.Transactional;
 
-import javax.inject.Inject;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 public class RastreamentoEventoBo implements Serializable{
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private RastreamentoEventosDao rastreamentoEventosDao;
 
     @Transactional

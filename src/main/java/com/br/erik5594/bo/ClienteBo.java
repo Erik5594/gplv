@@ -1,22 +1,29 @@
 package com.br.erik5594.bo;
 
-import com.br.erik5594.dao.ClienteDao;
-import com.br.erik5594.dto.ClienteDto;
-import com.br.erik5594.model.Cliente;
-import com.br.erik5594.util.cast.ClienteCast;
-import com.br.erik5594.util.jpa.Transactional;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.br.erik5594.dao.ClienteDao;
+import com.br.erik5594.dto.ClienteDto;
+import com.br.erik5594.model.Cliente;
+import com.br.erik5594.util.cast.ClienteCast;
+import com.br.erik5594.util.jpa.Transactional;
+
 public class ClienteBo implements Serializable{
 
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private ClienteDao clienteDao;
 
     @Transactional

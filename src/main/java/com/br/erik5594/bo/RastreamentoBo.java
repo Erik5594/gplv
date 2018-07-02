@@ -1,5 +1,15 @@
 package com.br.erik5594.bo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.br.erik5594.client.RastreamentoClient;
 import com.br.erik5594.client.domain.RetornoHubCorreios;
 import com.br.erik5594.client.domain.RetornoHubDados;
@@ -11,18 +21,14 @@ import com.br.erik5594.model.Rastreamento;
 import com.br.erik5594.model.StatusPedidoCorreios;
 import com.br.erik5594.util.cast.RastreamentoCast;
 import com.br.erik5594.util.jpa.Transactional;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
-import javax.xml.crypto.Data;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class RastreamentoBo implements Serializable{
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private RastreamentoDao rastreamentoDao;
     @Inject
     private RastreamentoClient rastreamentoClient;

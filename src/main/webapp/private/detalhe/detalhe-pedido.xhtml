@@ -44,25 +44,25 @@
             <f:facet name="header">
                 Itens Pedido
             </f:facet>
-            <p:column headerText="Produto" width="69%">
+            <p:column headerText="Produto" width="40">
                 <p:outputLabel value="#{item.produto != null ? item.produto.nomeProduto:''}"/>
             </p:column>
-            <p:column headerText="Variante" width="10%">
+            <p:column headerText="Variante" width="20">
                 <p:outputLabel value="#{item.produto != null ? item.produto.varianteProduto:''}"/>
             </p:column>
-            <p:column headerText="Quantidade" width="9%">
+            <p:column headerText="Qtde" width="5">
                 <p:outputLabel value="#{item.quantidadeProduto}"/>
             </p:column>
-            <p:column headerText="Ped Aliexpress" width="9%" rendered="#{item.pedidoAliexpress != null}">
+            <p:column headerText="Ped Aliexpress" width="20">
                 <p:outputLabel value="#{item.pedidoAliexpress.idAliexpress}"/>
             </p:column>
-            <p:column headerText="Data Limite" width="9%" rendered="#{item.pedidoAliexpress != null}">
+            <p:column headerText="Data Limite" width="12">
                 <p:outputLabel value="#{item.pedidoAliexpress.dataLimiteDisputaFormatada}"/>
             </p:column>
-            <p:column headerText="Status" width="9%" rendered="#{item.pedidoAliexpress != null}">
+            <p:column headerText="Status" width="15">
                 <p:outputLabel value="#{item.pedidoAliexpress.statusPedidoAliexpress}"/>
             </p:column>
-            <p:column headerText="Cód Rastreamento" width="12%" rendered="#{item.pedidoAliexpress != null}">
+            <p:column headerText="Cód Rastreamento" width="15">
                 <p:commandButton update=":formPedidoShopify:dialogRastreamento" oncomplete="PF('dialogRastreamento').show()" icon="ui-icon-search"
                                  title="Ver Detalhe" value="#{item.pedidoAliexpress.rastreamento.codigoRastreamento}">
                     <f:setPropertyActionListener value="#{item.pedidoAliexpress.rastreamento}" target="#{detalhaPedidoControlador.rastreamentoDto}"/>
@@ -79,13 +79,13 @@
             </h:panelGrid>
             <p:dataTable value="#{detalhaPedidoControlador.rastreamentoDto.eventos}" var="evento"
                          rendered="#{detalhaPedidoControlador.rastreamentoDto.eventos != null}" emptyMessage="Nenhum evento">
-                <p:column headerText="Data">
-                    <p:outputLabel value="#{evento.dataEvento}"/>
+                <p:column headerText="Data" width="20">
+                    <p:outputLabel value="#{evento.dataEventoFormatada}"/>
                 </p:column>
-                <p:column headerText="Local">
+                <p:column headerText="Local" width="25">
                     <p:outputLabel value="#{evento.localEvento}"/>
                 </p:column>
-                <p:column headerText="Mensagem">
+                <p:column headerText="Mensagem" width="35">
                     <p:outputLabel value="#{evento.mensagemEvento}"/>
                 </p:column>
             </p:dataTable>

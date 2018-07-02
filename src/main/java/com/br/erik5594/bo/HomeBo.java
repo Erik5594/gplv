@@ -1,16 +1,20 @@
 package com.br.erik5594.bo;
 
-import com.br.erik5594.dto.PedidoAliexpressDto;
-import com.br.erik5594.model.StatusPedidoAliexpress;
-
-import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import com.br.erik5594.dto.PedidoAliexpressDto;
+
 public class HomeBo implements Serializable{
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private PedidoShopifyBo pedidoShopifyBo;
     @Inject
     private PedidoAliexpressBo pedidoAliexpressBo;

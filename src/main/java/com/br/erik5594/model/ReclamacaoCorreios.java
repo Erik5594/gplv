@@ -1,17 +1,29 @@
 package com.br.erik5594.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.Data;
+
 @Entity(name = "reclamacao_correios")
 public @Data class ReclamacaoCorreios implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "id_reclamacao")
     private BigDecimal idReclamacao = BigDecimal.ZERO;
 

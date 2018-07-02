@@ -1,5 +1,14 @@
 package com.br.erik5594.bo;
 
+import java.io.BufferedReader;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.br.erik5594.dao.PedidoShopifyDao;
 import com.br.erik5594.dto.ClienteDto;
 import com.br.erik5594.dto.ItemDto;
@@ -9,18 +18,15 @@ import com.br.erik5594.model.PedidoShopify;
 import com.br.erik5594.util.Util;
 import com.br.erik5594.util.cast.PedidoShopifyCast;
 import com.br.erik5594.util.jpa.Transactional;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.Serializable;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PedidoShopifyBo implements Serializable{
 
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Inject
     private PedidoShopifyDao pedidoShopifyDao;
 
     @Inject

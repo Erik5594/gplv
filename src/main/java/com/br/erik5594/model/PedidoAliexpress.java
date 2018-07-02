@@ -1,17 +1,34 @@
 package com.br.erik5594.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "pedido_aliexpress")
 public @Data class PedidoAliexpress implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "id_pedido_aliexpress", columnDefinition = "numeric")
     private Long idAliexpress;
 

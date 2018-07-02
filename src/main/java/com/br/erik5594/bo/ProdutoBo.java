@@ -1,22 +1,29 @@
 package com.br.erik5594.bo;
 
-import com.br.erik5594.dao.ProdutoDao;
-import com.br.erik5594.dto.ProdutoDto;
-import com.br.erik5594.model.Produto;
-import com.br.erik5594.util.cast.ProdutoCast;
-import com.br.erik5594.util.jpa.Transactional;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.br.erik5594.dao.ProdutoDao;
+import com.br.erik5594.dto.ProdutoDto;
+import com.br.erik5594.model.Produto;
+import com.br.erik5594.util.cast.ProdutoCast;
+import com.br.erik5594.util.jpa.Transactional;
+
 public class ProdutoBo implements Serializable{
 
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private ProdutoDao produtoDao;
 
     @Transactional

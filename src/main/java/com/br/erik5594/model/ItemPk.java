@@ -1,15 +1,26 @@
 package com.br.erik5594.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import lombok.Data;
 
 @Embeddable
 public @Data class ItemPk implements Serializable{
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_shopify")
     private PedidoShopify pedidoShopify;
 

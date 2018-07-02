@@ -3,6 +3,7 @@ package com.br.erik5594.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -28,5 +29,11 @@ public @Data class RastreamentoEventoDto implements Serializable{
     public int hashCode() {
 
         return Objects.hash(super.hashCode(), idEvento, rastreamento);
+    }
+    
+    public String getDataEventoFormatada() {
+    	if(this.dataEvento == null) return null;
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return format.format(this.dataEvento);
     }
 }

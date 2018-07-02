@@ -1,15 +1,25 @@
 package com.br.erik5594.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import lombok.Data;
 
 @Entity
 public @Data class Item implements Serializable{
 
-    @EmbeddedId
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
     private ItemPk id;
 
     @Column(name = "quantidade")

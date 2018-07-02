@@ -1,5 +1,13 @@
 package com.br.erik5594.bo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import com.br.erik5594.dao.PedidoAliexpressDao;
 import com.br.erik5594.dto.PedidoAliexpressDto;
 import com.br.erik5594.dto.RastreamentoDto;
@@ -7,18 +15,15 @@ import com.br.erik5594.model.PedidoAliexpress;
 import com.br.erik5594.model.StatusPedidoAliexpress;
 import com.br.erik5594.util.cast.PedidoAliexpressCast;
 import com.br.erik5594.util.jpa.Transactional;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PedidoAliexpressBo implements Serializable{
 
-    @Inject
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private PedidoAliexpressDao pedidoAliexpressDao;
     @Inject
     private RastreamentoBo rastreamentoBo;

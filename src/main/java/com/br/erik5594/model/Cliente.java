@@ -1,20 +1,26 @@
 package com.br.erik5594.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
-import java.util.Objects;
+
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
 
 @Entity
 public @Data class Cliente implements Serializable{
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     @GeneratedValue
     @Setter(value = AccessLevel.PRIVATE)
     private Long id;
